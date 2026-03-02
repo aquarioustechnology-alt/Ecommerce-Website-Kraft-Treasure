@@ -6,10 +6,10 @@ import Link from "next/link"
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 const HERO_IMAGES = [
-  "/images/homepage/1st image.png",
-  "/images/homepage/2nd image.png",
-  "/images/homepage/3rd image.png",
-  "/images/homepage/4th image.png"
+  "/images/homepage/1st-image.png",
+  "/images/homepage/2nd-image.png",
+  "/images/homepage/3rd-image.png",
+  "/images/homepage/4th-image.png"
 ]
 
 export function HeroSection() {

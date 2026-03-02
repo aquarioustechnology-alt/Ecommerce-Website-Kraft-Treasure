@@ -23,12 +23,12 @@ export function CollectionsSection() {
   }, [])
 
   const categories = [
-    { id: "cat-1", name: "Cups and plates", image: "/images/homepage/Cup & Plates Category.png", description: "Exquisite handcrafted vessels for daily ritual and display." },
-    { id: "cat-2", name: "Show Pieces", image: "/images/homepage/Show Pieces category.png", description: "Sculptural art redefining heritage craftsmanship." },
-    { id: "cat-3", name: "Masks", image: "/images/homepage/Mask category.png", description: "Ceremonial masks embodying ancestral spirits and forms." },
-    { id: "cat-4", name: "Carpets", image: "/images/homepage/Carpet category.png", description: "Hand-knotted textiles with sacred geometric patterns." },
-    { id: "cat-5", name: "Necklaces", image: "/images/homepage/Necklace Category.png", description: "Traditional adornments crafted with rare heritage beads." },
-    { id: "cat-6", name: "Others", image: "/images/homepage/Other Category.png", description: "A curation of diverse tribal artifacts and hidden treasures." }
+    { id: "cat-1", name: "Cups and plates", image: "/images/homepage/cup-and-plates-category.png", description: "Exquisite handcrafted vessels for daily ritual and display." },
+    { id: "cat-2", name: "Show Pieces", image: "/images/homepage/show-pieces-category.png", description: "Sculptural art redefining heritage craftsmanship." },
+    { id: "cat-3", name: "Masks", image: "/images/homepage/mask-category.png", description: "Ceremonial masks embodying ancestral spirits and forms." },
+    { id: "cat-4", name: "Carpets", image: "/images/homepage/carpet-category.png", description: "Hand-knotted textiles with sacred geometric patterns." },
+    { id: "cat-5", name: "Necklaces", image: "/images/homepage/necklace-category.png", description: "Traditional adornments crafted with rare heritage beads." },
+    { id: "cat-6", name: "Others", image: "/images/homepage/other-category.png", description: "A curation of diverse tribal artifacts and hidden treasures." }
   ]
 
   return (

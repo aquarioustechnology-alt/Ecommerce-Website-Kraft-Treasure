@@ -35,7 +35,7 @@ export function Navigation() {
             <div className="flex items-center gap-12">
               <Link href="/" className="transition-opacity hover:opacity-80">
                 <NextImage
-                  src="/images/logo/Logo Transparent.png"
+                  src="/images/logo/logo-transparent.png"
                   alt="Kraft Treasure Logo"
                   width={140}
                   height={55}
