@@ -5,6 +5,7 @@ import { FeaturedProducts } from "@/components/featured-products"
 import { HeritageSection } from "@/components/heritage-section"
 import { BespokeSection } from "@/components/bespoke-section"
 import { NewArrivals } from "@/components/new-arrivals"
+import { TrustedSection } from "@/components/trusted-section"
 import { SiteFooter } from "@/components/site-footer"
 
 export default function HomePage() {
@@ -22,6 +23,8 @@ export default function HomePage() {
       <BespokeSection />
 
       <NewArrivals />
+
+      <TrustedSection />
 
       {/* Marquee ticker */}
       <div className="py-6 border-y border-border overflow-hidden">
