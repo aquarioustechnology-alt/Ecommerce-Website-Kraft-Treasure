@@ -4,6 +4,7 @@ import { CollectionsSection } from "@/components/collections-section"
 import { FeaturedProducts } from "@/components/featured-products"
 import { HeritageSection } from "@/components/heritage-section"
 import { BespokeSection } from "@/components/bespoke-section"
+import { NewArrivals } from "@/components/new-arrivals"
 import { SiteFooter } from "@/components/site-footer"
 
 export default function HomePage() {
@@ -14,9 +15,13 @@ export default function HomePage() {
 
       <CollectionsSection />
 
+      <HeritageSection />
+
       <FeaturedProducts />
 
-      <HeritageSection />
+      <BespokeSection />
+
+      <NewArrivals />
 
       {/* Marquee ticker */}
       <div className="py-6 border-y border-border overflow-hidden">
@@ -24,7 +29,7 @@ export default function HomePage() {
           {Array.from({ length: 3 }).map((_, i) => (
             <span
               key={i}
-              className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground font-sans mx-8"
+              className="text-sm md:text-base tracking-[0.3em] uppercase text-black/80 font-sans mx-8"
             >
               Heritage Craftsmanship {"  \u2022  "} Museum Quality {"  \u2022  "} Fair Trade Certified {"  \u2022  "} Global Shipping {"  \u2022  "} Certificate of Authenticity {"  \u2022  "} Bespoke Commissions {"  \u2022  "}
             </span>
@@ -32,9 +37,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      <BespokeSection />
-
       <SiteFooter />
     </main>
   )
 }
+

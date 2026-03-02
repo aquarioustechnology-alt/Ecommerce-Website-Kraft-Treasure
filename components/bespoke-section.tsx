@@ -19,14 +19,13 @@ export function BespokeSection() {
   }, [])
 
   return (
-    <section ref={ref} id="bespoke" className="py-24 lg:py-36 px-6 lg:px-20">
-      <div className="relative overflow-hidden bg-card">
+    <section ref={ref} id="bespoke" className="py-12 lg:py-16 px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+      <div className="relative overflow-hidden bg-[#FFF4B3]">
         <div className="grid grid-cols-1 lg:grid-cols-5">
           {/* Image */}
           <div
-            className={`relative lg:col-span-2 aspect-[4/3] lg:aspect-auto lg:min-h-[500px] overflow-hidden transition-all duration-1000 ${
-              visible ? "opacity-100" : "opacity-0"
-            }`}
+            className={`relative lg:col-span-2 aspect-[4/3] lg:aspect-auto lg:min-h-[500px] overflow-hidden transition-all duration-1000 ${visible ? "opacity-100" : "opacity-0"
+              }`}
           >
             <Image
               src="/images/artisan-portrait.jpg"
@@ -39,20 +38,19 @@ export function BespokeSection() {
 
           {/* Content */}
           <div
-            className={`lg:col-span-3 p-8 lg:p-16 xl:p-20 flex flex-col justify-center transition-all duration-1000 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`lg:col-span-3 p-8 lg:p-16 xl:p-20 flex flex-col justify-center transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
             style={{ transitionDelay: "0.3s" }}
           >
             <p className="text-xs tracking-[0.4em] uppercase text-primary font-sans mb-6">
               Bespoke Commissions
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground leading-tight mb-6 text-balance">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-6 text-balance">
               Your Vision,
               <br />
               Their Mastery
             </h2>
-            <p className="text-sm text-muted-foreground font-sans leading-relaxed mb-8 max-w-lg">
+            <p className="text-sm text-black/80 font-sans leading-relaxed mb-8 max-w-lg">
               Work directly with our master artisans to commission one-of-a-kind
               pieces tailored to your vision. From bespoke textiles for
               haute-couture to sculptural installations for private residences,
@@ -83,10 +81,10 @@ export function BespokeSection() {
                   <p className="text-2xl font-serif text-primary mb-2">
                     {item.step}
                   </p>
-                  <h3 className="text-sm font-sans text-foreground mb-1 tracking-wide">
+                  <h3 className="text-sm font-sans text-black mb-1 tracking-wide">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground font-sans leading-relaxed">
+                  <p className="text-xs text-black/70 font-sans leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -95,8 +93,9 @@ export function BespokeSection() {
 
             {/* CTA */}
             <div>
-              <button className="inline-flex items-center justify-center bg-primary text-primary-foreground px-8 py-4 text-xs tracking-[0.2em] uppercase font-sans hover:bg-gold-light transition-all duration-300">
-                Begin Your Commission
+              <button className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px]">
+                <span className="relative z-20">Begin Your Commission</span>
+                <div className="absolute inset-0 bg-[#E31E25] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
               </button>
             </div>
           </div>

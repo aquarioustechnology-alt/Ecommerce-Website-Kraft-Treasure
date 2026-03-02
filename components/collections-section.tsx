@@ -32,10 +32,10 @@ export function CollectionsSection() {
   ]
 
   return (
-    <section ref={ref} id="collections" className="pb-24 lg:pb-36 pt-0 px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+    <section ref={ref} id="collections" className="pb-12 lg:pb-16 pt-[60px] px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
       {/* Section header */}
       <div
-        className={`mb-16 lg:mb-24 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        className={`mb-8 lg:mb-12 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
       >
         <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5AB7D] font-sans mb-4">
@@ -81,7 +81,7 @@ export function CollectionsSection() {
                 <h3 className="text-2xl lg:text-3xl font-serif text-white mb-2">
                   {category.name}
                 </h3>
-                <p className="text-sm text-white/90 font-sans leading-relaxed mb-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-y-4 group-hover:translate-y-0">
+                <p className="text-sm text-white/90 font-sans leading-relaxed mb-5 opacity-100 transition-opacity duration-500">
                   {category.description}
                 </p>
                 <div className="flex items-center gap-2 text-white">
