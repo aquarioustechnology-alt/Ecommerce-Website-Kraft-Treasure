@@ -5,7 +5,7 @@ export function TrustedSection() {
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black mb-6">
                     Trusted by Customers
                 </h2>
-                <div className="flex items-center justify-center gap-3 text-sm md:text-base lg:text-lg text-black font-sans uppercase tracking-widest text-balance">
+                <div className="flex items-center justify-center gap-3 md:gap-4 text-base md:text-lg lg:text-xl text-black font-sans uppercase tracking-widest text-balance">
                     <span>Promote Craft</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-black block"></span>
                     <span>Support the artisan</span>
