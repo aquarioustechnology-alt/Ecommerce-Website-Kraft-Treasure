@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
+import { AuthenticitySection } from "@/components/Homepage/authenticity-section"
 import { CollectionsSection } from "@/components/collections-section"
 import { FeaturedProducts } from "@/components/featured-products"
 import { HeritageSection } from "@/components/heritage-section"
@@ -13,6 +14,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-background">
       <Navigation />
       <HeroSection />
+      <AuthenticitySection />
 
       <CollectionsSection />
 

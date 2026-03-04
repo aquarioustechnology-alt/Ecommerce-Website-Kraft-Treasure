@@ -71,7 +71,7 @@ export function HeroSection() {
 
             {/* Subheading - Reduced gap */}
             <p
-              className={`text-sm md:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`text-xs md:text-sm lg:text-base text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               style={{ transitionDelay: "0.8s" }}
             >
