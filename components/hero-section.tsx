@@ -58,7 +58,7 @@ export function HeroSection() {
 
             {/* Main heading - Improved responsiveness for all screens */}
             <h2
-              className={`text-[42px] leading-[1.1] sm:text-5xl md:text-7xl lg:text-5xl xl:text-[70px] font-serif text-black tracking-tight mb-5 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              className={`text-[40px] leading-[1.1] sm:text-5xl md:text-[54px] lg:text-[62px] xl:text-[70px] font-serif text-black tracking-tight mb-5 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
               style={{ transitionDelay: "0.6s" }}
             >
@@ -71,7 +71,7 @@ export function HeroSection() {
 
             {/* Subheading - Increased size for mobile/tablet, adjusted for small desktop */}
             <p
-              className={`text-sm sm:text-base md:text-lg lg:text-base text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`text-sm sm:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               style={{ transitionDelay: "0.8s" }}
             >

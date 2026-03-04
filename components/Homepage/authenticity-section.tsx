@@ -36,17 +36,17 @@ export function AuthenticitySection() {
             <div className="relative z-10 max-w-4xl mx-auto text-center">
                 {/* Heading - Improved responsiveness */}
                 <h2
-                    className={`text-[32px] sm:text-4xl md:text-5xl lg:text-5xl font-serif text-black leading-tight mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    className={`text-[28px] sm:text-[34px] md:text-[38px] lg:text-[44px] xl:text-5xl font-serif text-black leading-tight mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         }`}
                     style={{ transitionDelay: "0.2s" }}
                 >
-                    Authentic Arunachal Pradesh Artifacts - <br className="hidden md:block" />
+                    Authentic Arunachal Pradesh Artifacts - <br className="hidden lg:block" />
                     Handmade Heritage for Modern Homes
                 </h2>
 
                 {/* Content - Increased for mobile/tablet */}
                 <p
-                    className={`text-sm sm:text-base md:text-lg lg:text-base text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                    className={`text-sm sm:text-base lg:text-lg text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                         }`}
                     style={{ transitionDelay: "0.4s" }}
                 >
