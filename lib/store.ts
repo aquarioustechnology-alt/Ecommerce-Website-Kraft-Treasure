@@ -6,12 +6,14 @@ type CartItem = {
 
 type CartState = {
   items: CartItem[]
+  wishlist: string[]
   currency: string
   isOpen: boolean
 }
 
 let state: CartState = {
   items: [],
+  wishlist: [],
   currency: "INR",
   isOpen: false,
 }
@@ -83,5 +85,23 @@ export const cartStore = {
   },
   getItemCount() {
     return state.items.reduce((sum, i) => sum + i.quantity, 0)
+  },
+  toggleWishlist(productId: string) {
+    const exists = state.wishlist.includes(productId)
+    if (exists) {
+      state = {
+        ...state,
+        wishlist: state.wishlist.filter((id) => id !== productId),
+      }
+    } else {
+      state = {
+        ...state,
+        wishlist: [...state.wishlist, productId],
+      }
+    }
+    emitChange()
+  },
+  getWishlistCount() {
+    return state.wishlist.length
   },
 }

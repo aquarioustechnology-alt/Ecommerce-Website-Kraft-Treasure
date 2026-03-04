@@ -5,6 +5,38 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
+function CountingNumber({ value, duration = 2000, visible }: { value: string, duration?: number, visible: boolean }) {
+  const [count, setCount] = useState(0)
+  const target = parseInt(value)
+  const isPlus = value.includes("+")
+
+  useEffect(() => {
+    if (!visible) return
+
+    let start = 0
+    const end = target
+    const increment = end / (duration / 16)
+
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= end) {
+        setCount(end)
+        clearInterval(timer)
+      } else {
+        setCount(Math.floor(start))
+      }
+    }, 16)
+
+    return () => clearInterval(timer)
+  }, [visible, target, duration])
+
+  return (
+    <span>
+      {count}{isPlus ? "+" : ""}
+    </span>
+  )
+}
+
 export function HeritageSection() {
   const [visible, setVisible] = useState(false)
   const ref = useRef<HTMLElement>(null)
@@ -22,7 +54,7 @@ export function HeritageSection() {
 
   return (
     <section ref={ref} id="heritage" className="relative py-12 lg:py-16 max-w-[1440px] mx-auto w-full px-6 lg:px-20">
-      {/* Full-width image background */}
+      {/* Container */}
       <div className="relative overflow-hidden w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Image side */}
@@ -37,24 +69,25 @@ export function HeritageSection() {
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-
           </div>
 
           {/* Content side */}
           <div
-            className={`bg-card p-8 lg:p-16 xl:p-20 flex flex-col justify-center transition-all duration-1000 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+            className={`bg-card p-8 lg:p-12 xl:p-16 flex flex-col justify-center transition-all duration-1000 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
               }`}
             style={{ transitionDelay: "0.3s" }}
           >
-            <p className="text-xs tracking-[0.4em] uppercase text-primary font-sans mb-6">
+            <p className="text-xs tracking-[0.4em] uppercase text-primary font-sans mb-4">
               Global Heritage
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground leading-tight mb-8 text-balance">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-foreground leading-tight mb-6 text-balance">
               From the Himalayan
               <br />
               Foothills to the World
             </h2>
-            <div className="space-y-5 text-sm text-black font-sans leading-relaxed">
+
+            {/* Reduced gap between content sections */}
+            <div className="space-y-4 text-[12px] md:text-[14px] lg:text-[16px] text-black/80 font-sans leading-relaxed">
               <p>
                 Nestled between the eastern Himalayas and the plains of Assam,
                 Arunachal Pradesh is home to 26 major tribes and over 100
@@ -75,18 +108,18 @@ export function HeritageSection() {
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-border">
+            {/* Stats - Increased font size and Counter Animation */}
+            <div className="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-border">
               {[
                 { value: "26+", label: "Tribal Communities" },
                 { value: "180+", label: "Master Artisans" },
                 { value: "12", label: "Countries Served" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <p className="text-2xl lg:text-3xl font-serif text-primary">
-                    {stat.value}
+                  <p className="text-3xl lg:text-5xl font-serif text-primary">
+                    <CountingNumber value={stat.value} visible={visible} />
                   </p>
-                  <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-sans mt-1">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-sans mt-2">
                     {stat.label}
                   </p>
                 </div>

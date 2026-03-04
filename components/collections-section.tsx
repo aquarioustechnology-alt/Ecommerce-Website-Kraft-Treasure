@@ -50,9 +50,8 @@ export function CollectionsSection() {
             </h2>
           </div>
           <div className="flex-1 flex lg:justify-end">
-            <p className="text-sm md:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl lg:pt-1">
-              Each collection represents a distinct tradition of craft, preserved
-              through generations and reimagined for the contemporary connoisseur.
+            <p className="text-[12px] md:text-[14px] lg:text-[16px] text-black/80 font-sans leading-relaxed max-w-xl lg:pt-1">
+              As the premier digital gateway to Arunachal Pradesh's artistic heritage, Kraft Treasure connects you directly with tribal master weavers and carvers. Each collection represents a distinct tradition of craft, preserved through generations and reimagined for the contemporary connoisseur, now delivered from the hills to your doorstep.
             </p>
           </div>
         </div>

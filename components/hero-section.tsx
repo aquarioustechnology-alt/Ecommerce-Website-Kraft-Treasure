@@ -69,9 +69,9 @@ export function HeroSection() {
               Modern Luxury
             </h2>
 
-            {/* Subheading - Increased size for mobile/tablet, adjusted for small desktop */}
+            {/* Subheading - Reduced size by 2px */}
             <p
-              className={`text-sm sm:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`text-[12px] sm:text-[14px] lg:text-[16px] text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               style={{ transitionDelay: "0.8s" }}
             >
@@ -146,14 +146,14 @@ export function HeroSection() {
             <div className="absolute bottom-6 right-6 flex gap-3 z-30">
               <button
                 onClick={prevImage}
-                className="p-3 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 rounded-full border border-black/10 shadow-lg"
+                className="p-4 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 border border-black/10 shadow-lg"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextImage}
-                className="p-3 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 rounded-full border border-black/10 shadow-lg"
+                className="p-4 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 border border-black/10 shadow-lg"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5" />

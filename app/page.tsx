@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section"
 import { AuthenticitySection } from "@/components/Homepage/authenticity-section"
 import { CollectionsSection } from "@/components/collections-section"
 import { FeaturedProducts } from "@/components/featured-products"
+import { TrendingProducts } from "@/components/trending-products"
 import { HeritageSection } from "@/components/heritage-section"
 import { BespokeSection } from "@/components/bespoke-section"
 import { NewArrivals } from "@/components/new-arrivals"
@@ -17,6 +18,7 @@ export default function HomePage() {
       <AuthenticitySection />
 
       <CollectionsSection />
+      <TrendingProducts />
 
       <HeritageSection />
 

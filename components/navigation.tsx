@@ -12,6 +12,7 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const cart = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getSnapshot)
   const itemCount = cart.items.reduce((sum, i) => sum + i.quantity, 0)
+  const wishlistCount = cart.wishlist.length
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,8 +73,13 @@ export function Navigation() {
               </Link>
 
               {/* Wishlist */}
-              <button className="text-black hover:text-[#E31E25] transition-colors" aria-label="Wishlist">
+              <button className="relative text-black hover:text-[#E31E25] transition-colors" aria-label={`Wishlist with ${wishlistCount} items`}>
                 <Heart className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 w-4 h-4 lg:w-5 lg:h-5 bg-[#E31E25] text-white text-[9px] lg:text-[10px] font-sans flex items-center justify-center rounded-full font-bold">
+                    {wishlistCount}
+                  </span>
+                )}
               </button>
 
               {/* Cart */}

@@ -131,14 +131,14 @@ export function FeaturedProducts() {
         <div className="flex justify-center gap-4 mt-12">
           <button
             onClick={scrollPrev}
-            className="p-3 bg-card border border-border text-foreground hover:bg-muted transition-colors rounded-full shadow-sm"
+            className="p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
             aria-label="Previous item"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={scrollNext}
-            className="p-3 bg-card border border-border text-foreground hover:bg-muted transition-colors rounded-full shadow-sm"
+            className="p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
             aria-label="Next item"
           >
             <ChevronRight className="w-5 h-5" />

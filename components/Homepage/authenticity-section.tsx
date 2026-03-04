@@ -44,9 +44,9 @@ export function AuthenticitySection() {
                     Handmade Heritage for Modern Homes
                 </h2>
 
-                {/* Content - Increased for mobile/tablet */}
+                {/* Content - Reduced size by 2px */}
                 <p
-                    className={`text-sm sm:text-base lg:text-lg text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                    className={`text-[12px] sm:text-[14px] lg:text-[16px] text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                         }`}
                     style={{ transitionDelay: "0.4s" }}
                 >
