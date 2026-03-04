@@ -8,6 +8,8 @@ import { HeritageSection } from "@/components/heritage-section"
 import { BespokeSection } from "@/components/bespoke-section"
 import { CuratedCategories } from "@/components/curated-categories"
 import { Testimonials } from "@/components/testimonials"
+import { HeritageDecors } from "@/components/heritage-decors"
+import { InstagramFeed } from "@/components/instagram-feed"
 import { TrustedSection } from "@/components/trusted-section"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -49,8 +51,10 @@ export default function HomePage() {
 
       <Testimonials />
       <BespokeSection />
+      <HeritageDecors />
 
       <TrustedSection />
+      <InstagramFeed />
 
       {/* Marquee ticker */}
       <div className="py-6 border-y border-border overflow-hidden">

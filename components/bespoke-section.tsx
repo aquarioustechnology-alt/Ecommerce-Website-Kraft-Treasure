@@ -63,17 +63,17 @@ export function BespokeSection() {
                 {
                   step: "01",
                   title: "Rooted in Community",
-                  desc: "Traditional techniques taught within artisan families across Arunachal villages.",
+                  desc: "Techniques taught within families.",
                 },
                 {
                   step: "02",
                   title: "Crafted in Small Batches",
-                  desc: "Each piece is made by hand—natural variations are a hallmark of authentic craft.",
+                  desc: "Each piece is hand-made authenticity.",
                 },
                 {
                   step: "03",
                   title: "Shipped with Pride",
-                  desc: "Secure packaging ensures each heritage craft reaches your home safely.",
+                  desc: "Secure packaging for your craft.",
                 },
               ].map((item) => (
                 <div key={item.step}>
