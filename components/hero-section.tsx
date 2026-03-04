@@ -6,10 +6,10 @@ import Link from "next/link"
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 const HERO_IMAGES = [
-  "/images/homepage/1st-image.png",
-  "/images/homepage/2nd-image.png",
-  "/images/homepage/3rd-image.png",
-  "/images/homepage/4th-image.png"
+  { src: "/images/homepage/1st-image.png", name: "Traditional Brass Lamp" },
+  { src: "/images/homepage/2nd-image.png", name: "Handwoven Tribal Textile" },
+  { src: "/images/homepage/3rd-image.png", name: "Bamboo Craft Vessel" },
+  { src: "/images/homepage/4th-image.png", name: "Ceremonial Tribal Mask" }
 ]
 
 export function HeroSection() {
@@ -18,6 +18,10 @@ export function HeroSection() {
 
   useEffect(() => {
     setLoaded(true)
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % HERO_IMAGES.length)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [])
 
   const nextImage = () => {
@@ -49,7 +53,7 @@ export function HeroSection() {
                 color: "#C5AB7D"
               }}
             >
-              Heritage Craftsmanship for the World
+              Authentic Arunachal Pradesh Handicrafts
             </p>
 
             {/* Main heading - Font size adjusted for mobile/tablet */}
@@ -71,8 +75,9 @@ export function HeroSection() {
                 }`}
               style={{ transitionDelay: "0.8s" }}
             >
-              Museum-quality artifacts handcrafted by the tribal artisans of
-              Arunachal Pradesh, curated for discerning collectors worldwide.
+              Discover original tribal crafts from Arunachal Pradesh, bamboo & cane,
+              handloom textiles, traditional jewellery, masks, and home
+              décor-sourced directly from artisans and delivered with care.
             </p>
 
             {/* CTA Buttons - Single line, smaller font, adjusted padding */}
@@ -91,10 +96,10 @@ export function HeroSection() {
               </Link>
 
               <Link
-                href="#bespoke"
+                href="/shop"
                 className="relative group overflow-hidden inline-flex items-center justify-center gap-2 border border-black bg-transparent text-black px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-all duration-500 shadow-sm whitespace-nowrap min-w-[180px]"
               >
-                <span className="relative z-20 transition-colors duration-500 group-hover:text-white font-medium">Commission a Piece</span>
+                <span className="relative z-20 transition-colors duration-500 group-hover:text-white font-medium">Shop Now</span>
                 <div className="absolute inset-0 bg-black -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
               </Link>
             </div>
@@ -104,30 +109,40 @@ export function HeroSection() {
         {/* Right Section - Image Side - Carousel centered in its half */}
         <div className="w-full md:w-1/2 relative flex items-center justify-center overflow-hidden min-h-[500px] md:min-h-screen">
           <div
-            className={`relative w-full aspect-square max-w-[380px] lg:max-w-[460px] 2xl:max-w-[500px] transition-all duration-700 ease-out ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"
+            className={`relative w-full aspect-square max-w-[380px] lg:max-w-[460px] 2xl:max-w-[500px] transition-all duration-700 ease-out group ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"
               }`}
             style={{ transitionDelay: "0.5s" }}
           >
-            {HERO_IMAGES.map((src, index) => (
+            {HERO_IMAGES.map((image, index) => (
               <div
-                key={src}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImage ? "opacity-100 z-10" : "opacity-0 z-0"
+                key={image.src}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out overflow-hidden rounded-sm shadow-xl ${index === currentImage ? "opacity-100 z-10" : "opacity-0 z-0"
                   }`}
               >
                 <NextImage
-                  src={src}
-                  alt={`Handcrafted Artisan Piece ${index + 1}`}
+                  src={image.src}
+                  alt={image.name}
                   fill
-                  className="object-cover rounded-sm shadow-xl"
+                  className="object-cover transition-transform duration-1000 ease-out scale-110 group-hover:scale-100"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority={index === 0}
                 />
+
+                {/* Name and Gradient overlay - Always visible now */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-20 flex flex-col justify-end p-8 pointer-events-none">
+                  <p className="text-white text-xs tracking-[0.3em] uppercase font-sans mb-2">
+                    Product
+                  </p>
+                  <h3 className="text-white text-xl md:text-2xl font-serif">
+                    {image.name}
+                  </h3>
+                </div>
               </div>
             ))}
 
-            <div className="absolute inset-0 border border-[#E31E25]/5 pointer-events-none z-20" />
+            <div className="absolute inset-0 border border-white/10 pointer-events-none z-20 rounded-sm" />
 
-            {/* Carousel Controls */}
+            {/* Carousel Controls - Always visible now */}
             <div className="absolute bottom-6 right-6 flex gap-3 z-30">
               <button
                 onClick={prevImage}

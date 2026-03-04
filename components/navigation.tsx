@@ -30,7 +30,7 @@ export function Navigation() {
           }`}
       >
         <div className="max-w-[1440px] mx-auto w-full">
-          <nav className="flex items-center justify-between px-6 py-5 lg:px-12 lg:py-6">
+          <nav className="flex items-center justify-between px-6 py-3 lg:px-12 lg:py-4">
             {/* Left side - Logo & Desktop Nav */}
             <div className="flex items-center gap-12">
               <Link href="/" className="transition-opacity hover:opacity-80">
@@ -50,10 +50,10 @@ export function Navigation() {
                   <Link
                     key={item}
                     href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
-                    className="flex items-center gap-1 text-[13px] tracking-[0.2em] uppercase font-sans font-medium text-black hover:text-[#E31E25] transition-colors"
+                    className="flex items-center gap-1 text-[11px] tracking-[0.2em] uppercase font-sans font-medium text-black hover:text-[#E31E25] transition-colors"
                   >
                     {item}
-                    {item === "Shop" && <ChevronDown className="w-4 h-4 ml-0.5" />}
+                    {item === "Shop" && <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
                   </Link>
                 ))}
               </div>
@@ -63,17 +63,17 @@ export function Navigation() {
             <div className="flex items-center gap-4 lg:gap-6">
               {/* Search */}
               <button className="text-black hover:text-[#E31E25] transition-colors" aria-label="Search">
-                <Search className="w-5 h-5 lg:w-6 lg:h-6" />
+                <Search className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
               </button>
 
               {/* Login */}
               <Link href="/login" className="text-black hover:text-[#E31E25] transition-colors" aria-label="Login">
-                <User className="w-5 h-5 lg:w-6 lg:h-6" />
+                <User className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
               </Link>
 
               {/* Wishlist */}
               <button className="text-black hover:text-[#E31E25] transition-colors" aria-label="Wishlist">
-                <Heart className="w-5 h-5 lg:w-6 lg:h-6" />
+                <Heart className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
               </button>
 
               {/* Cart */}
@@ -82,7 +82,7 @@ export function Navigation() {
                 className="relative text-black hover:text-[#E31E25] transition-colors"
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
-                <ShoppingBag className="w-5 h-5 lg:w-6 lg:h-6" />
+                <ShoppingBag className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
                 {itemCount > 0 && (
                   <span className="absolute -top-2 -right-2 w-4 h-4 lg:w-5 lg:h-5 bg-[#E31E25] text-white text-[9px] lg:text-[10px] font-sans flex items-center justify-center rounded-full font-bold">
                     {itemCount}
