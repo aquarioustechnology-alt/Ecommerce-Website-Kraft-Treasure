@@ -32,7 +32,7 @@ export function CollectionsSection() {
   ]
 
   return (
-    <section ref={ref} id="collections" className="py-[80px] px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+    <section ref={ref} id="collections" className="py-[80px] px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
       {/* Section header */}
       <div
         className={`mb-8 lg:mb-12 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

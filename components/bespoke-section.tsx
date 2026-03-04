@@ -19,7 +19,7 @@ export function BespokeSection() {
   }, [])
 
   return (
-    <section ref={ref} id="bespoke" className="py-12 lg:py-16 px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+    <section ref={ref} id="bespoke" className="py-12 lg:py-16 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
       <div className="relative overflow-hidden bg-[#FFF4B3]">
         <div className="grid grid-cols-1 lg:grid-cols-5">
           {/* Image */}

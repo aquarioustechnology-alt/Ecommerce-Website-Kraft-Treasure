@@ -11,46 +11,46 @@ import { useToast } from "@/hooks/use-toast"
 const TRENDING_PRODUCTS = [
     {
         id: "tp-1",
-        name: "Handcrafted Ziro Vase",
-        category: "Show Pieces",
+        name: "Ancient Green Deity Mask",
+        category: "Masks",
         price: 4500,
-        slug: "handcrafted-ziro-vase",
+        slug: "ancient-green-deity-mask",
         image: "/images/Trending Products/Trending Product 1.png",
         hoverImage: "/images/Trending Products/Trending Product 1 Hover.png"
     },
     {
         id: "tp-2",
-        name: "Cane Heritage Bowl",
-        category: "Cups and plates",
+        name: "Patterned Steel Tongue Drum",
+        category: "Show Pieces",
         price: 2800,
-        slug: "cane-heritage-bowl",
+        slug: "patterned-steel-tongue-drum",
         image: "/images/Trending Products/Trending Product 2.png",
         hoverImage: "/images/Trending Products/Trending Product 2 Hover.png"
     },
     {
         id: "tp-3",
-        name: "Sacred Ceremonial Mask",
-        category: "Masks",
+        name: "Tribal Red Bead Necklace",
+        category: "Necklaces",
         price: 9200,
-        slug: "sacred-ceremonial-mask",
+        slug: "tribal-red-bead-necklace",
         image: "/images/Trending Products/Trending Product 3.png",
         hoverImage: "/images/Trending Products/Trending Product 3 Hover.png"
     },
     {
         id: "tp-4",
-        name: "Monpa Handwoven Rug",
-        category: "Carpets",
+        name: "Ornate Floral Ritual Bowl",
+        category: "Cups and plates",
         price: 5400,
-        slug: "monpa-handwoven-rug",
+        slug: "ornate-floral-ritual-bowl",
         image: "/images/Trending Products/Trending Product 4.png",
         hoverImage: "/images/Trending Products/Trending Product 4 Hover.png"
     },
     {
         id: "tp-5",
-        name: "Tribal Adornment Set",
-        category: "Necklaces",
+        name: "Sacred Ceremonial Wall Mask",
+        category: "Masks",
         price: 3100,
-        slug: "tribal-adornment-set",
+        slug: "sacred-ceremonial-wall-mask",
         image: "/images/Trending Products/Trending Product 5.png",
         hoverImage: "/images/Trending Products/Trending Product 5 Hover.png"
     }
@@ -104,7 +104,7 @@ export function TrendingProducts() {
     }
 
     return (
-        <section ref={ref} className="pt-10 pb-20 px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+        <section ref={ref} className="pt-10 pb-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
             {/* Header */}
             <div
                 className={`mb-12 text-center transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

@@ -53,7 +53,7 @@ export function HeritageSection() {
   }, [])
 
   return (
-    <section ref={ref} id="heritage" className="relative py-12 lg:py-16 max-w-[1440px] mx-auto w-full px-6 lg:px-20">
+    <section ref={ref} id="heritage" className="relative py-12 lg:py-16 max-w-[1440px] mx-auto w-full px-6 lg:px-12">
       {/* Container */}
       <div className="relative overflow-hidden w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
