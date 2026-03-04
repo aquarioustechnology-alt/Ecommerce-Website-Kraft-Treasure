@@ -32,7 +32,7 @@ export function Navigation() {
         <div className="max-w-[1440px] mx-auto w-full">
           <nav className="flex items-center justify-between px-6 py-3 lg:px-12 lg:py-4">
             {/* Left side - Logo & Desktop Nav */}
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-6 xl:gap-12">
               <Link href="/" className="transition-opacity hover:opacity-80">
                 <NextImage
                   src="/images/logo/logo-transparent.png"
@@ -45,7 +45,7 @@ export function Navigation() {
               </Link>
 
               {/* Desktop Nav Links */}
-              <div className="hidden lg:flex items-center gap-8">
+              <div className="hidden lg:flex items-center gap-4 xl:gap-8">
                 {["Home", "Shop", "Our Story", "Contact"].map((item) => (
                   <Link
                     key={item}

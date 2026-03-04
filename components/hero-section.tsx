@@ -42,7 +42,7 @@ export function HeroSection() {
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col md:flex-row h-full">
         {/* Left Section - Content */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center px-6 lg:px-12 pt-36 pb-12 md:py-0 items-center md:items-start text-center md:text-left">
+        <div className="w-full md:w-1/2 flex flex-col justify-center px-6 lg:px-12 pt-36 pb-32 md:py-0 items-center md:items-start text-center md:text-left">
           <div className="max-w-xl w-full">
             {/* Overline - Color #C5AB7D */}
             <p
@@ -56,9 +56,9 @@ export function HeroSection() {
               Authentic Arunachal Pradesh Handicrafts
             </p>
 
-            {/* Main heading - Font size adjusted for mobile/tablet */}
+            {/* Main heading - Improved responsiveness for all screens */}
             <h2
-              className={`text-4xl md:text-6xl lg:text-[70px] font-serif text-black leading-[1.05] tracking-tight mb-5 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              className={`text-[42px] leading-[1.1] sm:text-5xl md:text-7xl lg:text-5xl xl:text-[70px] font-serif text-black tracking-tight mb-5 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
               style={{ transitionDelay: "0.6s" }}
             >
@@ -69,9 +69,9 @@ export function HeroSection() {
               Modern Luxury
             </h2>
 
-            {/* Subheading - Reduced gap */}
+            {/* Subheading - Increased size for mobile/tablet, adjusted for small desktop */}
             <p
-              className={`text-xs md:text-sm lg:text-base text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`text-sm sm:text-base md:text-lg lg:text-base text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               style={{ transitionDelay: "0.8s" }}
             >

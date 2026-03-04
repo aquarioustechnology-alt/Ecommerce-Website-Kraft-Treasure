@@ -34,9 +34,9 @@ export function AuthenticitySection() {
             </div>
 
             <div className="relative z-10 max-w-4xl mx-auto text-center">
-                {/* Heading */}
+                {/* Heading - Improved responsiveness */}
                 <h2
-                    className={`text-3xl md:text-5xl lg:text-5xl font-serif text-black leading-tight mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    className={`text-[32px] sm:text-4xl md:text-5xl lg:text-5xl font-serif text-black leading-tight mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                         }`}
                     style={{ transitionDelay: "0.2s" }}
                 >
@@ -44,9 +44,9 @@ export function AuthenticitySection() {
                     Handmade Heritage for Modern Homes
                 </h2>
 
-                {/* Content */}
+                {/* Content - Increased for mobile/tablet */}
                 <p
-                    className={`text-sm md:text-base text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                    className={`text-sm sm:text-base md:text-lg lg:text-base text-black/80 font-sans leading-relaxed transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                         }`}
                     style={{ transitionDelay: "0.4s" }}
                 >
