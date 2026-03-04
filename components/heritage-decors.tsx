@@ -21,7 +21,7 @@ const HERITAGE_DECOR_DATA = [
     {
         id: "hd-2",
         name: "Sacred Geometric Steel Tongue Drum",
-        category: "Show Pieces",
+        category: "Instruments",
         price: 6800,
         slug: "sacred-geometric-steel-tongue-drum",
         image: "/images/homepage/New Arrivals/Product 4.png",
@@ -30,7 +30,7 @@ const HERITAGE_DECOR_DATA = [
     {
         id: "hd-3",
         name: "Tribal Red Bead Necklace",
-        category: "Necklaces",
+        category: "Jewellery",
         price: 9200,
         slug: "tribal-red-bead-necklace",
         image: "/images/homepage/Trending Products/Trending Product 3.png",
@@ -38,8 +38,8 @@ const HERITAGE_DECOR_DATA = [
     },
     {
         id: "hd-4",
-        name: "Ritual Gilded Butter Lamp Cup",
-        category: "Show Pieces",
+        name: "Ritual Gilded Butter Lamp",
+        category: "Home Decor",
         price: 4200,
         slug: "ritual-gilded-butter-lamp-cup",
         image: "/images/homepage/New Arrivals/Product 5.png",
@@ -48,11 +48,38 @@ const HERITAGE_DECOR_DATA = [
     {
         id: "hd-5",
         name: "Ornate Floral Ritual Bowl",
-        category: "Cups and plates",
+        category: "Dining",
         price: 5400,
         slug: "ornate-floral-ritual-bowl",
         image: "/images/homepage/Trending Products/Trending Product 4.png",
         hoverImage: "/images/homepage/Trending Products/Trending Product 4 Hover.png"
+    },
+    {
+        id: "hd-6",
+        name: "Serene Buddha Head",
+        category: "Sculptures",
+        price: 9400,
+        slug: "serene-buddha-head-sculpture",
+        image: "/images/homepage/New Arrivals/Product 1.png",
+        hoverImage: "/images/homepage/New Arrivals/Product 1 Hover.png"
+    },
+    {
+        id: "hd-7",
+        name: "Majestic Ritual Soul Mask",
+        category: "Masks",
+        price: 12400,
+        slug: "majestic-ritual-soul-mask",
+        image: "/images/homepage/New Arrivals/Product 3.png",
+        hoverImage: "/images/homepage/New Arrivals/Product 3 Hover.png"
+    },
+    {
+        id: "hd-8",
+        name: "Sacred Ceremonial Wall Mask",
+        category: "Masks",
+        price: 3100,
+        slug: "sacred-ceremonial-wall-mask",
+        image: "/images/homepage/Trending Products/Trending Product 5.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 5 Hover.png"
     }
 ]
 
@@ -64,7 +91,8 @@ export function HeritageDecors() {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: "start",
         loop: true,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        dragFree: true
     })
 
     const scrollPrev = useCallback(() => {
@@ -115,7 +143,7 @@ export function HeritageDecors() {
     }
 
     return (
-        <section ref={ref} className="py-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
+        <section ref={ref} className="pt-12 pb-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
             {/* Header */}
             <div
                 className={`max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

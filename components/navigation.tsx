@@ -3,9 +3,11 @@
 import { useState, useSyncExternalStore, useEffect } from "react"
 import Link from "next/link"
 import NextImage from "next/image"
-import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown } from "lucide-react"
+import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, Facebook, Instagram } from "lucide-react"
 import { cartStore } from "@/lib/store"
 import { currencies } from "@/lib/data"
+
+import { TopBar } from "./top-bar"
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -16,7 +18,7 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
@@ -24,8 +26,11 @@ export function Navigation() {
 
   return (
     <>
+      <div className="relative z-[60]">
+        <TopBar />
+      </div>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? "bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm"
           : "bg-transparent"
           }`}
@@ -123,75 +128,55 @@ export function Navigation() {
         />
 
         {/* Menu Content */}
-        <div className={`relative h-full flex flex-col justify-center px-8 lg:px-20 transition-transform duration-700 ${menuOpen ? "translate-y-0" : "-translate-y-8"
-          }`}>
-          {/* Close button */}
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="absolute top-6 left-6 lg:left-12 flex items-center gap-2 text-foreground hover:text-primary transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-5 h-5" />
-            <span className="text-xs tracking-[0.2em] uppercase font-sans">
-              Close
-            </span>
-          </button>
+        <div className={`relative h-full flex flex-col px-8 lg:px-20 pt-8 transition-transform duration-700 ${menuOpen ? "translate-y-0" : "-translate-y-8"}`}>
+          {/* Top Bar with Close button */}
+          <div className="flex justify-end mb-12">
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 text-black hover:text-[#E31E25] transition-colors z-[70]"
+              aria-label="Close menu"
+            >
+              <span className="text-[10px] tracking-[0.2em] uppercase font-sans font-medium">
+                Close
+              </span>
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
-          {/* Navigation Links */}
-          <nav className="flex flex-col gap-2" aria-label="Main navigation">
+          {/* Navigation Links - Aligned to top */}
+          <nav className="flex flex-col gap-6" aria-label="Main navigation">
             {[
               { label: "Home", href: "/" },
-              { label: "Collections", href: "/#collections" },
-              { label: "Heritage", href: "/#heritage" },
-              { label: "Artisans", href: "/#artisans" },
-              { label: "Checkout", href: "/checkout" },
+              { label: "Shop", href: "/shop" },
+              { label: "Our Story", href: "/our-story" },
+              { label: "Contact", href: "/contact" },
             ].map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="group flex items-center gap-6"
+                className="group flex items-center gap-4"
                 style={{ animationDelay: `${index * 0.08}s` }}
               >
-                <span className="text-xs text-muted-foreground font-sans tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="text-4xl md:text-6xl lg:text-7xl font-serif text-foreground hover:text-primary transition-colors duration-300 leading-tight">
+                <span className="text-3xl md:text-4xl font-serif text-black hover:text-[#E31E25] transition-colors duration-300 leading-tight capitalise flex items-center gap-2">
                   {item.label}
+                  {item.label === "Shop" && <ChevronDown className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />}
                 </span>
               </Link>
             ))}
           </nav>
 
-          {/* Bottom info */}
-          <div className="absolute bottom-8 left-8 lg:left-20 right-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground font-sans mb-1">
-                Inquiries
-              </p>
-              <p className="text-sm text-foreground font-sans">
-                concierge@arunachalluxe.com
-              </p>
-            </div>
+          {/* Bottom Socials Only */}
+          <div className="absolute bottom-12 left-8 right-8 flex justify-between items-center border-t border-black/5 pt-8">
             <div className="flex gap-6">
-              {/* Currency selector in menu for mobile */}
-              <select
-                value={cart.currency}
-                onChange={(e) => cartStore.setCurrency(e.target.value)}
-                className="sm:hidden bg-transparent text-xs tracking-[0.15em] uppercase text-foreground border border-border px-3 py-2 cursor-pointer font-sans"
-                aria-label="Select currency"
-              >
-                {currencies.map((c) => (
-                  <option key={c.code} value={c.code} className="bg-background text-foreground">
-                    {c.code}
-                  </option>
-                ))}
-              </select>
-              <div className="flex gap-4 text-xs text-muted-foreground tracking-wider font-sans">
-                <span>Instagram</span>
-                <span>WeChat</span>
-              </div>
+              <Link href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
+                <Instagram className="w-5 h-5" />
+              </Link>
+              <Link href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
+                <Facebook className="w-5 h-5" />
+              </Link>
             </div>
+
           </div>
         </div>
       </div>

@@ -59,7 +59,7 @@ export function Testimonials() {
                             <div className="relative z-10 flex flex-col items-center h-full">
                                 <div className="flex gap-1 mb-8">
                                     {[...Array(review.rating)].map((_, i) => (
-                                        <Star key={i} className="w-3.5 h-3.5 fill-[#FFF4B3] text-[#FFF4B3] stroke-black/20" />
+                                        <Star key={i} className="w-3.5 h-3.5 fill-[#E31E25] text-[#E31E25]" />
                                     ))}
                                 </div>
 

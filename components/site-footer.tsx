@@ -8,28 +8,28 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-black text-white border-t border-white/10 px-6 lg:px-20 pt-16 lg:pt-24 pb-8 lg:pb-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-20">
+    <footer className="bg-black text-white border-t border-white/10 px-6 lg:px-20 pt-20 pb-[50px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-12">
         {/* Brand & Socials */}
         <div className="lg:col-span-1">
-          <div className="mb-8">
+          <div className="mb-8 scale-110 origin-left">
             <Image
               src="/images/logo/logo-transparent.png"
               alt="Kraft Treasures Logo"
-              width={180}
-              height={70}
-              className="object-contain h-14 lg:h-16 w-auto invert brightness-0"
+              width={200}
+              height={80}
+              className="object-contain h-16 lg:h-20 w-auto"
             />
           </div>
-          <p className="text-sm text-white/60 font-sans leading-relaxed mb-8 max-w-xs">
+          <p className="text-sm text-white/60 font-sans leading-relaxed mb-8 max-w-xs transition-opacity hover:opacity-100">
             Authentic heritage craftsmanship from the tribal artisans of Arunachal
             Pradesh, curated for global connoisseurs of fine traditional art.
           </p>
-          <div className="flex gap-5 items-center">
-            <Link href="#" className="p-3 rounded-full border border-white/10 hover:bg-[#E31E25] hover:border-[#E31E25] transition-all duration-300">
+          <div className="flex gap-4 items-center">
+            <Link href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
               <Instagram className="w-5 h-5" />
             </Link>
-            <Link href="#" className="p-3 rounded-full border border-white/10 hover:bg-[#E31E25] hover:border-[#E31E25] transition-all duration-300">
+            <Link href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
               <Facebook className="w-5 h-5" />
             </Link>
           </div>
@@ -37,7 +37,7 @@ export function SiteFooter() {
 
         {/* Quick Links */}
         <div>
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white font-sans mb-8">
+          <p className="text-[12px] tracking-[0.4em] uppercase text-white font-sans font-medium mb-8">
             Quick Links
           </p>
           <ul className="space-y-4">
@@ -45,7 +45,7 @@ export function SiteFooter() {
               <li key={item}>
                 <Link
                   href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
-                  className="text-sm text-white/50 font-sans hover:text-[#E31E25] hover:translate-x-1 inline-block transition-all"
+                  className="text-sm text-white/50 font-sans hover:text-[#FFF4B3] hover:translate-x-1 inline-block transition-all duration-300"
                 >
                   {item}
                 </Link>
@@ -56,7 +56,7 @@ export function SiteFooter() {
 
         {/* Client Services */}
         <div>
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white font-sans mb-8">
+          <p className="text-[12px] tracking-[0.4em] uppercase text-white font-sans font-medium mb-8">
             Client Services
           </p>
           <ul className="space-y-4">
@@ -70,7 +70,7 @@ export function SiteFooter() {
               <li key={item}>
                 <Link
                   href="#"
-                  className="text-sm text-white/50 font-sans hover:text-[#E31E25] hover:translate-x-1 inline-block transition-all"
+                  className="text-sm text-white/50 font-sans hover:text-[#FFF4B3] hover:translate-x-1 inline-block transition-all duration-300"
                 >
                   {item}
                 </Link>
@@ -81,7 +81,7 @@ export function SiteFooter() {
 
         {/* Newsletter */}
         <div>
-          <p className="text-[10px] tracking-[0.4em] uppercase text-white font-sans mb-8">
+          <p className="text-[12px] tracking-[0.4em] uppercase text-white font-sans font-medium mb-8">
             Newsletter
           </p>
           <p className="text-sm text-white/50 font-sans mb-6">
@@ -105,16 +105,13 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-10 border-t border-white/5">
-        <p className="text-[10px] text-white/30 tracking-widest font-sans uppercase">
+      <div className="pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <p className="text-[12px] text-white/80 font-sans">
           {"\u00A9"} {currentYear} Kraft Treasures. All rights reserved.
         </p>
-        <div className="flex gap-8 text-[10px] text-white/30 tracking-widest font-sans uppercase">
-          <Link href="#" className="hover:text-white transition-colors">
-            Privacy Policy
-          </Link>
-          <Link href="#" className="hover:text-white transition-colors">
-            Terms of Use
+        <div className="flex items-center">
+          <Link href="https://www.theaquarious.com/" target="_blank" className="text-[12px] text-white/80 font-sans hover:text-[#FFF4B3] transition-colors">
+            Designed By Aquarious Technology
           </Link>
         </div>
       </div>
