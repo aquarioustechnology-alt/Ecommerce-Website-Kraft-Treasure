@@ -43,7 +43,7 @@ export function Navigation() {
             <div className="flex items-center gap-6 xl:gap-12">
               <Link href="/" className="transition-opacity hover:opacity-80">
                 <NextImage
-                  src="/images/logo/logo-transparent.png"
+                  src="/images/logo/logo.png"
                   alt="Kraft Treasure Logo"
                   width={140}
                   height={55}
@@ -189,7 +189,7 @@ export function Navigation() {
           <div className="flex items-center justify-between mb-12">
             <Link href="/" onClick={() => setMenuOpen(false)}>
               <NextImage
-                src="/images/logo/logo-transparent.png"
+                src="/images/logo/logo.png"
                 alt="Kraft Treasure Logo"
                 width={120}
                 height={45}

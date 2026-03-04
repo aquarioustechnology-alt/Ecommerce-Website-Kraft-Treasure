@@ -14,8 +14,8 @@ export function SiteFooter() {
         <div className="lg:col-span-1">
           <div className="mb-8 scale-110 origin-left">
             <Image
-              src="/images/logo/logo-transparent.png"
-              alt="Kraft Treasures Logo"
+              src="/images/logo/logo.png"
+              alt="Kraft Treasure Logo"
               width={200}
               height={80}
               className="object-contain h-16 lg:h-20 w-auto"
@@ -107,7 +107,7 @@ export function SiteFooter() {
       {/* Bottom bar */}
       <div className="pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-6">
         <p className="text-[12px] text-white/80 font-sans">
-          {"\u00A9"} {currentYear} Kraft Treasures. All rights reserved.
+          {"\u00A9"} {currentYear} Kraft Treasure. All rights reserved.
         </p>
         <div className="flex items-center">
           <Link href="https://www.theaquarious.com/" target="_blank" className="text-[12px] text-white/80 font-sans hover:text-[#FFF4B3] transition-colors">

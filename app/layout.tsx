@@ -16,9 +16,9 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Arunachal Luxe Artifacts | Heritage Craftsmanship for the World',
+  title: 'Kraft Treasure | Heritage Craftsmanship from Arunachal Pradesh',
   description:
-    'Discover museum-quality handcrafted artifacts from the artisans of Arunachal Pradesh. Luxury tribal art, textiles, and heritage pieces curated for global collectors.',
+    'Discover museum-quality handcrafted artifacts from Kraft Treasure. Luxury tribal art, textiles, and heritage pieces from the artisans of Arunachal Pradesh, curated for global collectors.',
   generator: 'v0.app',
   icons: {
     icon: [
