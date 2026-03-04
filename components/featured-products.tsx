@@ -15,8 +15,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Show Pieces",
     price: 6800,
     slug: "sacred-geometric-steel-tongue-drum",
-    image: "/images/New Arrivals/Product 4.png",
-    hoverImage: "/images/New Arrivals/Product 4 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 4.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 4 Hover.png"
   },
   {
     id: "na-5",
@@ -24,8 +24,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Show Pieces",
     price: 4200,
     slug: "ritual-gilded-butter-lamp-cup",
-    image: "/images/New Arrivals/Product 5.png",
-    hoverImage: "/images/New Arrivals/Product 5 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 5.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 5 Hover.png"
   },
   {
     id: "na-6",
@@ -33,8 +33,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Others",
     price: 3600,
     slug: "sacred-tawang-monastery-banner",
-    image: "/images/New Arrivals/Product 6.png",
-    hoverImage: "/images/New Arrivals/Product 6 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 6.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 6 Hover.png"
   },
   {
     id: "na-7",
@@ -42,8 +42,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Cups and plates",
     price: 1800,
     slug: "imperial-dragon-motif-teacup",
-    image: "/images/New Arrivals/Product 7.png",
-    hoverImage: "/images/New Arrivals/Product 7 hover.png"
+    image: "/images/homepage/New Arrivals/Product 7.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 7 hover.png"
   },
   {
     id: "na-1",
@@ -51,8 +51,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Show Pieces",
     price: 9400,
     slug: "serene-buddha-head-sculpture",
-    image: "/images/New Arrivals/Product 1.png",
-    hoverImage: "/images/New Arrivals/Product 1 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 1.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 1 Hover.png"
   },
   {
     id: "na-2",
@@ -60,8 +60,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Show Pieces",
     price: 8500,
     slug: "tribal-sun-guardian-shield",
-    image: "/images/New Arrivals/Product 2.png",
-    hoverImage: "/images/New Arrivals/Product 2 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 2.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 2 Hover.png"
   },
   {
     id: "na-3",
@@ -69,8 +69,8 @@ const NEW_ARRIVALS_DATA = [
     category: "Masks",
     price: 12400,
     slug: "majestic-ritual-soul-mask",
-    image: "/images/New Arrivals/Product 3.png",
-    hoverImage: "/images/New Arrivals/Product 3 Hover.png"
+    image: "/images/homepage/New Arrivals/Product 3.png",
+    hoverImage: "/images/homepage/New Arrivals/Product 3 Hover.png"
   }
 ]
 
@@ -133,7 +133,7 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section ref={ref} className="pt-10 pb-20 px-6 lg:px-12 max-w-full mx-auto w-full overflow-hidden">
+    <section ref={ref} className="pt-10 pb-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
       {/* Header */}
       <div
         className={`max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

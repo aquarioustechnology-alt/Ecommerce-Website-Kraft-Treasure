@@ -6,7 +6,7 @@ import { FeaturedProducts } from "@/components/featured-products"
 import { TrendingProducts } from "@/components/trending-products"
 import { HeritageSection } from "@/components/heritage-section"
 import { BespokeSection } from "@/components/bespoke-section"
-import { NewArrivals } from "@/components/new-arrivals"
+import { CuratedCategories } from "@/components/curated-categories"
 import { TrustedSection } from "@/components/trusted-section"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -44,6 +44,7 @@ export default function HomePage() {
       </div>
 
       <FeaturedProducts />
+      <CuratedCategories />
 
       <BespokeSection />
 

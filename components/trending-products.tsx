@@ -15,8 +15,8 @@ const TRENDING_PRODUCTS = [
         category: "Masks",
         price: 4500,
         slug: "ancient-green-deity-mask",
-        image: "/images/Trending Products/Trending Product 1.png",
-        hoverImage: "/images/Trending Products/Trending Product 1 Hover.png"
+        image: "/images/homepage/Trending Products/Trending Product 1.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 1 Hover.png"
     },
     {
         id: "tp-2",
@@ -24,8 +24,8 @@ const TRENDING_PRODUCTS = [
         category: "Show Pieces",
         price: 2800,
         slug: "patterned-steel-tongue-drum",
-        image: "/images/Trending Products/Trending Product 2.png",
-        hoverImage: "/images/Trending Products/Trending Product 2 Hover.png"
+        image: "/images/homepage/Trending Products/Trending Product 2.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 2 Hover.png"
     },
     {
         id: "tp-3",
@@ -33,8 +33,8 @@ const TRENDING_PRODUCTS = [
         category: "Necklaces",
         price: 9200,
         slug: "tribal-red-bead-necklace",
-        image: "/images/Trending Products/Trending Product 3.png",
-        hoverImage: "/images/Trending Products/Trending Product 3 Hover.png"
+        image: "/images/homepage/Trending Products/Trending Product 3.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 3 Hover.png"
     },
     {
         id: "tp-4",
@@ -42,8 +42,8 @@ const TRENDING_PRODUCTS = [
         category: "Cups and plates",
         price: 5400,
         slug: "ornate-floral-ritual-bowl",
-        image: "/images/Trending Products/Trending Product 4.png",
-        hoverImage: "/images/Trending Products/Trending Product 4 Hover.png"
+        image: "/images/homepage/Trending Products/Trending Product 4.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 4 Hover.png"
     },
     {
         id: "tp-5",
@@ -51,8 +51,8 @@ const TRENDING_PRODUCTS = [
         category: "Masks",
         price: 3100,
         slug: "sacred-ceremonial-wall-mask",
-        image: "/images/Trending Products/Trending Product 5.png",
-        hoverImage: "/images/Trending Products/Trending Product 5 Hover.png"
+        image: "/images/homepage/Trending Products/Trending Product 5.png",
+        hoverImage: "/images/homepage/Trending Products/Trending Product 5 Hover.png"
     }
 ]
 
