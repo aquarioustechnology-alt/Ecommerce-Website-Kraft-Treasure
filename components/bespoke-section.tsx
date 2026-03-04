@@ -19,84 +19,75 @@ export function BespokeSection() {
   }, [])
 
   return (
-    <section ref={ref} id="bespoke" className="py-12 lg:py-16 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
+    <section ref={ref} id="artisan-stories" className="pb-12 lg:pb-16 pt-8 lg:pt-10 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
       <div className="relative overflow-hidden bg-[#FFF4B3]">
-        <div className="grid grid-cols-1 lg:grid-cols-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* Image */}
           <div
-            className={`relative lg:col-span-2 aspect-[4/3] lg:aspect-auto lg:min-h-[500px] overflow-hidden transition-all duration-1000 ${visible ? "opacity-100" : "opacity-0"
+            className={`relative min-h-[400px] lg:min-h-[550px] overflow-hidden transition-all duration-1000 ${visible ? "opacity-100" : "opacity-0"
               }`}
           >
             <Image
-              src="/images/artisan-portrait.jpg"
-              alt="Master artisan from Arunachal Pradesh"
+              src="/images/homepage/Artisans Image.png"
+              alt="Artisans of Arunachal Pradesh"
               fill
               className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 40vw"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
 
           {/* Content */}
           <div
-            className={`lg:col-span-3 p-8 lg:p-16 xl:p-20 flex flex-col justify-center transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            className={`p-8 lg:p-12 xl:p-16 flex flex-col justify-center transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             style={{ transitionDelay: "0.3s" }}
           >
             <p className="text-xs tracking-[0.4em] uppercase text-primary font-sans mb-6">
-              Bespoke Commissions
+              Artisan Stories from Arunachal
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-6 text-balance">
-              Your Vision,
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight mb-8 text-balance">
+              Made by Hands.
               <br />
-              Their Mastery
+              Carried by Heritage.
             </h2>
-            <p className="text-sm text-black/80 font-sans leading-relaxed mb-8 max-w-lg">
-              Work directly with our master artisans to commission one-of-a-kind
-              pieces tailored to your vision. From bespoke textiles for
-              haute-couture to sculptural installations for private residences,
-              every commission begins with a personal consultation with our
-              curatorial team.
+            <p className="text-sm md:text-base text-black/80 font-sans leading-relaxed mb-8 max-w-xl">
+              Behind every Kraft Treasure piece is an artisan family from Arunachal Pradesh,
+              preserving ancestral skills in small village workshops. Your purchase directly
+              supports local livelihoods and helps sustain the living heritage of our tribal
+              communities in a modern world.
             </p>
 
             {/* Process steps */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-4">
               {[
                 {
                   step: "01",
-                  title: "Consultation",
-                  desc: "A private session with our curator to define your vision",
+                  title: "Rooted in Community",
+                  desc: "Traditional techniques taught within artisan families across Arunachal villages.",
                 },
                 {
                   step: "02",
-                  title: "Artisan Match",
-                  desc: "We pair you with the master best suited to your project",
+                  title: "Crafted in Small Batches",
+                  desc: "Each piece is made by hand—natural variations are a hallmark of authentic craft.",
                 },
                 {
                   step: "03",
-                  title: "Creation",
-                  desc: "Track progress with photo updates from the artisan's studio",
+                  title: "Shipped with Pride",
+                  desc: "Secure packaging ensures each heritage craft reaches your home safely.",
                 },
               ].map((item) => (
                 <div key={item.step}>
-                  <p className="text-2xl font-serif text-primary mb-2">
+                  <p className="text-4xl lg:text-5xl font-serif text-primary mb-4 opacity-90 transition-all group-hover:scale-110">
                     {item.step}
                   </p>
-                  <h3 className="text-sm font-sans text-black mb-1 tracking-wide">
+                  <h3 className="text-sm font-sans text-black font-semibold mb-2 tracking-wide uppercase">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-black/70 font-sans leading-relaxed">
+                  <p className="text-[13px] text-black/70 font-sans leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
               ))}
-            </div>
-
-            {/* CTA */}
-            <div>
-              <button className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px]">
-                <span className="relative z-20">Begin Your Commission</span>
-                <div className="absolute inset-0 bg-[#E31E25] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
-              </button>
             </div>
           </div>
         </div>

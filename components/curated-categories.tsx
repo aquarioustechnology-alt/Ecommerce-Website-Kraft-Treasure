@@ -21,7 +21,7 @@ export function CuratedCategories() {
     }, [])
 
     return (
-        <section ref={ref} className="py-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
+        <section ref={ref} className="pb-20 pt-8 px-6 lg:px-12 max-w-[1440px] mx-auto w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 min-h-[600px] lg:h-[700px]">
                 {/* Left Side - Large Portrait */}
                 <div
@@ -33,7 +33,7 @@ export function CuratedCategories() {
                         fill
                         className="object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:from-black/100 transition-all duration-500 z-10" />
                     <div className="absolute bottom-8 left-8 right-8 text-white z-20">
                         <p className="text-[10px] tracking-[0.4em] uppercase font-sans mb-3 text-white/90">
                             Handcrafted Adornments
@@ -61,7 +61,7 @@ export function CuratedCategories() {
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:from-black/100 transition-all duration-500 z-10" />
                         <div className="absolute bottom-10 left-8 right-8 text-white z-20">
                             <p className="text-[10px] tracking-[0.4em] uppercase font-sans mb-3 text-white/90">
                                 Silver Artistry
@@ -87,7 +87,7 @@ export function CuratedCategories() {
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent group-hover:from-black/100 transition-all duration-500 z-10" />
                         <div className="absolute bottom-10 left-8 right-8 text-white z-20">
                             <p className="text-[10px] tracking-[0.4em] uppercase font-sans mb-3 text-white/90">
                                 Liturgy & Ritual

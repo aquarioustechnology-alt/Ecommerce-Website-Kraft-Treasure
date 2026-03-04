@@ -133,7 +133,7 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section ref={ref} className="pt-10 pb-20 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
+    <section ref={ref} className="pt-10 pb-8 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
       {/* Header */}
       <div
         className={`max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
