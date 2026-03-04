@@ -82,13 +82,13 @@ export function HeroSection() {
 
             {/* CTA Buttons - Single line, smaller font, adjusted padding */}
             <div
-              className={`flex flex-col sm:flex-row justify-center md:justify-start gap-4 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`flex flex-col sm:flex-row justify-center md:justify-start gap-4 md:gap-3 lg:gap-4 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               style={{ transitionDelay: "1s" }}
             >
               <Link
                 href="/#collections"
-                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px]"
+                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px] md:min-w-[215px] xl:min-w-[180px]"
               >
                 <span className="relative z-20">Explore Collections</span>
                 <ArrowRight className="relative z-20 w-3.5 h-3.5 transition-transform group-hover:translate-x-2" />
@@ -97,7 +97,7 @@ export function HeroSection() {
 
               <Link
                 href="/shop"
-                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 border border-black bg-transparent text-black px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-all duration-500 shadow-sm whitespace-nowrap min-w-[180px]"
+                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 border border-black bg-transparent text-black px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-all duration-500 shadow-sm whitespace-nowrap min-w-[180px] md:min-w-[130px] xl:min-w-[180px]"
               >
                 <span className="relative z-20 transition-colors duration-500 group-hover:text-white font-medium">Shop Now</span>
                 <div className="absolute inset-0 bg-black -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
@@ -133,7 +133,7 @@ export function HeroSection() {
                   <p className="text-white text-xs tracking-[0.3em] uppercase font-sans mb-2">
                     Product
                   </p>
-                  <h3 className="text-white text-xl md:text-2xl font-serif">
+                  <h3 className="text-white text-xl md:text-lg lg:text-2xl font-serif">
                     {image.name}
                   </h3>
                 </div>
