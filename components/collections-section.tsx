@@ -32,30 +32,34 @@ export function CollectionsSection() {
   ]
 
   return (
-    <section ref={ref} id="collections" className="pb-12 lg:pb-16 pt-[60px] px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
+    <section ref={ref} id="collections" className="py-[80px] px-6 lg:px-20 max-w-[1440px] mx-auto w-full">
       {/* Section header */}
       <div
         className={`mb-8 lg:mb-12 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
       >
-        <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5AB7D] font-sans mb-4">
-          Curated Collections
-        </p>
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-black leading-tight text-balance">
-            Three Worlds of
-            <br />
-            Artisanship
-          </h2>
-          <p className="text-sm md:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl">
-            Each collection represents a distinct tradition of craft, preserved
-            through generations and reimagined for the contemporary connoisseur.
-          </p>
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-6 lg:items-start">
+          <div className="flex-1">
+            <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5AB7D] font-sans mb-4">
+              Curated Collections
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight text-balance">
+              Three Worlds of
+              <br />
+              Artisanship
+            </h2>
+          </div>
+          <div className="flex-1 flex lg:justify-end">
+            <p className="text-sm md:text-base lg:text-lg text-black/80 font-sans leading-relaxed max-w-xl lg:pt-1">
+              Each collection represents a distinct tradition of craft, preserved
+              through generations and reimagined for the contemporary connoisseur.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Collection cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {categories.map((category, index) => (
           <Link
             href={`/shop?category=${encodeURIComponent(category.name)}`}
@@ -65,30 +69,32 @@ export function CollectionsSection() {
             style={{ transitionDelay: `${0.1 + index * 0.1}s` }}
           >
             {/* Image */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-md bg-zinc-100">
+            <div className="relative aspect-[3/2] lg:aspect-[4/5] overflow-hidden rounded-sm shadow-md bg-zinc-100">
               <Image
                 src={category.image}
                 alt={category.name}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               {/* Overlay with black gradient for text visibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80" />
 
               {/* Content overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8 flex flex-col justify-end">
-                <h3 className="text-2xl lg:text-3xl font-serif text-white mb-2">
-                  {category.name}
-                </h3>
-                <p className="text-sm text-white/90 font-sans leading-relaxed mb-5 opacity-100 transition-opacity duration-500">
-                  {category.description}
-                </p>
-                <div className="flex items-center gap-2 text-white">
-                  <span className="text-[11px] tracking-[0.2em] uppercase font-sans">
-                    Explore Category
-                  </span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-2" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-7 flex flex-col justify-end h-full">
+                <div className="mt-auto">
+                  <h3 className="text-xl lg:text-2xl font-serif text-white mb-1.5 transition-transform duration-500 group-hover:-translate-y-1">
+                    {category.name}
+                  </h3>
+                  <p className="text-xs lg:text-sm text-white/90 font-sans leading-relaxed mb-4 line-clamp-2 transition-transform duration-500 group-hover:-translate-y-1">
+                    {category.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-white">
+                    <span className="text-[10px] tracking-[0.2em] uppercase font-sans">
+                      Explore Category
+                    </span>
+                    <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-2" />
+                  </div>
                 </div>
               </div>
             </div>
