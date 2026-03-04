@@ -209,8 +209,8 @@ export function Navigation() {
             </button>
           </div>
 
-          {/* Navigation Links - Compact alignment */}
-          <nav className="flex flex-col gap-5" aria-label="Main navigation">
+          {/* Navigation Links - Ultra-compact alignment */}
+          <nav className="flex flex-col gap-4" aria-label="Main navigation">
             {[
               { label: "Home", href: "/" },
               { label: "Shop", href: "#", isShop: true },
@@ -222,14 +222,14 @@ export function Navigation() {
                   className="group flex items-center justify-between gap-4 cursor-pointer"
                   onClick={() => item.isShop ? setShopAccordionOpen(!shopAccordionOpen) : (setMenuOpen(false), window.location.href = item.href)}
                 >
-                  <span className="text-2xl md:text-3xl font-serif text-black hover:text-[#E31E25] transition-colors duration-300 leading-tight capitalise flex items-center gap-2">
+                  <span className="text-xl md:text-2xl font-serif text-black hover:text-[#E31E25] transition-colors duration-300 leading-tight capitalise flex items-center gap-2">
                     {item.label}
-                    {item.isShop && <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${shopAccordionOpen ? "rotate-180" : "opacity-40"}`} />}
+                    {item.isShop && <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${shopAccordionOpen ? "rotate-180" : "opacity-40"}`} />}
                   </span>
                 </div>
 
                 {item.isShop && (
-                  <div className={`flex flex-col gap-2.5 pl-4 transition-all duration-500 overflow-hidden ${shopAccordionOpen ? "max-h-[500px] mt-4 opacity-100" : "max-h-0 opacity-0"}`}>
+                  <div className={`flex flex-col gap-2 pl-4 transition-all duration-500 overflow-hidden ${shopAccordionOpen ? "max-h-[500px] mt-2 opacity-100" : "max-h-0 opacity-0"}`}>
                     {[
                       "Cups and plates",
                       "Show Pieces",
@@ -242,7 +242,7 @@ export function Navigation() {
                         key={subCat}
                         href={`/shop?category=${encodeURIComponent(subCat)}`}
                         onClick={() => setMenuOpen(false)}
-                        className="text-sm md:text-base font-sans text-black/60 hover:text-[#E31E25] transition-colors py-1"
+                        className="text-[13px] md:text-sm font-sans text-black/60 hover:text-[#E31E25] transition-colors py-0.5"
                       >
                         {subCat}
                       </Link>
