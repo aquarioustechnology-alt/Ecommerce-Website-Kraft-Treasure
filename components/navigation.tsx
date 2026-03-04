@@ -3,7 +3,7 @@
 import { useState, useSyncExternalStore, useEffect } from "react"
 import Link from "next/link"
 import NextImage from "next/image"
-import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, Facebook, Instagram } from "lucide-react"
+import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, Facebook, Instagram, ArrowRight } from "lucide-react"
 import { cartStore } from "@/lib/store"
 import { currencies } from "@/lib/data"
 
@@ -11,6 +11,8 @@ import { TopBar } from "./top-bar"
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [megaMenuOpen, setMegaMenuOpen] = useState(false)
+  const [shopAccordionOpen, setShopAccordionOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const cart = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getSnapshot)
   const itemCount = cart.items.reduce((sum, i) => sum + i.quantity, 0)
@@ -35,7 +37,7 @@ export function Navigation() {
           : "bg-transparent"
           }`}
       >
-        <div className="max-w-[1440px] mx-auto w-full">
+        <div className="max-w-[1440px] mx-auto w-full relative">
           <nav className="flex items-center justify-between px-6 py-3 lg:px-12 lg:py-4">
             {/* Left side - Logo & Desktop Nav */}
             <div className="flex items-center gap-6 xl:gap-12">
@@ -53,19 +55,26 @@ export function Navigation() {
               {/* Desktop Nav Links */}
               <div className="hidden lg:flex items-center gap-4 xl:gap-8">
                 {["Home", "Shop", "Our Story", "Contact"].map((item) => (
-                  <Link
+                  <div
                     key={item}
-                    href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
-                    className="flex items-center gap-1 text-[11px] tracking-[0.2em] uppercase font-sans font-medium text-black hover:text-[#E31E25] transition-colors"
+                    className="relative py-4"
+                    onMouseEnter={() => item === "Shop" && setMegaMenuOpen(true)}
+                    onMouseLeave={() => item === "Shop" && setMegaMenuOpen(false)}
                   >
-                    {item}
-                    {item === "Shop" && <ChevronDown className="w-3.5 h-3.5 ml-0.5" />}
-                  </Link>
+                    <Link
+                      href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
+                      className="flex items-center gap-1 text-[11px] tracking-[0.2em] uppercase font-sans font-medium text-black hover:text-[#E31E25] transition-colors"
+                      onClick={() => setMegaMenuOpen(false)}
+                    >
+                      {item}
+                      {item === "Shop" && <ChevronDown className={`w-3.5 h-3.5 ml-0.5 transition-transform duration-300 ${megaMenuOpen ? "rotate-180" : ""}`} />}
+                    </Link>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Right actions */}
+            {/* Right actions (Rest unchanged) */}
             <div className="flex items-center gap-4 lg:gap-6">
               {/* Search */}
               <button className="text-black hover:text-[#E31E25] transition-colors" aria-label="Search">
@@ -111,6 +120,53 @@ export function Navigation() {
               </button>
             </div>
           </nav>
+
+          {/* Desktop Mega Menu - Absolute to Header Container */}
+          <div
+            className={`absolute top-full left-0 right-0 w-full bg-white z-[45] border-b border-gray-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 origin-top overflow-hidden ${megaMenuOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
+              }`}
+            onMouseEnter={() => setMegaMenuOpen(true)}
+            onMouseLeave={() => setMegaMenuOpen(false)}
+          >
+            <div className="max-w-[1440px] mx-auto px-12 py-12">
+              <div className="grid grid-cols-6 gap-6">
+                {[
+                  { name: "Cups and plates", image: "/images/homepage/cup-and-plates-category.png" },
+                  { name: "Show Pieces", image: "/images/homepage/show-pieces-category.png" },
+                  { name: "Masks", image: "/images/homepage/mask-category.png" },
+                  { name: "Carpets", image: "/images/homepage/carpet-category.png" },
+                  { name: "Necklaces", image: "/images/homepage/necklace-category.png" },
+                  { name: "Others", image: "/images/homepage/other-category.png" }
+                ].map((cat) => (
+                  <Link
+                    key={cat.name}
+                    href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                    className="group flex flex-col"
+                    onClick={() => setMegaMenuOpen(false)}
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-sm mb-4 bg-zinc-100">
+                      <NextImage
+                        src={cat.image}
+                        alt={cat.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                    </div>
+                    <h4 className="text-[11px] tracking-[0.2em] uppercase font-sans font-semibold text-black mb-2 px-1">
+                      {cat.name}
+                    </h4>
+                    <div className="flex items-center gap-2 group-hover:text-[#E31E25] transition-colors px-1">
+                      <span className="text-[9px] tracking-[0.15em] uppercase font-sans font-medium text-black/60 group-hover:text-[#E31E25]">
+                        Explore
+                      </span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -153,26 +209,47 @@ export function Navigation() {
             </button>
           </div>
 
-          {/* Navigation Links - Aligned to top */}
-          <nav className="flex flex-col gap-6" aria-label="Main navigation">
+          {/* Navigation Links - Compact alignment */}
+          <nav className="flex flex-col gap-5" aria-label="Main navigation">
             {[
               { label: "Home", href: "/" },
-              { label: "Shop", href: "/shop" },
+              { label: "Shop", href: "#", isShop: true },
               { label: "Our Story", href: "/our-story" },
               { label: "Contact", href: "/contact" },
             ].map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="group flex items-center gap-4"
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                <span className="text-3xl md:text-4xl font-serif text-black hover:text-[#E31E25] transition-colors duration-300 leading-tight capitalise flex items-center gap-2">
-                  {item.label}
-                  {item.label === "Shop" && <ChevronDown className="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" />}
-                </span>
-              </Link>
+              <div key={item.label}>
+                <div
+                  className="group flex items-center justify-between gap-4 cursor-pointer"
+                  onClick={() => item.isShop ? setShopAccordionOpen(!shopAccordionOpen) : (setMenuOpen(false), window.location.href = item.href)}
+                >
+                  <span className="text-2xl md:text-3xl font-serif text-black hover:text-[#E31E25] transition-colors duration-300 leading-tight capitalise flex items-center gap-2">
+                    {item.label}
+                    {item.isShop && <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${shopAccordionOpen ? "rotate-180" : "opacity-40"}`} />}
+                  </span>
+                </div>
+
+                {item.isShop && (
+                  <div className={`flex flex-col gap-2.5 pl-4 transition-all duration-500 overflow-hidden ${shopAccordionOpen ? "max-h-[500px] mt-4 opacity-100" : "max-h-0 opacity-0"}`}>
+                    {[
+                      "Cups and plates",
+                      "Show Pieces",
+                      "Masks",
+                      "Carpets",
+                      "Necklaces",
+                      "Others"
+                    ].map((subCat) => (
+                      <Link
+                        key={subCat}
+                        href={`/shop?category=${encodeURIComponent(subCat)}`}
+                        onClick={() => setMenuOpen(false)}
+                        className="text-sm md:text-base font-sans text-black/60 hover:text-[#E31E25] transition-colors py-1"
+                      >
+                        {subCat}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
