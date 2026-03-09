@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Send } from "lucide-react"
@@ -28,10 +26,10 @@ export function SiteFooter() {
             Pradesh, curated for global connoisseurs of fine traditional art.
           </p>
           <div className="flex gap-4 items-center">
-            <Link href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
+            <Link prefetch={false} href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
               <Instagram className="w-5 h-5" />
             </Link>
-            <Link href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
+            <Link prefetch={false} href="#" className="p-3 rounded-none bg-white/5 border border-white/10 hover:bg-[#FFF4B3] hover:text-black hover:border-[#FFF4B3] transition-all duration-500">
               <Facebook className="w-5 h-5" />
             </Link>
           </div>
@@ -45,7 +43,7 @@ export function SiteFooter() {
           <ul className="space-y-4">
             {["Home", "Shop", "Our Story", "Contact"].map((item) => (
               <li key={item}>
-                <Link
+                <Link prefetch={false}
                   href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
                   className="text-sm text-white/50 font-sans hover:text-[#FFF4B3] hover:translate-x-1 inline-block transition-all duration-300"
                 >
@@ -70,7 +68,7 @@ export function SiteFooter() {
               "Terms of Use"
             ].map((item) => (
               <li key={item}>
-                <Link
+                <Link prefetch={false}
                   href="#"
                   className="text-sm text-white/50 font-sans hover:text-[#FFF4B3] hover:translate-x-1 inline-block transition-all duration-300"
                 >
@@ -112,7 +110,7 @@ export function SiteFooter() {
           {"\u00A9"} {currentYear} Kraft Treasure. All rights reserved.
         </p>
         <div className="flex items-center">
-          <Link href="https://www.theaquarious.com/" target="_blank" className="text-[12px] text-white/80 font-sans hover:text-[#FFF4B3] transition-colors">
+          <Link prefetch={false} href="https://www.theaquarious.com/" target="_blank" className="text-[12px] text-white/80 font-sans hover:text-[#FFF4B3] transition-colors">
             Designed By Aquarious Technology
           </Link>
         </div>
@@ -120,4 +118,3 @@ export function SiteFooter() {
     </footer>
   )
 }
-

@@ -55,7 +55,7 @@ export function AuthenticitySection() {
                     handloom textiles, bead jewellery, and ritual-inspired masks, these products are created using
                     time-tested techniques passed across generations. At Kraft Treasure, we bring these genuine
                     Arunachal artifacts online directly sourced from artisan communities, so you can own handmade
-                    décor and lifestyle pieces that feel rooted, sustainable, and truly original.
+                    d{"\u00E9"}cor and lifestyle pieces that feel rooted, sustainable, and truly original.
                 </p>
             </div>
         </section>

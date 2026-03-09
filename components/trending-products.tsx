@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, ShoppingBag, Heart } from "lucide-react"
-import { formatPrice, convertPrice } from "@/lib/data"
 import { cartStore } from "@/lib/store"
 import { useToast } from "@/hooks/use-toast"
 
@@ -121,7 +120,7 @@ export function TrendingProducts() {
             {/* Static Grid - 5 columns on desktop with reduced gap - Gap reduced more */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4 mb-8">
                 {TRENDING_PRODUCTS.map((product, index) => (
-                    <Link
+                    <Link prefetch={false}
                         href={`/product/${product.slug}`}
                         key={product.id}
                         className={`group transition-all duration-1000 block ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -183,7 +182,7 @@ export function TrendingProducts() {
                                 {product.name}
                             </h3>
                             <p className="text-base lg:text-lg font-sans text-primary font-semibold">
-                                ₹{product.price.toLocaleString()}
+                                {"\u20B9"}{product.price.toLocaleString()}
                             </p>
                         </div>
                     </Link>
@@ -192,7 +191,7 @@ export function TrendingProducts() {
 
             {/* View All Button below grid - Gap reduced */}
             <div className="flex justify-center">
-                <Link
+                <Link prefetch={false}
                     href="/shop"
                     className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[200px]"
                 >

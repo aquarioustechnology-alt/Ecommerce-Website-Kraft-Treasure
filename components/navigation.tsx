@@ -5,7 +5,6 @@ import Link from "next/link"
 import NextImage from "next/image"
 import { Menu, X, ShoppingBag, Search, Heart, User, ChevronDown, Facebook, Instagram, ArrowRight } from "lucide-react"
 import { cartStore } from "@/lib/store"
-import { currencies } from "@/lib/data"
 
 import { TopBar } from "./top-bar"
 
@@ -43,14 +42,13 @@ export function Navigation() {
           <nav className="flex items-center justify-between px-6 py-3 lg:px-12 lg:py-4">
             {/* Left side - Logo & Desktop Nav */}
             <div className="flex items-center gap-6 xl:gap-12">
-              <Link href="/" className="transition-opacity hover:opacity-80">
+              <Link prefetch={false} href="/" className="transition-opacity hover:opacity-80">
                 <NextImage
                   src={LOGO_SRC}
                   alt="Kraft Treasure Logo"
                   width={220}
                   height={80}
                   className="object-contain h-11 lg:h-14 w-auto"
-                  priority
                 />
               </Link>
 
@@ -63,7 +61,7 @@ export function Navigation() {
                     onMouseEnter={() => item === "Shop" && setMegaMenuOpen(true)}
                     onMouseLeave={() => item === "Shop" && setMegaMenuOpen(false)}
                   >
-                    <Link
+                    <Link prefetch={false}
                       href={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`}
                       className="flex items-center gap-1 text-[11px] tracking-[0.2em] uppercase font-sans font-medium text-black hover:text-[#E31E25] transition-colors"
                       onClick={() => setMegaMenuOpen(false)}
@@ -84,7 +82,7 @@ export function Navigation() {
               </button>
 
               {/* Login */}
-              <Link href="/login" className="text-black hover:text-[#E31E25] transition-colors" aria-label="Login">
+              <Link prefetch={false} href="/login" className="text-black hover:text-[#E31E25] transition-colors" aria-label="Login">
                 <User className="w-[18px] h-[18px] lg:w-[22px] lg:h-[22px]" strokeWidth={1.5} />
               </Link>
 
@@ -99,7 +97,7 @@ export function Navigation() {
               </button>
 
               {/* Cart */}
-              <Link
+              <Link prefetch={false}
                 href="/checkout"
                 className="relative text-black hover:text-[#E31E25] transition-colors"
                 aria-label={`Shopping bag with ${itemCount} items`}
@@ -140,7 +138,7 @@ export function Navigation() {
                   { name: "Necklaces", image: "/images/homepage/necklace-category.png" },
                   { name: "Others", image: "/images/homepage/other-category.png" }
                 ].map((cat) => (
-                  <Link
+                  <Link prefetch={false}
                     key={cat.name}
                     href={`/shop?category=${encodeURIComponent(cat.name)}`}
                     className="group flex flex-col"
@@ -189,7 +187,7 @@ export function Navigation() {
         <div className={`relative h-full flex flex-col px-6 lg:px-20 pt-8 transition-transform duration-700 ${menuOpen ? "translate-y-0" : "-translate-y-8"}`}>
           {/* Top Bar with Logo & Close button */}
           <div className="flex items-center justify-between mb-12">
-            <Link href="/" onClick={() => setMenuOpen(false)}>
+            <Link prefetch={false} href="/" onClick={() => setMenuOpen(false)}>
               <NextImage
                 src={LOGO_SRC}
                 alt="Kraft Treasure Logo"
@@ -240,7 +238,7 @@ export function Navigation() {
                       "Necklaces",
                       "Others"
                     ].map((subCat) => (
-                      <Link
+                      <Link prefetch={false}
                         key={subCat}
                         href={`/shop?category=${encodeURIComponent(subCat)}`}
                         onClick={() => setMenuOpen(false)}
@@ -258,7 +256,7 @@ export function Navigation() {
           {/* Bottom Section */}
           <div className="mt-auto pb-12">
             {/* View All Products Button */}
-            <Link
+            <Link prefetch={false}
               href="/shop"
               onClick={() => setMenuOpen(false)}
               className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white w-full py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md mb-8"
@@ -272,10 +270,10 @@ export function Navigation() {
 
             {/* Social Icons */}
             <div className="flex gap-6">
-              <Link href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
+              <Link prefetch={false} href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
+              <Link prefetch={false} href="#" className="text-black hover:text-[#E31E25] transition-colors p-2">
                 <Facebook className="w-5 h-5" />
               </Link>
             </div>
@@ -285,4 +283,3 @@ export function Navigation() {
     </>
   )
 }
-

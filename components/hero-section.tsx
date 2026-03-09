@@ -77,7 +77,7 @@ export function HeroSection() {
             >
               Discover original tribal crafts from Arunachal Pradesh, bamboo & cane,
               handloom textiles, traditional jewellery, masks, and home
-              décor-sourced directly from artisans and delivered with care.
+              d{"\u00E9"}cor-sourced directly from artisans and delivered with care.
             </p>
 
             {/* CTA Buttons - Single line, smaller font, adjusted padding */}
@@ -86,7 +86,7 @@ export function HeroSection() {
                 }`}
               style={{ transitionDelay: "1s" }}
             >
-              <Link
+              <Link prefetch={false}
                 href="/#collections"
                 className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px] md:min-w-[215px] xl:min-w-[180px]"
               >
@@ -95,7 +95,7 @@ export function HeroSection() {
                 <div className="absolute inset-0 bg-[#E31E25] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
               </Link>
 
-              <Link
+              <Link prefetch={false}
                 href="/shop"
                 className="relative group overflow-hidden inline-flex items-center justify-center gap-2 border border-black bg-transparent text-black px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-all duration-500 shadow-sm whitespace-nowrap min-w-[180px] md:min-w-[130px] xl:min-w-[180px]"
               >

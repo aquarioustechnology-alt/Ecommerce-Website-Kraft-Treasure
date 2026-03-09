@@ -1,7 +1,3 @@
-"use client"
-
-import { ShieldCheck, Leaf, Gem } from "lucide-react"
-
 export function TopBar() {
     return (
         <div className="w-full bg-black text-white py-3 border-b border-white/10 hidden lg:block">

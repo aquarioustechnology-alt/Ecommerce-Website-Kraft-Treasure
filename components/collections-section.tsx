@@ -60,7 +60,7 @@ export function CollectionsSection() {
       {/* Collection cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {categories.map((category, index) => (
-          <Link
+          <Link prefetch={false}
             href={`/shop?category=${encodeURIComponent(category.name)}`}
             key={category.id}
             className={`group relative overflow-hidden transition-all duration-1000 block ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"

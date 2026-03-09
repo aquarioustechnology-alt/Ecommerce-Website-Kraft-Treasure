@@ -1,5 +1,3 @@
-"use client"
-
 import { ShieldCheck, Leaf, Gem } from "lucide-react"
 
 export function BrandBenefits() {

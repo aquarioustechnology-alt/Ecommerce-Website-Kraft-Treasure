@@ -147,7 +147,7 @@ export function FeaturedProducts() {
             New Arrivals
           </h2>
         </div>
-        <Link
+        <Link prefetch={false}
           href="/shop"
           className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[200px]"
         >
@@ -166,7 +166,7 @@ export function FeaturedProducts() {
                 className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_20%] pl-4 lg:pl-5 min-w-0"
                 key={product.id}
               >
-                <Link
+                <Link prefetch={false}
                   href={`/product/${product.slug}`}
                   className={`group transition-all duration-1000 block ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
                     }`}
@@ -223,7 +223,7 @@ export function FeaturedProducts() {
                       {product.name}
                     </h3>
                     <p className="text-base lg:text-lg font-sans text-primary font-semibold">
-                      ₹{product.price.toLocaleString()}
+                      {"\u20B9"}{product.price.toLocaleString()}
                     </p>
                   </div>
                 </Link>

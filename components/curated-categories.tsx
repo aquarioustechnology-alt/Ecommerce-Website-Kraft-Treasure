@@ -39,8 +39,8 @@ export function CuratedCategories() {
                             Handcrafted Adornments
                         </p>
                         <h3 className="text-3xl md:text-4xl font-serif mb-4 leading-tight">Heritage Bead<br />Necklaces</h3>
-                        <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from ₹5,400</p>
-                        <Link
+                        <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from {"\u20B9"}5,400</p>
+                        <Link prefetch={false}
                             href="/shop?category=necklaces"
                             className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase font-sans border-b border-white/40 pb-1 hover:border-white transition-colors"
                         >
@@ -67,8 +67,8 @@ export function CuratedCategories() {
                                 Silver Artistry
                             </p>
                             <h3 className="text-2xl md:text-3xl font-serif mb-3">Artisanal Bangles</h3>
-                            <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from ₹3,200</p>
-                            <Link
+                            <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from {"\u20B9"}3,200</p>
+                            <Link prefetch={false}
                                 href="/shop?category=bracelets"
                                 className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase font-sans border-b border-white/40 pb-1 hover:border-white transition-colors"
                             >
@@ -93,8 +93,8 @@ export function CuratedCategories() {
                                 Liturgy & Ritual
                             </p>
                             <h3 className="text-2xl md:text-3xl font-serif mb-3">Gilded Vessels</h3>
-                            <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from ₹2,800</p>
-                            <Link
+                            <p className="text-sm font-sans mb-6 text-white/80 tracking-wide">Starting from {"\u20B9"}2,800</p>
+                            <Link prefetch={false}
                                 href="/shop?category=ritual"
                                 className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] uppercase font-sans border-b border-white/40 pb-1 hover:border-white transition-colors"
                             >

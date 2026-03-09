@@ -127,7 +127,7 @@ export function HeritageSection() {
             </div>
 
             <div className="mt-8 flex">
-              <Link
+              <Link prefetch={false}
                 href="/our-story"
                 className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px]"
               >
