@@ -9,6 +9,8 @@ import { currencies } from "@/lib/data"
 
 import { TopBar } from "./top-bar"
 
+const LOGO_SRC = "/images/logo/Kraft Treasure Logo Final transparent.png"
+
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
@@ -43,11 +45,11 @@ export function Navigation() {
             <div className="flex items-center gap-6 xl:gap-12">
               <Link href="/" className="transition-opacity hover:opacity-80">
                 <NextImage
-                  src="/images/logo/logo.png"
+                  src={LOGO_SRC}
                   alt="Kraft Treasure Logo"
-                  width={140}
-                  height={55}
-                  className="object-contain h-10 lg:h-12 w-auto"
+                  width={220}
+                  height={80}
+                  className="object-contain h-11 lg:h-14 w-auto"
                   priority
                 />
               </Link>
@@ -189,11 +191,11 @@ export function Navigation() {
           <div className="flex items-center justify-between mb-12">
             <Link href="/" onClick={() => setMenuOpen(false)}>
               <NextImage
-                src="/images/logo/logo.png"
+                src={LOGO_SRC}
                 alt="Kraft Treasure Logo"
-                width={120}
-                height={45}
-                className="object-contain h-8 w-auto"
+                width={190}
+                height={68}
+                className="object-contain h-10 w-auto"
               />
             </Link>
 
@@ -283,3 +285,4 @@ export function Navigation() {
     </>
   )
 }
+

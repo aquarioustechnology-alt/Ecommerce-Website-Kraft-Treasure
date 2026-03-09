@@ -4,6 +4,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Send } from "lucide-react"
 
+const LOGO_SRC = "/images/logo/Kraft Treasure Logo Final transparent.png"
+
 export function SiteFooter() {
   const currentYear = new Date().getFullYear()
 
@@ -14,10 +16,10 @@ export function SiteFooter() {
         <div className="lg:col-span-1">
           <div className="mb-8 scale-110 origin-left">
             <Image
-              src="/images/logo/logo.png"
+              src={LOGO_SRC}
               alt="Kraft Treasure Logo"
-              width={200}
-              height={80}
+              width={260}
+              height={96}
               className="object-contain h-16 lg:h-20 w-auto"
             />
           </div>
@@ -118,3 +120,4 @@ export function SiteFooter() {
     </footer>
   )
 }
+
