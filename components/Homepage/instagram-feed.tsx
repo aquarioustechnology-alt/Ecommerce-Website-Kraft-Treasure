@@ -34,10 +34,10 @@ export function InstagramFeed() {
                 </p>
                 <h2 className="text-3xl md:text-4xl font-serif text-black mb-6">Shared on Instagram</h2>
 
-                <button className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[200px]">
+                <button className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-[#D33740] text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[200px]">
                     <span className="relative z-20">View in Instagram</span>
                     <Instagram className="relative z-20 w-3.5 h-3.5" />
-                    <div className="absolute inset-0 bg-[#E31E25] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
+                    <div className="absolute inset-0 bg-[#C5AB7D] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
                 </button>
             </div>
 

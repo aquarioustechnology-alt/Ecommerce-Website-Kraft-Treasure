@@ -1,18 +1,18 @@
-import { products } from "@/lib/data"
 import { notFound } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { SiteFooter } from "@/components/site-footer"
 import { ProductDetail } from "@/components/product-detail"
+import { catalogProducts, getProductBySlug } from "@/lib/catalog"
 
 export function generateStaticParams() {
-  return products.map((product) => ({
+  return catalogProducts.map((product) => ({
     slug: product.slug,
   }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const product = products.find((p) => p.slug === slug)
+  const product = getProductBySlug(slug)
   if (!product) return { title: "Not Found" }
   return {
     title: `${product.name} | Arunachal Luxe Artifacts`,
@@ -22,15 +22,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const product = products.find((p) => p.slug === slug)
+  const product = getProductBySlug(slug)
 
   if (!product) {
     notFound()
   }
 
-  // Get related products (same collection, excluding current)
-  const related = products
-    .filter((p) => p.collection === product.collection && p.id !== product.id)
+  const related = catalogProducts
+    .filter((item) => item.collection === product.collection && item.id !== product.id)
     .slice(0, 3)
 
   return (

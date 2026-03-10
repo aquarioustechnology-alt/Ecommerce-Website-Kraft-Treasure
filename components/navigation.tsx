@@ -259,10 +259,10 @@ export function Navigation() {
             <Link prefetch={false}
               href="/shop"
               onClick={() => setMenuOpen(false)}
-              className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-black text-white w-full py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md mb-8"
+              className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-[#D33740] text-white w-full py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md mb-8"
             >
               <span className="relative z-20">View All Products</span>
-              <div className="absolute inset-0 bg-[#E31E25] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
+              <div className="absolute inset-0 bg-[#C5AB7D] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
             </Link>
 
             {/* Divider */}

@@ -5,8 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Minus, Plus, Trash2, Lock, CreditCard, ShieldCheck } from "lucide-react"
 import { cartStore } from "@/lib/store"
+import { getProductById } from "@/lib/catalog"
 import {
-  products,
   currencies,
   formatPrice,
   convertPrice,
@@ -22,7 +22,7 @@ export function CheckoutContent() {
   const [step, setStep] = useState<"bag" | "shipping" | "payment">("bag")
 
   const cartItems = cart.items.map((item) => {
-    const product = products.find((p) => p.id === item.productId)
+    const product = getProductById(item.productId)
     return { ...item, product }
   }).filter((item) => item.product)
 
@@ -38,7 +38,6 @@ export function CheckoutContent() {
 
   const { duty, tax, total } = calculateDuty(totalINR, cart.currency)
 
-  // Empty cart state
   if (cartItems.length === 0) {
     return (
       <div className="pt-32 pb-24 px-6 lg:px-20 min-h-[60vh] flex flex-col items-center justify-center text-center">
@@ -65,10 +64,9 @@ export function CheckoutContent() {
 
   return (
     <div className="pt-28 lg:pt-32 pb-24 px-6 lg:px-20">
-      {/* Header */}
       <div className="mb-12">
         <Link
-          href="/"
+          href="/shop"
           className="inline-flex items-center gap-2 text-muted-foreground text-xs tracking-[0.15em] uppercase font-sans hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -79,7 +77,6 @@ export function CheckoutContent() {
         </h1>
       </div>
 
-      {/* Progress steps */}
       <div className="flex items-center gap-4 mb-12">
         {(["bag", "shipping", "payment"] as const).map((s, i) => (
           <button
@@ -111,11 +108,9 @@ export function CheckoutContent() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
-        {/* Main content */}
         <div className="lg:col-span-2">
           {step === "bag" && (
             <div className="space-y-6">
-              {/* Currency toggle */}
               <div className="flex items-center gap-2 mb-8">
                 <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground font-sans mr-2">
                   Currency
@@ -137,7 +132,6 @@ export function CheckoutContent() {
                 </div>
               </div>
 
-              {/* Cart items */}
               {cartItems.map((item) => {
                 if (!item.product) return null
                 const itemPrice = convertPrice(item.product.price, cart.currency)
@@ -147,7 +141,6 @@ export function CheckoutContent() {
                     key={item.productId}
                     className="flex gap-4 lg:gap-6 pb-6 border-b border-border"
                   >
-                    {/* Image */}
                     <Link
                       href={`/product/${item.product.slug}`}
                       className="relative w-24 h-32 lg:w-32 lg:h-40 shrink-0 overflow-hidden bg-card"
@@ -161,7 +154,6 @@ export function CheckoutContent() {
                       />
                     </Link>
 
-                    {/* Details */}
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <p className="text-[10px] tracking-[0.3em] uppercase text-primary font-sans mb-1">
@@ -181,7 +173,6 @@ export function CheckoutContent() {
                       </div>
 
                       <div className="flex items-end justify-between mt-3">
-                        {/* Quantity */}
                         <div className="flex items-center border border-border">
                           <button
                             onClick={() =>
@@ -321,7 +312,6 @@ export function CheckoutContent() {
                 </div>
               </div>
 
-              {/* Security note */}
               <div className="flex items-center gap-3 pt-4">
                 <Lock className="w-4 h-4 text-primary" />
                 <p className="text-xs text-muted-foreground font-sans">
@@ -332,14 +322,12 @@ export function CheckoutContent() {
           )}
         </div>
 
-        {/* Order Summary Sidebar */}
         <div className="lg:col-span-1">
           <div className="sticky top-28 bg-card p-6 lg:p-8">
             <h2 className="text-lg font-serif text-foreground mb-6">
               Order Summary
             </h2>
 
-            {/* Currency badge */}
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-border">
               <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-sans">
                 Currency:
@@ -349,7 +337,6 @@ export function CheckoutContent() {
               </span>
             </div>
 
-            {/* Items summary */}
             <div className="space-y-3 mb-6">
               {cartItems.map((item) => {
                 if (!item.product) return null
@@ -373,7 +360,6 @@ export function CheckoutContent() {
               })}
             </div>
 
-            {/* Cost breakdown */}
             <div className="space-y-3 pt-4 border-t border-border">
               <div className="flex justify-between text-sm font-sans">
                 <span className="text-muted-foreground">Subtotal</span>
@@ -417,7 +403,6 @@ export function CheckoutContent() {
               </div>
             </div>
 
-            {/* Total */}
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-border">
               <span className="text-sm font-sans text-foreground uppercase tracking-wider">
                 Total
@@ -427,7 +412,6 @@ export function CheckoutContent() {
               </span>
             </div>
 
-            {/* Action button */}
             <button
               onClick={() => {
                 if (step === "bag") setStep("shipping")
@@ -442,7 +426,6 @@ export function CheckoutContent() {
                 : "Place Order"}
             </button>
 
-            {/* Trust */}
             <div className="flex items-center justify-center gap-2 mt-4">
               <ShieldCheck className="w-3.5 h-3.5 text-primary" />
               <p className="text-[10px] text-muted-foreground font-sans tracking-wider">

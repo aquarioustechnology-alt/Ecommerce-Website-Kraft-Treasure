@@ -1,17 +1,17 @@
 import { Navigation } from "@/components/navigation"
-import { HeroSection } from "@/components/hero-section"
+import { HeroSection } from "@/components/Homepage/hero-section"
 import { AuthenticitySection } from "@/components/Homepage/authenticity-section"
-import { CollectionsSection } from "@/components/collections-section"
-import { FeaturedProducts } from "@/components/featured-products"
-import { TrendingProducts } from "@/components/trending-products"
-import { HeritageSection } from "@/components/heritage-section"
-import { BespokeSection } from "@/components/bespoke-section"
-import { CuratedCategories } from "@/components/curated-categories"
-import { Testimonials } from "@/components/testimonials"
-import { HeritageDecors } from "@/components/heritage-decors"
-import { InstagramFeed } from "@/components/instagram-feed"
-import { TrustedSection } from "@/components/trusted-section"
-import { BrandBenefits } from "@/components/brand-benefits"
+import { CollectionsSection } from "@/components/Homepage/collections-section"
+import { FeaturedProducts } from "@/components/Homepage/featured-products"
+import { TrendingProducts } from "@/components/Homepage/trending-products"
+import { HeritageSection } from "@/components/Homepage/heritage-section"
+import { BespokeSection } from "@/components/Homepage/bespoke-section"
+import { CuratedCategories } from "@/components/Homepage/curated-categories"
+import { Testimonials } from "@/components/Homepage/testimonials"
+import { HeritageDecors } from "@/components/Homepage/heritage-decors"
+import { InstagramFeed } from "@/components/Homepage/instagram-feed"
+import { TrustedSection } from "@/components/Homepage/trusted-section"
+import { BrandBenefits } from "@/components/Homepage/brand-benefits"
 import { SiteFooter } from "@/components/site-footer"
 
 export default function HomePage() {
@@ -26,7 +26,6 @@ export default function HomePage() {
 
       <HeritageSection />
 
-      {/* Horizontal Marquee Ticker - Above New Arrivals */}
       <div className="relative z-20 mb-12 mt-10 overflow-hidden py-6 border-y border-[#FFF4B3]/50 bg-[#FFF4B3]">
         <div className="relative z-30 flex whitespace-nowrap py-1">
           <div className="animate-marquee flex">
@@ -62,4 +61,3 @@ export default function HomePage() {
     </main>
   )
 }
-
