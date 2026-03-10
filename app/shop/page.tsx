@@ -8,11 +8,19 @@ export const metadata: Metadata = {
   description: "Browse the full Kraft Treasure catalog with category-led filtering and curated product listings.",
 }
 
-export default function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string | string[] | undefined }>
+}) {
+  const resolvedSearchParams = await searchParams
+  const category = resolvedSearchParams.category
+  const initialCategory = Array.isArray(category) ? (category[0] ?? null) : (category ?? null)
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navigation />
-      <ShopPageContent />
+      <ShopPageContent initialCategory={initialCategory} />
       <SiteFooter />
     </main>
   )

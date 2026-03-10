@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useTransition } from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState, useTransition } from "react"
+import { usePathname, useRouter } from "next/navigation"
 import { ShopHero } from "@/components/Shop/shop-hero"
 import { ShopFilters } from "@/components/Shop/shop-filters"
 import { ShopToolbar } from "@/components/Shop/shop-toolbar"
@@ -9,32 +9,41 @@ import { ShopProductGrid } from "@/components/Shop/shop-product-grid"
 import { ShopMobileControls } from "@/components/Shop/shop-mobile-controls"
 import { normalizeShopCategory, shopCategories, shopProducts } from "@/lib/shop-data"
 
-export function ShopPageContent() {
+interface ShopPageContentProps {
+  initialCategory?: string | null
+}
+
+export function ShopPageContent({ initialCategory = null }: ShopPageContentProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
 
+  const [activeCategory, setActiveCategory] = useState<string | null>(normalizeShopCategory(initialCategory))
   const [selectedCollection, setSelectedCollection] = useState("All collections")
   const [availability, setAvailability] = useState<"all" | "in-stock">("all")
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "latest">("featured")
   const [columns, setColumns] = useState<3 | 4>(4)
 
-  const activeCategory = normalizeShopCategory(searchParams.get("category"))
+  useEffect(() => {
+    setActiveCategory(normalizeShopCategory(initialCategory))
+  }, [initialCategory])
+
   const collections = Array.from(new Set(shopProducts.map((product) => product.collection)))
   const categoryCounts = Object.fromEntries(
     shopCategories.map((category) => [category, shopProducts.filter((product) => product.category === category).length])
   ) as Record<string, number>
 
   const updateCategory = (category: string | null) => {
-    const params = new URLSearchParams(searchParams.toString())
-    if (category) {
-      params.set("category", category)
-    } else {
-      params.delete("category")
+    const nextCategory = normalizeShopCategory(category)
+    const params = new URLSearchParams()
+
+    if (nextCategory) {
+      params.set("category", nextCategory)
     }
 
     const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname
+    setActiveCategory(nextCategory)
+
     startTransition(() => {
       router.replace(nextUrl, { scroll: false })
     })
