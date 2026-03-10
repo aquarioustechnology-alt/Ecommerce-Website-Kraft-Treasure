@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Send } from "lucide-react"
 
-const LOGO_SRC = "/images/logo/Kraft Treasure Logo Final transparent.png"
+const LOGO_SRC = "/images/logo/Logo content.png"
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear()

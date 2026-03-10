@@ -8,7 +8,7 @@ import { cartStore } from "@/lib/store"
 
 import { TopBar } from "./top-bar"
 
-const LOGO_SRC = "/images/logo/Kraft Treasure Logo Final transparent.png"
+const LOGO_SRC = "/images/logo/Logo content.png"
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
