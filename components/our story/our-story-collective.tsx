@@ -2,19 +2,19 @@ import Image from "next/image"
 
 const craftFamilies = [
   {
-    title: "Ceremonial forms",
-    image: "/images/product-mask.jpg",
-    description: "Masks and ritual objects that carry spiritual symbolism, community memory, and performative power.",
+    title: "Sacred Wall Banner",
+    image: "/images/Our Story/Card 1.png",
+    description: "A devotional hanging that carries ceremonial symbolism, color memory, and handcrafted detail.",
   },
   {
-    title: "Woven heirlooms",
-    image: "/images/product-shawl.jpg",
-    description: "Textiles shaped by patient handwork, regional motifs, and generations of embodied pattern knowledge.",
+    title: "Lidded Tea Vessel",
+    image: "/images/Our Story/Card 2.png",
+    description: "A refined tabletop object shaped by ornament, utility, and the quiet pleasure of everyday ritual.",
   },
   {
-    title: "Everyday vessels",
-    image: "/images/product-pottery.jpg",
-    description: "Functional objects elevated by material honesty and the quiet intelligence of daily use.",
+    title: "Turquoise Deity Relief",
+    image: "/images/Our Story/Card 3.png",
+    description: "A sculptural wall piece where spiritual iconography meets material richness and presence.",
   },
 ]
 
@@ -48,7 +48,7 @@ export function OurStoryCollective() {
           <div className="max-w-2xl">
             <p className="text-[10px] font-sans uppercase tracking-[0.35em] text-[#B08D4E]">Craft Families</p>
             <h2 className="mt-4 text-4xl font-serif leading-tight text-black sm:text-5xl">
-              Different materials, one shared principle: make with memory.
+              Different Materials, One Shared Principle: Make With Memory.
             </h2>
             <p className="mt-5 text-sm leading-7 text-black/65 md:text-base">
               We curate across categories without flattening them into a single aesthetic. Each family of objects arrives with its own history and logic.
@@ -69,7 +69,7 @@ export function OurStoryCollective() {
                 </div>
                 <div className="p-5">
                   <h3 className="text-2xl font-serif text-black">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-black/65">{item.description}</p>
+                  <p className="mt-3 text-sm leading-5 text-black/65">{item.description}</p>
                 </div>
               </article>
             ))}

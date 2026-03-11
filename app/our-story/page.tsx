@@ -4,7 +4,6 @@ import { SiteFooter } from "@/components/site-footer"
 import { OurStoryCta } from "@/components/our story/our-story-cta"
 import { OurStoryCollective } from "@/components/our story/our-story-collective"
 import { OurStoryHero } from "@/components/our story/our-story-hero"
-import { OurStoryJourney } from "@/components/our story/our-story-journey"
 import { OurStoryLedger } from "@/components/our story/our-story-ledger"
 import { OurStoryOrigin } from "@/components/our story/our-story-origin"
 import { OurStoryValues } from "@/components/our story/our-story-values"
@@ -22,7 +21,6 @@ export default function OurStoryPage() {
       <OurStoryHero />
       <OurStoryLedger />
       <OurStoryOrigin />
-      <OurStoryJourney />
       <OurStoryCollective />
       <OurStoryValues />
       <OurStoryCta />

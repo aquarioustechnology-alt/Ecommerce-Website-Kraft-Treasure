@@ -31,7 +31,7 @@ export function OurStoryValues() {
           <div>
             <p className="text-[10px] font-sans uppercase tracking-[0.35em] text-[#D33740]">What We Stand For</p>
             <h2 className="mt-4 text-4xl font-serif leading-tight text-black sm:text-5xl">
-              Four commitments shape every decision on the platform.
+              Four Commitments Shape Every Decision On The Platform.
             </h2>
             <p className="mt-5 max-w-md text-sm leading-7 text-black/65 md:text-base">
               These are not brand adjectives. They are operating rules that help us decide what belongs in the collection and how it should be presented.
@@ -49,12 +49,15 @@ export function OurStoryValues() {
               const Icon = value.icon
 
               return (
-                <article key={value.title} className="bg-white p-6 lg:p-8">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-[#FFF4B3]">
-                    <Icon className="h-5 w-5" />
+                <article className="group relative overflow-hidden bg-white" key={value.title}>
+                  <div className="absolute inset-0 translate-y-full bg-[#D33740] transition-transform duration-500 ease-out group-hover:translate-y-0" />
+                  <div className="relative z-10 p-6 lg:p-8">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-none bg-[#D33740] text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[#D33740]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-5 text-2xl font-serif text-black transition-colors duration-300 group-hover:text-white">{value.title}</h3>
+                    <p className="mt-4 text-sm leading-5 text-black/65 transition-colors duration-300 group-hover:text-white/88">{value.description}</p>
                   </div>
-                  <h3 className="mt-5 text-2xl font-serif text-black">{value.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-black/65">{value.description}</p>
                 </article>
               )
             })}

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react"
 
 export function OurStoryCta() {
   return (
-    <section className="bg-white pb-20 pt-4 lg:pb-24">
+    <section className="bg-white pb-20 pt-14 lg:pb-24 lg:pt-20">
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="relative overflow-hidden border border-black/10 bg-[linear-gradient(135deg,#101010_0%,#181818_55%,#2a2220_100%)] px-6 py-10 text-white sm:px-8 lg:px-12 lg:py-14">
           <div aria-hidden className="absolute -right-10 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-[#D33740]/30 blur-3xl" />
@@ -12,8 +12,8 @@ export function OurStoryCta() {
           <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="max-w-3xl">
               <p className="text-[10px] font-sans uppercase tracking-[0.35em] text-[#FFF4B3]">Continue The Story</p>
-              <h2 className="mt-4 text-4xl font-serif leading-tight sm:text-5xl lg:text-6xl">
-                Explore the collection or start a conversation with our curators.
+              <h2 className="mt-4 text-4xl font-serif leading-tight text-white sm:text-5xl">
+                Explore The Collection Or Discover Pieces Rooted In Heritage.
               </h2>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-white/65 md:text-base">
                 Whether you are building a personal collection, sourcing a statement piece, or simply learning the language of these traditions, we can guide the next step.
@@ -47,3 +47,5 @@ export function OurStoryCta() {
     </section>
   )
 }
+
+
