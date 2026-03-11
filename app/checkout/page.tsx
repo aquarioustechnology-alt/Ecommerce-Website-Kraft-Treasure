@@ -1,7 +1,7 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { Navigation } from "@/components/navigation"
 import { SiteFooter } from "@/components/site-footer"
-import { CheckoutContent } from "@/components/checkout-content"
+import { CheckoutPageContent } from "@/components/Checkout/checkout-page-content"
 
 export const metadata: Metadata = {
   title: "Checkout | Arunachal Luxe Artifacts",
@@ -12,8 +12,9 @@ export default function CheckoutPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
-      <CheckoutContent />
+      <CheckoutPageContent />
       <SiteFooter />
     </main>
   )
 }
+

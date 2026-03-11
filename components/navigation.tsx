@@ -1,6 +1,7 @@
-"use client"
+﻿"use client"
 
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import NextImage from "next/image"
 import {
@@ -14,8 +15,9 @@ import {
   ShoppingBag,
   User,
   X,
+  LogOut,
 } from "lucide-react"
-import { AUTH_EVENT, getStoredSession } from "@/lib/auth"
+import { AUTH_EVENT, clearStoredSession, getDisplayName, getStoredSession } from "@/lib/auth"
 import { cartStore } from "@/lib/store"
 import { MiniCheckoutSheet } from "@/components/Mini checkout/mini-checkout-sheet"
 import { SearchOverlay } from "@/components/search/search-overlay"
@@ -45,17 +47,30 @@ const SHOP_CATEGORIES = [
   { name: "Others", image: "/images/homepage/other-category.png" },
 ] as const
 
+const ACCOUNT_MENU_ITEMS = [
+  { label: "My profile", href: "/my-account?section=profile" },
+  { label: "Change password", href: "/my-account?section=password" },
+  { label: "My Orders", href: "/my-account?section=orders" },
+  { label: "My Transaction", href: "/my-account?section=transactions" },
+  { label: "My Address", href: "/my-account?section=address" },
+] as const
+
 export function Navigation() {
+  const router = useRouter()
+  const accountMenuRef = useRef<HTMLDivElement | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const [shopAccordionOpen, setShopAccordionOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [accountHref, setAccountHref] = useState("/login")
-  const [accountLabel, setAccountLabel] = useState("Login")
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false)
+  const [accountName, setAccountName] = useState("")
+  const [accountInitial, setAccountInitial] = useState<string | null>(null)
   const cart = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getSnapshot)
   const itemCount = cart.items.reduce((sum, item) => sum + item.quantity, 0)
   const wishlistCount = cart.wishlist.length
+  const accountHref = accountInitial ? "/my-account" : "/login"
+  const accountLabel = accountInitial ? "My Account" : "Login"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,13 +84,23 @@ export function Navigation() {
   useEffect(() => {
     const syncSession = () => {
       const session = getStoredSession()
-      setAccountHref(session ? "/my-account" : "/login")
-      setAccountLabel(session ? "My Account" : "Login")
+
+      if (!session) {
+        setAccountName("")
+        setAccountInitial(null)
+        setAccountMenuOpen(false)
+        return
+      }
+
+      const displayName = getDisplayName(session)
+      setAccountName(displayName)
+      setAccountInitial(displayName.charAt(0).toUpperCase() || "U")
     }
 
     const handleShortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault()
+        setAccountMenuOpen(false)
         setMenuOpen(false)
         setSearchOpen(true)
       }
@@ -93,6 +118,37 @@ export function Navigation() {
     }
   }, [])
 
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!accountMenuRef.current) return
+      if (!accountMenuRef.current.contains(event.target as Node)) {
+        setAccountMenuOpen(false)
+      }
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setAccountMenuOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown)
+    window.addEventListener("keydown", handleEscape)
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown)
+      window.removeEventListener("keydown", handleEscape)
+    }
+  }, [])
+
+  const handleLogout = () => {
+    clearStoredSession()
+    setAccountMenuOpen(false)
+    setMenuOpen(false)
+    router.push("/login")
+    router.refresh()
+  }
+
   return (
     <>
       <div className="relative z-[60]">
@@ -100,7 +156,7 @@ export function Navigation() {
       </div>
       <header
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm" : "bg-transparent"
+          scrolled ? "border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur-md" : "bg-transparent"
         }`}
       >
         <div className="relative mx-auto w-full max-w-[1440px]">
@@ -145,27 +201,90 @@ export function Navigation() {
             <div className="flex items-center gap-4 lg:gap-6">
               <button
                 type="button"
-                onClick={() => setSearchOpen(true)}
+                onClick={() => {
+                  setAccountMenuOpen(false)
+                  setSearchOpen(true)
+                }}
                 className="text-black transition-colors hover:text-[#E31E25]"
                 aria-label="Search"
               >
                 <Search className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
               </button>
 
-              <Link
-                prefetch={false}
-                href={accountHref}
-                className="text-black transition-colors hover:text-[#E31E25]"
-                aria-label={accountLabel}
-              >
-                <User className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
-              </Link>
+              {accountInitial ? (
+                <div ref={accountMenuRef} className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setAccountMenuOpen((open) => !open)}
+                    className="flex cursor-pointer items-center gap-2 text-black transition-colors hover:text-[#E31E25]"
+                    aria-label={`${accountName} account menu`}
+                    aria-expanded={accountMenuOpen}
+                  >
+                    <span className="flex h-[30px] w-[30px] items-center justify-center bg-[#D33740] text-[12px] font-sans font-semibold uppercase text-white lg:h-[38px] lg:w-[38px] lg:text-[13px]">
+                      {accountInitial}
+                    </span>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-300 ${accountMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  <div
+                    className={`absolute right-0 top-full z-[70] mt-3 w-[240px] border border-black/10 bg-white shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35)] transition-all duration-300 ${
+                      accountMenuOpen
+                        ? "visible translate-y-0 opacity-100"
+                        : "invisible -translate-y-1 opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <div className="border-b border-black/10 px-4 py-4">
+                      <p className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">
+                        Signed In
+                      </p>
+                      <p className="mt-2 text-sm font-sans font-semibold text-black">
+                        {accountName}
+                      </p>
+                    </div>
+
+                    <div className="py-2">
+                      {ACCOUNT_MENU_ITEMS.map((item) => (
+                        <Link
+                          prefetch={false}
+                          key={item.label}
+                          href={item.href}
+                          onClick={() => setAccountMenuOpen(false)}
+                          className="block px-4 py-3 text-sm font-sans text-black transition-colors hover:bg-[#FFF8F4] hover:text-[#D33740]"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2 px-4 py-3 text-sm font-sans text-[#D33740] transition-colors hover:bg-[#FFF8F4]"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  prefetch={false}
+                  href={accountHref}
+                  className="text-black transition-colors hover:text-[#E31E25]"
+                  aria-label={accountLabel}
+                >
+                  <User className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
+                </Link>
+              )}
 
               <Link
                 prefetch={false}
                 href="/wishlist"
                 className="relative text-black transition-colors hover:text-[#E31E25]"
                 aria-label={`Wishlist with ${wishlistCount} items`}
+                onClick={() => setAccountMenuOpen(false)}
               >
                 <Heart className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
                 {wishlistCount > 0 ? (
@@ -177,7 +296,10 @@ export function Navigation() {
 
               <button
                 type="button"
-                onClick={() => cartStore.openCart()}
+                onClick={() => {
+                  setAccountMenuOpen(false)
+                  cartStore.openCart()
+                }}
                 className="relative cursor-pointer text-black transition-colors hover:text-[#E31E25]"
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
@@ -191,7 +313,10 @@ export function Navigation() {
 
               <button
                 type="button"
-                onClick={() => setMenuOpen(true)}
+                onClick={() => {
+                  setAccountMenuOpen(false)
+                  setMenuOpen(true)
+                }}
                 className="text-black transition-colors hover:text-[#E31E25] lg:hidden"
                 aria-label="Open menu"
               >
@@ -380,5 +505,4 @@ export function Navigation() {
     </>
   )
 }
-
 

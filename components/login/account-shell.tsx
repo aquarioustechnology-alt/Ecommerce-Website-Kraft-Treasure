@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -28,10 +28,10 @@ export function AccountShell() {
 
   if (session === undefined) {
     return (
-      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#f8f2e7_18%,#f2eadc_100%)] px-6 py-14 lg:px-12 lg:py-20">
-        <div className="mx-auto max-w-[1440px] border border-black/10 bg-white px-8 py-16 text-center">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-[#B8894A]">Loading account</p>
-          <h1 className="mt-4 font-serif text-5xl leading-none text-black lg:text-[72px]">Preparing Your Collector Space.</h1>
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#faf5ea_100%)] px-6 py-12 lg:px-12 lg:py-16">
+        <div className="mx-auto max-w-[1280px] border border-black/10 bg-white px-8 py-16 text-center">
+          <p className="text-[10px] font-sans uppercase tracking-[0.32em] text-[#B8894A]">Loading account</p>
+          <h1 className="mt-4 font-serif text-[42px] leading-tight text-black lg:text-[56px]">Preparing Your Account Dashboard.</h1>
         </div>
       </section>
     )
@@ -39,12 +39,12 @@ export function AccountShell() {
 
   if (!session) {
     return (
-      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#f8f2e7_18%,#f2eadc_100%)] px-6 py-14 lg:px-12 lg:py-20">
-        <div className="mx-auto max-w-[1100px] border border-black/10 bg-white p-8 text-center lg:p-14">
-          <p className="text-[11px] uppercase tracking-[0.32em] text-[#B8894A]">Access required</p>
-          <h1 className="mt-4 font-serif text-5xl leading-[0.92] text-black lg:text-[72px]">Login First To Open My Account.</h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-black/64">
-            The account page is active, but this browser does not have a test session yet. Sign in or register once, and you will come straight back here.
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#faf5ea_100%)] px-6 py-12 lg:px-12 lg:py-16">
+        <div className="mx-auto max-w-[980px] border border-black/10 bg-white p-8 text-center lg:p-12">
+          <p className="text-[10px] font-sans uppercase tracking-[0.32em] text-[#B8894A]">Access required</p>
+          <h1 className="mt-4 font-serif text-[40px] leading-tight text-black lg:text-[52px]">Login To Open Your Account Area.</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-sm font-sans leading-7 text-black/64 lg:text-[15px]">
+            This page is ready, but there is no active test session in the browser yet. Sign in once or create an account and you will return here immediately.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -63,7 +63,7 @@ export function AccountShell() {
               href="/shop"
               className="inline-flex min-w-[220px] items-center justify-center border border-black/10 bg-white px-5 py-4 text-[11px] font-medium uppercase tracking-[0.22em] text-black transition-colors duration-300 hover:border-[#D33740] hover:text-[#D33740]"
             >
-              Keep Browsing The Shop
+              Continue Shopping
             </Link>
           </div>
         </div>

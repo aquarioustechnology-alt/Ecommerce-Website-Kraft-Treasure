@@ -1,27 +1,6 @@
-import Image from "next/image"
+﻿import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-
-const highlights = [
-  {
-    eyebrow: "Sourced at origin",
-    title: "Direct relationships with village artisans",
-    description:
-      "We work with makers, not middlemen, so each piece carries a human story instead of an anonymous supply chain.",
-  },
-  {
-    eyebrow: "Rooted in place",
-    title: "Craft traditions shaped by Arunachal landscapes",
-    description:
-      "Bamboo, cane, wood, textile, and ritual forms are presented with the context that gives them meaning.",
-  },
-  {
-    eyebrow: "Made to endure",
-    title: "Slow luxury built around provenance",
-    description:
-      "Every acquisition is framed as a collectible cultural object, with authenticity, stewardship, and respect at the center.",
-  },
-]
 
 export function OurStoryHero() {
   return (
@@ -80,23 +59,21 @@ export function OurStoryHero() {
               />
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="relative mx-auto mt-12 grid max-w-[1440px] gap-4 px-6 lg:grid-cols-3 lg:px-12">
-        {highlights.map((item, index) => (
-          <article
-            key={item.title}
-            className={`p-6 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1 ${
-              index === 1 ? "bg-[#fff9ea]" : "bg-white/82"
-            }`}
-          >
-            <p className="text-[10px] font-sans uppercase tracking-[0.3em] text-[#B08D4E]">{item.eyebrow}</p>
-            <h2 className="mt-3 text-2xl font-serif leading-tight text-black">{item.title}</h2>
-            <p className="mt-4 text-sm leading-6 text-black/65">{item.description}</p>
-          </article>
-        ))}
+          <div className="absolute bottom-0 right-[10%] max-w-[320px] border border-black/10 bg-white/95 p-5 shadow-[0_28px_60px_-38px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+            <p className="text-[10px] font-sans uppercase tracking-[0.32em] text-[#D33740]">
+              Curatorial Principle
+            </p>
+            <h2 className="mt-3 font-serif text-[24px] leading-tight text-black lg:text-[28px]">
+              Context Should Travel With The Craft.
+            </h2>
+            <p className="mt-3 text-sm font-sans leading-6 text-black/65">
+              Every piece is presented with origin, material memory, and the story of the hands behind it.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
+
