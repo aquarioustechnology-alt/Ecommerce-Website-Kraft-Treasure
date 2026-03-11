@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { AUTH_EVENT, getStoredSession } from "@/lib/auth"
 import { cartStore } from "@/lib/store"
+import { MiniCheckoutSheet } from "@/components/Mini checkout/mini-checkout-sheet"
 import { SearchOverlay } from "@/components/search/search-overlay"
 import { TopBar } from "./top-bar"
 
@@ -160,8 +161,9 @@ export function Navigation() {
                 <User className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
               </Link>
 
-              <button
-                type="button"
+              <Link
+                prefetch={false}
+                href="/wishlist"
                 className="relative text-black transition-colors hover:text-[#E31E25]"
                 aria-label={`Wishlist with ${wishlistCount} items`}
               >
@@ -171,11 +173,11 @@ export function Navigation() {
                     {wishlistCount}
                   </span>
                 ) : null}
-              </button>
+              </Link>
 
-              <Link
-                prefetch={false}
-                href="/checkout"
+              <button
+                type="button"
+                onClick={() => cartStore.openCart()}
                 className="relative text-black transition-colors hover:text-[#E31E25]"
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
@@ -185,7 +187,7 @@ export function Navigation() {
                     {itemCount}
                   </span>
                 ) : null}
-              </Link>
+              </button>
 
               <button
                 type="button"
@@ -374,6 +376,7 @@ export function Navigation() {
       </div>
 
       <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
+      <MiniCheckoutSheet />
     </>
   )
 }

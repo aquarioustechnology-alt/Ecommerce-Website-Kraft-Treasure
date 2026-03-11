@@ -64,7 +64,7 @@ export function RegisterForm({
             value={values.firstName}
             onChange={(event) => setValues((current) => ({ ...current, firstName: event.target.value }))}
             className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
-            placeholder="User"
+            placeholder="First Name"
           />
         </label>
 
@@ -75,7 +75,7 @@ export function RegisterForm({
             value={values.lastName}
             onChange={(event) => setValues((current) => ({ ...current, lastName: event.target.value }))}
             className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
-            placeholder="User"
+            placeholder="Last Name"
           />
         </label>
 

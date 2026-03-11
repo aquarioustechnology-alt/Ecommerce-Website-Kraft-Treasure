@@ -32,21 +32,21 @@ export const cartStore = {
   getSnapshot() {
     return state
   },
-  addItem(productId: string) {
+  addItem(productId: string, quantity = 1) {
     const existing = state.items.find((i) => i.productId === productId)
     if (existing) {
       state = {
         ...state,
         items: state.items.map((i) =>
           i.productId === productId
-            ? { ...i, quantity: i.quantity + 1 }
+            ? { ...i, quantity: i.quantity + quantity }
             : i
         ),
       }
     } else {
       state = {
         ...state,
-        items: [...state.items, { productId, quantity: 1 }],
+        items: [...state.items, { productId, quantity }],
       }
     }
     emitChange()
@@ -73,6 +73,10 @@ export const cartStore = {
   },
   setCurrency(currency: string) {
     state = { ...state, currency }
+    emitChange()
+  },
+  openCart() {
+    state = { ...state, isOpen: true }
     emitChange()
   },
   toggleCart() {
