@@ -14,13 +14,13 @@ export function WishlistPageContent() {
     .filter((product): product is NonNullable<ReturnType<typeof getProductById>> => Boolean(product))
 
   return (
-    <>
-      <WishlistHero count={wishlistProducts.length} />
-      <section className="px-6 py-12 lg:px-12 lg:py-14">
-        <div className="mx-auto max-w-[1440px]">
+    <section className="border-b border-black/8 bg-[linear-gradient(180deg,#ffffff_0%,#f8f2e7_100%)] px-6 py-12 lg:px-12 lg:py-16">
+      <div className="mx-auto max-w-[1440px]">
+        <WishlistHero />
+        <div className="mt-10">
           {wishlistProducts.length > 0 ? <WishlistGrid products={wishlistProducts} /> : <WishlistEmpty />}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

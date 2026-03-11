@@ -30,7 +30,7 @@ export function SearchResultCard({
       <div className="flex min-w-0 items-center justify-between gap-4">
         <div className="min-w-0">
           <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-[#B8894A]">{product.category}</p>
-          <h3 className="mt-1 font-serif text-[20px] leading-none text-black md:text-[22px]">{product.name}</h3>
+          <h3 className="mt-1 font-serif text-[18px] leading-none text-black md:text-[19px]">{product.name}</h3>
           <p className="mt-1 text-sm text-black/56">{product.collection}</p>
         </div>
 

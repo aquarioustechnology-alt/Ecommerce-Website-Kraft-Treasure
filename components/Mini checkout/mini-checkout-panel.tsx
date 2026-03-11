@@ -4,7 +4,6 @@ import { convertPrice } from "@/lib/data"
 import { MiniCheckoutEmpty } from "@/components/Mini checkout/mini-checkout-empty"
 import { MiniCheckoutFooter } from "@/components/Mini checkout/mini-checkout-footer"
 import { MiniCheckoutItem } from "@/components/Mini checkout/mini-checkout-item"
-import { MiniCheckoutProgress } from "@/components/Mini checkout/mini-checkout-progress"
 
 interface MiniCheckoutPanelProps {
   items: Array<{ product: Product; quantity: number }>
@@ -28,8 +27,6 @@ export function MiniCheckoutPanel({ items, currency, onClose }: MiniCheckoutPane
           <X className="h-6 w-6" />
         </button>
       </div>
-
-      <MiniCheckoutProgress subtotal={subtotal} currency={currency} />
 
       {items.length === 0 ? (
         <MiniCheckoutEmpty onClose={onClose} />

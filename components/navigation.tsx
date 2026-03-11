@@ -178,7 +178,7 @@ export function Navigation() {
               <button
                 type="button"
                 onClick={() => cartStore.openCart()}
-                className="relative text-black transition-colors hover:text-[#E31E25]"
+                className="relative cursor-pointer text-black transition-colors hover:text-[#E31E25]"
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
                 <ShoppingBag className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
@@ -380,3 +380,5 @@ export function Navigation() {
     </>
   )
 }
+
+

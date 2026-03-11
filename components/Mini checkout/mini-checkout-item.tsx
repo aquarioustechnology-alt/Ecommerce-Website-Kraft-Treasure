@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Minus, Plus, X } from "lucide-react"
+import { Minus, Plus, Trash2 } from "lucide-react"
 import type { Product } from "@/lib/data"
 import { convertPrice, formatPrice } from "@/lib/data"
 import { cartStore } from "@/lib/store"
@@ -19,16 +19,7 @@ export function MiniCheckoutItem({
   const unitPrice = convertPrice(product.price, currency)
 
   return (
-    <div className="grid grid-cols-[16px_78px_minmax(0,1fr)] gap-3 border-b border-black/8 py-4">
-      <button
-        type="button"
-        onClick={() => cartStore.removeItem(product.id)}
-        className="mt-2 text-black/50 transition-colors hover:text-[#D33740]"
-        aria-label={`Remove ${product.name}`}
-      >
-        <X className="h-4 w-4" />
-      </button>
-
+    <div className="grid grid-cols-[78px_minmax(0,1fr)_20px] gap-3 border-b border-black/8 py-4">
       <Link prefetch={false} href={`/product/${product.slug}`} onClick={onClose} className="relative aspect-[4/5] overflow-hidden bg-[#F3ECDE]">
         <Image
           src={product.image}
@@ -73,6 +64,15 @@ export function MiniCheckoutItem({
           </button>
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={() => cartStore.removeItem(product.id)}
+        className="mt-1 self-start text-[#D33740] transition-opacity hover:opacity-70"
+        aria-label={`Remove ${product.name}`}
+      >
+        <Trash2 className="h-4 w-4" />
+      </button>
     </div>
   )
 }
