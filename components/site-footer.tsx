@@ -9,6 +9,7 @@ const QUICK_LINKS = [
   { label: "Shop", href: "/shop" },
   { label: "Our Story", href: "/our-story" },
   { label: "Contact", href: "/contact" },
+  { label: "My Account", href: "/my-account" },
 ] as const
 
 const SERVICE_LINKS = [
@@ -92,7 +93,7 @@ export function SiteFooter() {
               type="email"
               placeholder="Your Email Address"
               suppressHydrationWarning
-              className="w-full border-b border-white/10 bg-white/5 px-0 py-3 text-sm focus:border-[#E31E25] focus:outline-none transition-colors"
+              className="w-full border-b border-white/10 bg-white/5 px-0 py-3 text-sm transition-colors focus:border-[#E31E25] focus:outline-none"
             />
             <button
               type="button"

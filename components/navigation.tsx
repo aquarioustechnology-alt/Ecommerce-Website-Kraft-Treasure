@@ -4,19 +4,20 @@ import { useEffect, useState, useSyncExternalStore } from "react"
 import Link from "next/link"
 import NextImage from "next/image"
 import {
-  Menu,
-  X,
-  ShoppingBag,
-  Search,
-  Heart,
-  User,
-  ChevronDown,
   Facebook,
   Instagram,
   ArrowRight,
+  ChevronDown,
+  Heart,
+  Menu,
+  Search,
+  ShoppingBag,
+  User,
+  X,
 } from "lucide-react"
+import { AUTH_EVENT, getStoredSession } from "@/lib/auth"
 import { cartStore } from "@/lib/store"
-
+import { SearchOverlay } from "@/components/search/search-overlay"
 import { TopBar } from "./top-bar"
 
 const LOGO_SRC = "/images/logo/Logo content.png"
@@ -47,7 +48,10 @@ export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [megaMenuOpen, setMegaMenuOpen] = useState(false)
   const [shopAccordionOpen, setShopAccordionOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [accountHref, setAccountHref] = useState("/login")
+  const [accountLabel, setAccountLabel] = useState("Login")
   const cart = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getSnapshot)
   const itemCount = cart.items.reduce((sum, item) => sum + item.quantity, 0)
   const wishlistCount = cart.wishlist.length
@@ -59,6 +63,33 @@ export function Navigation() {
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const syncSession = () => {
+      const session = getStoredSession()
+      setAccountHref(session ? "/my-account" : "/login")
+      setAccountLabel(session ? "My Account" : "Login")
+    }
+
+    const handleShortcut = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        setMenuOpen(false)
+        setSearchOpen(true)
+      }
+    }
+
+    syncSession()
+    window.addEventListener("storage", syncSession)
+    window.addEventListener(AUTH_EVENT, syncSession)
+    window.addEventListener("keydown", handleShortcut)
+
+    return () => {
+      window.removeEventListener("storage", syncSession)
+      window.removeEventListener(AUTH_EVENT, syncSession)
+      window.removeEventListener("keydown", handleShortcut)
+    }
   }, [])
 
   return (
@@ -99,11 +130,11 @@ export function Navigation() {
                       onClick={() => setMegaMenuOpen(false)}
                     >
                       {item.label}
-                      {item.isShop && (
+                      {item.isShop ? (
                         <ChevronDown
                           className={`ml-0.5 h-3.5 w-3.5 transition-transform duration-300 ${megaMenuOpen ? "rotate-180" : ""}`}
                         />
-                      )}
+                      ) : null}
                     </Link>
                   </div>
                 ))}
@@ -111,21 +142,35 @@ export function Navigation() {
             </div>
 
             <div className="flex items-center gap-4 lg:gap-6">
-              <button className="text-black transition-colors hover:text-[#E31E25]" aria-label="Search">
+              <button
+                type="button"
+                onClick={() => setSearchOpen(true)}
+                className="text-black transition-colors hover:text-[#E31E25]"
+                aria-label="Search"
+              >
                 <Search className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
               </button>
 
-              <Link prefetch={false} href="/login" className="text-black transition-colors hover:text-[#E31E25]" aria-label="Login">
+              <Link
+                prefetch={false}
+                href={accountHref}
+                className="text-black transition-colors hover:text-[#E31E25]"
+                aria-label={accountLabel}
+              >
                 <User className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
               </Link>
 
-              <button className="relative text-black transition-colors hover:text-[#E31E25]" aria-label={`Wishlist with ${wishlistCount} items`}>
+              <button
+                type="button"
+                className="relative text-black transition-colors hover:text-[#E31E25]"
+                aria-label={`Wishlist with ${wishlistCount} items`}
+              >
                 <Heart className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
-                {wishlistCount > 0 && (
+                {wishlistCount > 0 ? (
                   <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#E31E25] text-[9px] font-bold text-white lg:h-5 lg:w-5 lg:text-[10px]">
                     {wishlistCount}
                   </span>
-                )}
+                ) : null}
               </button>
 
               <Link
@@ -135,14 +180,15 @@ export function Navigation() {
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
                 <ShoppingBag className="h-[18px] w-[18px] lg:h-[22px] lg:w-[22px]" strokeWidth={1.5} />
-                {itemCount > 0 && (
+                {itemCount > 0 ? (
                   <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#E31E25] text-[9px] font-bold text-white lg:h-5 lg:w-5 lg:text-[10px]">
                     {itemCount}
                   </span>
-                )}
+                ) : null}
               </Link>
 
               <button
+                type="button"
                 onClick={() => setMenuOpen(true)}
                 className="text-black transition-colors hover:text-[#E31E25] lg:hidden"
                 aria-label="Open menu"
@@ -200,7 +246,11 @@ export function Navigation() {
       >
         <div className="absolute inset-0 bg-background/98 backdrop-blur-xl" onClick={() => setMenuOpen(false)} />
 
-        <div className={`relative flex h-full flex-col px-6 pt-8 transition-transform duration-700 lg:px-20 ${menuOpen ? "translate-y-0" : "-translate-y-8"}`}>
+        <div
+          className={`relative flex h-full flex-col px-6 pt-8 transition-transform duration-700 lg:px-20 ${
+            menuOpen ? "translate-y-0" : "-translate-y-8"
+          }`}
+        >
           <div className="mb-12 flex items-center justify-between">
             <Link prefetch={false} href="/" onClick={() => setMenuOpen(false)}>
               <NextImage
@@ -213,6 +263,7 @@ export function Navigation() {
             </Link>
 
             <button
+              type="button"
               onClick={() => setMenuOpen(false)}
               className="z-[70] flex items-center gap-2 text-black transition-colors hover:text-[#E31E25]"
               aria-label="Close menu"
@@ -220,6 +271,27 @@ export function Navigation() {
               <span className="text-[10px] font-medium uppercase tracking-[0.2em]">Close</span>
               <X className="h-5 w-5" />
             </button>
+          </div>
+
+          <div className="mb-10 grid grid-cols-2 gap-3 lg:hidden">
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false)
+                setSearchOpen(true)
+              }}
+              className="inline-flex items-center justify-center border border-black/10 bg-white px-4 py-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black transition-colors duration-300 hover:border-[#E31E25] hover:text-[#E31E25]"
+            >
+              Search
+            </button>
+            <Link
+              prefetch={false}
+              href={accountHref}
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex items-center justify-center border border-black/10 bg-white px-4 py-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black transition-colors duration-300 hover:border-[#E31E25] hover:text-[#E31E25]"
+            >
+              {accountLabel}
+            </Link>
           </div>
 
           <nav className="flex flex-col gap-4" aria-label="Main navigation">
@@ -251,7 +323,7 @@ export function Navigation() {
                   </Link>
                 )}
 
-                {item.isShop && (
+                {item.isShop ? (
                   <div
                     className={`overflow-hidden pl-4 transition-all duration-500 ${
                       shopAccordionOpen ? "mt-2 max-h-[500px] opacity-100" : "max-h-0 opacity-0"
@@ -271,7 +343,7 @@ export function Navigation() {
                       ))}
                     </div>
                   </div>
-                )}
+                ) : null}
               </div>
             ))}
           </nav>
@@ -300,6 +372,8 @@ export function Navigation() {
           </div>
         </div>
       </div>
+
+      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   )
 }
