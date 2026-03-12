@@ -9,7 +9,9 @@ import {
   DEFAULT_LAST_NAME,
   DEFAULT_PHONE,
   DEFAULT_PHONE_COUNTRY,
+  authenticateStoredUser,
   getStoredSession,
+  registerStoredUser,
   setStoredSession,
 } from "@/lib/auth"
 import { LoginForm } from "@/components/login/login-form"
@@ -93,34 +95,51 @@ export function AuthShell() {
         <div className="grid gap-5 xl:grid-cols-2">
           <LoginForm
             isSubmitting={isSubmitting}
-            onSubmit={({ email }) => {
-              const [firstName, lastName = DEFAULT_LAST_NAME] = email
-                .split(/[\s._-]+/)
-                .filter(Boolean)
-                .map((part) => normalizeName(part))
+            onSubmit={({ email, password }) => {
+              const result = authenticateStoredUser(email, password)
+              if (!result.ok) {
+                return result.error
+              }
 
               enterAccount({
-                firstName: firstName || "Collector",
-                lastName: normalizeName(lastName || DEFAULT_LAST_NAME),
-                email,
-                phone: DEFAULT_PHONE,
-                phoneCountry: DEFAULT_PHONE_COUNTRY,
+                firstName: result.data.firstName,
+                lastName: result.data.lastName,
+                email: result.data.email,
+                phone: result.data.phone,
+                phoneCountry: result.data.phoneCountry,
                 source: "login",
               })
+
+              return null
             }}
           />
 
           <RegisterForm
             isSubmitting={isSubmitting}
-            onSubmit={({ firstName, lastName, email }) => {
-              enterAccount({
+            onSubmit={({ firstName, lastName, email, password }) => {
+              const result = registerStoredUser({
                 firstName: normalizeName(firstName),
                 lastName: normalizeName(lastName || DEFAULT_LAST_NAME),
                 email,
+                password,
                 phone: DEFAULT_PHONE,
                 phoneCountry: DEFAULT_PHONE_COUNTRY,
+              })
+
+              if (!result.ok) {
+                return result.error
+              }
+
+              enterAccount({
+                firstName: result.data.firstName,
+                lastName: result.data.lastName,
+                email: result.data.email,
+                phone: result.data.phone,
+                phoneCountry: result.data.phoneCountry,
                 source: "register",
               })
+
+              return null
             }}
           />
         </div>

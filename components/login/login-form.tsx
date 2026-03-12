@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { ArrowRight, KeyRound } from "lucide-react"
+import { ArrowRight, Eye, EyeOff, KeyRound } from "lucide-react"
 
 type LoginValues = {
   email: string
@@ -12,11 +12,12 @@ export function LoginForm({
   onSubmit,
   isSubmitting,
 }: {
-  onSubmit: (values: LoginValues) => void
+  onSubmit: (values: LoginValues) => string | null
   isSubmitting: boolean
 }) {
   const [values, setValues] = useState<LoginValues>({ email: "", password: "" })
   const [error, setError] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -26,8 +27,13 @@ export function LoginForm({
       return
     }
 
+    const submitError = onSubmit({ email: values.email.trim(), password: values.password })
+    if (submitError) {
+      setError(submitError)
+      return
+    }
+
     setError(null)
-    onSubmit({ email: values.email.trim(), password: values.password })
   }
 
   return (
@@ -46,11 +52,14 @@ export function LoginForm({
 
       <div className="mt-5 space-y-4">
         <label className="block">
-          <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Email or username</span>
+          <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Email</span>
           <input
-            type="text"
+            type="email"
             value={values.email}
-            onChange={(event) => setValues((current) => ({ ...current, email: event.target.value }))}
+            onChange={(event) => {
+              setValues((current) => ({ ...current, email: event.target.value }))
+              setError(null)
+            }}
             className="w-full border border-black/10 bg-[#faf6ee] px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
             placeholder="user@example.com"
           />
@@ -58,13 +67,26 @@ export function LoginForm({
 
         <label className="block">
           <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Password</span>
-          <input
-            type="password"
-            value={values.password}
-            onChange={(event) => setValues((current) => ({ ...current, password: event.target.value }))}
-            className="w-full border border-black/10 bg-[#faf6ee] px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={(event) => {
+                setValues((current) => ({ ...current, password: event.target.value }))
+                setError(null)
+              }}
+              className="w-full border border-black/10 bg-[#faf6ee] px-4 py-3 pr-12 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
+              placeholder="Password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((current) => !current)}
+              className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center text-black/48 transition-colors hover:text-[#D33740]"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
         </label>
       </div>
 

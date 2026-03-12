@@ -1,4 +1,4 @@
-﻿import { Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import type { CheckoutAddress, ShippingFormValues } from "@/components/Checkout/checkout-types"
 
 type CheckoutShippingStepProps = {

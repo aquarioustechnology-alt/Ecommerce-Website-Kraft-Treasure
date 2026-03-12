@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, useState } from "react"
-import { ArrowRight, UserPlus } from "lucide-react"
+import { ArrowRight, Eye, EyeOff, UserPlus } from "lucide-react"
 
 type RegisterValues = {
   firstName: string
@@ -14,7 +14,7 @@ export function RegisterForm({
   onSubmit,
   isSubmitting,
 }: {
-  onSubmit: (values: RegisterValues) => void
+  onSubmit: (values: RegisterValues) => string | null
   isSubmitting: boolean
 }) {
   const [values, setValues] = useState<RegisterValues>({
@@ -24,6 +24,7 @@ export function RegisterForm({
     password: "",
   })
   const [error, setError] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -33,13 +34,19 @@ export function RegisterForm({
       return
     }
 
-    setError(null)
-    onSubmit({
+    const submitError = onSubmit({
       firstName: values.firstName.trim(),
       lastName: values.lastName.trim(),
       email: values.email.trim(),
       password: values.password,
     })
+
+    if (submitError) {
+      setError(submitError)
+      return
+    }
+
+    setError(null)
   }
 
   return (
@@ -62,7 +69,10 @@ export function RegisterForm({
           <input
             type="text"
             value={values.firstName}
-            onChange={(event) => setValues((current) => ({ ...current, firstName: event.target.value }))}
+            onChange={(event) => {
+              setValues((current) => ({ ...current, firstName: event.target.value }))
+              setError(null)
+            }}
             className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
             placeholder="First Name"
           />
@@ -73,18 +83,24 @@ export function RegisterForm({
           <input
             type="text"
             value={values.lastName}
-            onChange={(event) => setValues((current) => ({ ...current, lastName: event.target.value }))}
+            onChange={(event) => {
+              setValues((current) => ({ ...current, lastName: event.target.value }))
+              setError(null)
+            }}
             className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
             placeholder="Last Name"
           />
         </label>
 
         <label className="block sm:col-span-2">
-          <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Email or username</span>
+          <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Email</span>
           <input
-            type="text"
+            type="email"
             value={values.email}
-            onChange={(event) => setValues((current) => ({ ...current, email: event.target.value }))}
+            onChange={(event) => {
+              setValues((current) => ({ ...current, email: event.target.value }))
+              setError(null)
+            }}
             className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
             placeholder="user@example.com"
           />
@@ -92,13 +108,26 @@ export function RegisterForm({
 
         <label className="block sm:col-span-2">
           <span className="mb-2 block text-[11px] uppercase tracking-[0.22em] text-black/48">Password</span>
-          <input
-            type="password"
-            value={values.password}
-            onChange={(event) => setValues((current) => ({ ...current, password: event.target.value }))}
-            className="w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
-            placeholder="Password"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={(event) => {
+                setValues((current) => ({ ...current, password: event.target.value }))
+                setError(null)
+              }}
+              className="w-full border border-black/10 bg-white px-4 py-3 pr-12 text-sm text-black outline-none transition-colors focus:border-[#D33740]"
+              placeholder="Password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((current) => !current)}
+              className="absolute inset-y-0 right-0 flex w-12 cursor-pointer items-center justify-center text-black/48 transition-colors hover:text-[#D33740]"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
         </label>
       </div>
 
