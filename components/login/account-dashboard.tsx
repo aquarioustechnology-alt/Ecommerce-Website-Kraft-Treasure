@@ -3,13 +3,16 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
+import { format } from "date-fns"
 import { useEffect, useState, type ReactNode } from "react"
 import * as FlagIcons from "country-flag-icons/react/3x2"
 import {
+  CalendarRange,
   Download,
   FileText,
   KeyRound,
   LifeBuoy,
+  ListFilter,
   LogOut,
   MapPin,
   Package,
@@ -30,6 +33,8 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/Homepage/select"
+import { Calendar } from "@/components/Homepage/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/Homepage/popover"
 import {
   COUNTRY_DIAL_OPTIONS,
   getCountryByDialCode,
@@ -69,6 +74,13 @@ type OrderRecord = {
   }
 }
 
+type TransactionRecord = {
+  id: string
+  orderId: string
+  method: string
+  date: string
+}
+
 type AddressLabel = "Home" | "Work" | "Other"
 
 type AddressRecord = {
@@ -89,6 +101,9 @@ type ProfileFormState = {
   phoneCountry: string
   phoneNumber: string
 }
+
+type OrderDateRangeFilter = "all" | "mar-1-7" | "mar-8-14" | "mar-2026"
+type OrderStatusFilter = "all" | "processing" | "shipped" | "delivered" | "cancellation_requested"
 
 const ACCOUNT_SECTIONS: SectionConfig[] = [
   {
@@ -175,10 +190,10 @@ const ORDERS: OrderRecord[] = [
   },
 ]
 
-const TRANSACTIONS = [
-  { id: "TXN-919201", method: "UPI", date: "11 Mar 2026", amount: "Rs. 19,200" },
-  { id: "TXN-914004", method: "Netbanking", date: "02 Mar 2026", amount: "Rs. 12,400" },
-] as const
+const TRANSACTIONS: TransactionRecord[] = [
+  { id: "TXN-919201", orderId: "KT-24018", method: "UPI", date: "11 Mar 2026" },
+  { id: "TXN-914004", orderId: "KT-23974", method: "Netbanking", date: "02 Mar 2026" },
+]
 
 const ADDRESS_LABEL_OPTIONS: AddressLabel[] = ["Home", "Work", "Other"]
 
@@ -219,6 +234,82 @@ const INITIAL_ADDRESSES: AddressRecord[] = [
   },
 ]
 
+const ORDER_DATE_RANGE_OPTIONS = [
+  { value: "all", label: "All Dates" },
+  { value: "mar-1-7", label: "01 Mar - 07 Mar 2026" },
+  { value: "mar-8-14", label: "08 Mar - 14 Mar 2026" },
+  { value: "mar-2026", label: "March 2026" },
+] as const
+
+const ORDER_STATUS_OPTIONS = [
+  { value: "all", label: "All Status" },
+  { value: "processing", label: "Processing" },
+  { value: "shipped", label: "Shipped" },
+  { value: "delivered", label: "Delivered" },
+  { value: "cancellation_requested", label: "Cancellation Requested" },
+] as const
+
+const MONTH_INDEX_BY_LABEL: Record<string, number> = {
+  Jan: 0,
+  Feb: 1,
+  Mar: 2,
+  Apr: 3,
+  May: 4,
+  Jun: 5,
+  Jul: 6,
+  Aug: 7,
+  Sep: 8,
+  Oct: 9,
+  Nov: 10,
+  Dec: 11,
+}
+
+function parseDisplayDate(value: string) {
+  const [day, month, year] = value.split(" ")
+  return new Date(Number(year), MONTH_INDEX_BY_LABEL[month] ?? 0, Number(day))
+}
+
+function getOrderDisplayStatus(order: OrderRecord, cancelledOrderIds: string[]) {
+  return cancelledOrderIds.includes(order.id) ? "Cancellation Requested" : order.status
+}
+
+function matchesOrderDateRange(placedOn: string, startDate?: Date, endDate?: Date) {
+  if (!startDate && !endDate) return true
+
+  const placedDate = parseDisplayDate(placedOn)
+  let lowerBound = startDate ? new Date(startDate) : undefined
+  let upperBound = endDate ? new Date(endDate) : undefined
+
+  if (lowerBound && upperBound && lowerBound.getTime() > upperBound.getTime()) {
+    const swappedLower = new Date(upperBound)
+    const swappedUpper = new Date(lowerBound)
+    lowerBound = swappedLower
+    upperBound = swappedUpper
+  }
+
+  if (lowerBound) {
+    lowerBound.setHours(0, 0, 0, 0)
+    if (placedDate < lowerBound) return false
+  }
+
+  if (upperBound) {
+    upperBound.setHours(23, 59, 59, 999)
+    if (placedDate > upperBound) return false
+  }
+
+  return true
+}
+
+function matchesOrderStatus(status: string, filter: OrderStatusFilter) {
+  if (filter === "all") return true
+
+  if (filter === "cancellation_requested") {
+    return status === "Cancellation Requested"
+  }
+
+  return status.toLowerCase() === filter
+}
+
 function PrimaryButton({ label, href, onClick }: { label: string; href?: string; onClick?: () => void }) {
   const classes = "group relative inline-flex cursor-pointer items-center justify-center gap-2 overflow-hidden bg-[#D33740] px-6 py-4 text-[11px] font-medium uppercase tracking-[0.22em] text-white shadow-md transition-colors duration-500"
   const content = (
@@ -234,13 +325,94 @@ function PrimaryButton({ label, href, onClick }: { label: string; href?: string;
 
 function ContentHeader({ title, description, action }: { title: string; description: string; action?: ReactNode }) {
   return (
-    <div className="flex flex-col gap-5 border-b border-black/10 pb-5 lg:flex-row lg:items-start lg:justify-between">
+    <div className="flex flex-col gap-3 border-b border-black/10 pb-4 lg:flex-row lg:items-start lg:justify-between">
       <div className="min-w-0">
         <p className="text-[10px] font-sans uppercase tracking-[0.3em] text-[#B8894A]">Account Section</p>
-        <h2 className="mt-3 font-serif text-[34px] leading-tight text-foreground lg:text-[40px]">{title}</h2>
-        <p className="mt-3 text-sm font-sans leading-7 text-muted-foreground">{description}</p>
+        <h2 className="mt-2 font-serif text-[34px] leading-tight text-foreground lg:text-[40px]">{title}</h2>
+        <p className="mt-2 text-sm font-sans leading-6 text-muted-foreground">{description}</p>
       </div>
-      {action ? <div className="shrink-0 lg:pt-3">{action}</div> : null}
+      {action ? <div className="shrink-0 lg:pt-1">{action}</div> : null}
+    </div>
+  )
+}
+
+function DashboardFilterSelect({
+  label,
+  value,
+  onValueChange,
+  options,
+  icon,
+}: {
+  label: string
+  value: string
+  onValueChange: (value: string) => void
+  options: readonly { value: string; label: string }[]
+  icon: ReactNode
+}) {
+  const selectedOption = options.find((option) => option.value === value) || options[0]
+
+  return (
+    <div className="min-w-[220px]">
+      <span className="mb-2 block text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">{label}</span>
+      <Select value={value} onValueChange={onValueChange}>
+        <SelectTrigger size="default" className="w-full cursor-pointer rounded-none border-black/10 bg-white px-4 py-3 text-left text-sm font-sans text-foreground shadow-none transition-colors duration-500 focus:ring-0 focus-visible:ring-0">
+          <span className="flex items-center gap-2 truncate">
+            <span className="text-[#B8894A]">{icon}</span>
+            <span className="truncate">{selectedOption.label}</span>
+          </span>
+        </SelectTrigger>
+        <SelectContent className="rounded-none border-[#D7CEBF] bg-white shadow-lg">
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value} className="py-2.5">{option.label}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  )
+}
+
+function DateFilterPicker({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string
+  value: Date | undefined
+  onChange: (value: Date | undefined) => void
+  placeholder: string
+}) {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <div className="w-[188px] min-w-[188px]">
+      <span className="mb-2 block text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">{label}</span>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className="flex w-full cursor-pointer items-center justify-between border border-black/10 bg-white px-4 py-3 text-sm font-sans text-foreground transition-colors duration-500 hover:border-[#D33740]/60"
+          >
+            <span className="flex items-center gap-2 truncate">
+              <CalendarRange className="h-4 w-4 text-[#B8894A]" />
+              <span className={value ? "text-foreground" : "text-muted-foreground"}>
+                {value ? format(value, "dd MMM yyyy") : placeholder}
+              </span>
+            </span>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent align="end" className="w-auto rounded-none border-[#D7CEBF] bg-white p-0 shadow-lg">
+          <Calendar
+            mode="single"
+            selected={value}
+            onSelect={(date) => {
+              onChange(date)
+              if (date) setOpen(false)
+            }}
+            defaultMonth={value || new Date(2026, 2, 1)}
+          />
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }
@@ -521,6 +693,116 @@ function createEmptyAddress(): AddressRecord {
 function getTrackingOrderUrl(trackingCode: string) {
   return `https://www.17track.net/en/track?nums=${encodeURIComponent(trackingCode)}`
 }
+
+function DetailModal({
+  smallLabel,
+  heading,
+  order,
+  status,
+  onClose,
+  onDownloadInvoice,
+  showCancelAction,
+  cancelDisabled = false,
+  onCancelOrder,
+}: {
+  smallLabel: string
+  heading: string
+  order: OrderRecord
+  status: string
+  onClose: () => void
+  onDownloadInvoice: (order: OrderRecord) => void
+  showCancelAction: boolean
+  cancelDisabled?: boolean
+  onCancelOrder?: (orderId: string) => void
+}) {
+  const cancelLabel = status === "Cancellation Requested" ? "Cancel Requested" : "Cancel Order"
+
+  return (
+    <div className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-6 lg:px-8">
+      <button type="button" onClick={onClose} className="absolute inset-0 bg-black/55 backdrop-blur-[2px]" aria-label={`Close ${smallLabel}`} />
+
+      <div className="relative z-10 max-h-[90vh] w-full max-w-[1080px] overflow-y-auto border border-black/10 bg-white shadow-[0_30px_120px_-45px_rgba(0,0,0,0.7)]">
+        <div className="flex items-start justify-between gap-4 border-b border-black/10 px-6 py-5 lg:px-8">
+          <div>
+            <p className="text-[10px] font-sans uppercase tracking-[0.28em] text-[#B8894A]">{smallLabel}</p>
+            <h3 className="mt-3 font-serif text-[34px] leading-tight text-black lg:text-[40px]">{heading}</h3>
+          </div>
+
+          <button type="button" onClick={onClose} className="inline-flex h-10 w-10 cursor-pointer items-center justify-center border border-black/10 text-foreground transition-colors hover:border-[#D33740] hover:text-[#D33740]" aria-label={`Close ${smallLabel}`}>
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="grid gap-6 p-6 lg:grid-cols-[1.2fr_0.8fr] lg:p-8">
+          <div className="space-y-6">
+            <div className="flex flex-col gap-4 border border-black/10 bg-[#FBF8F2] p-4 sm:flex-row sm:items-start">
+              <div className="h-[116px] w-[92px] shrink-0 self-start overflow-hidden border border-black/10 bg-white">
+                <Image src={order.image} alt={order.productName} width={92} height={116} className="h-full w-full object-cover" />
+              </div>
+
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Order ID {order.id}</span>
+                  <StatusBadge status={status} />
+                </div>
+                <h4 className="mt-3 font-serif text-[24px] leading-tight text-black lg:text-[28px]">{order.productName}</h4>
+                <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans font-semibold text-black">
+                  <span>{order.productPrice}</span>
+                  <span>Qty: {order.quantity}</span>
+                  <span>Placed on {order.placedOn}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="border border-black/10 p-5">
+              <p className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Shipping Address</p>
+              <div className="mt-4 max-w-[460px] text-sm font-sans leading-6 text-black/68">
+                <p className="font-semibold text-black">{order.recipientName}</p>
+                <p className="mt-2">{order.shippingAddress.slice(1).join(", ")}</p>
+              </div>
+            </div>
+
+            <div className="border border-black/10 p-5">
+              <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]"><Truck className="h-4 w-4" />Tracking Details</div>
+              <p className="mt-4 text-sm font-sans leading-7 text-black/62">Pickup is scheduled with the courier partner.</p>
+              <div className="mt-4 grid gap-4 border-t border-black/10 pt-4 sm:grid-cols-2">
+                <div>
+                  <p className="text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">Tracking ID</p>
+                  <p className="mt-2 text-sm font-sans font-semibold text-black">{order.trackingCode}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">Expected Delivery</p>
+                  <p className="mt-2 text-sm font-sans font-semibold text-black">{order.deliveryWindow}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="border border-black/10 bg-[#FBF8F2] p-5">
+              <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]"><ShieldCheck className="h-4 w-4" />Payment Summary</div>
+              <div className="mt-5 space-y-3 border-b border-black/10 pb-4">
+                <SummaryRow label="Subtotal" value={order.paymentSummary.subtotal} />
+                <SummaryRow label="Shipping" value={order.paymentSummary.shipping} />
+                <SummaryRow label="Tax" value={order.paymentSummary.tax} />
+                <SummaryRow label="Discount" value={order.paymentSummary.discount} />
+              </div>
+              <SummaryRow label="Total Paid" value={order.paymentSummary.total} total />
+            </div>
+
+            <div className="grid gap-3">
+              <ActionButton label="Download Invoice" icon={Download} onClick={() => onDownloadInvoice(order)} />
+              <ActionLinkButton label="Need Help" icon={LifeBuoy} href="/contact" />
+              {showCancelAction ? (
+                <ActionButton label={cancelLabel} icon={X} tone="danger" disabled={cancelDisabled} onClick={() => onCancelOrder?.(order.id)} />
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 export function AccountDashboard({ session, onLogout }: { session: StoredSession; onLogout: () => void }) {
   const searchParams = useSearchParams()
   const sectionParam = searchParams.get("section")
@@ -530,6 +812,10 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [profileValues, setProfileValues] = useState(() => createProfileState(session))
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null)
+  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null)
+  const [orderStartDate, setOrderStartDate] = useState<Date | undefined>(undefined)
+  const [orderEndDate, setOrderEndDate] = useState<Date | undefined>(undefined)
+  const [orderStatusFilter, setOrderStatusFilter] = useState<OrderStatusFilter>("all")
   const [cancelledOrderIds, setCancelledOrderIds] = useState<string[]>([])
   const [savedAddresses, setSavedAddresses] = useState<AddressRecord[]>(INITIAL_ADDRESSES)
   const [editingAddressId, setEditingAddressId] = useState<string | null>(null)
@@ -541,16 +827,27 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
   }, [session])
 
   useEffect(() => {
-    if (!selectedOrderId) return
+    if (!selectedOrderId && !selectedTransactionId) return
 
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
     return () => {
       document.body.style.overflow = previousOverflow
     }
-  }, [selectedOrderId])
+  }, [selectedOrderId, selectedTransactionId])
 
   const selectedOrder = ORDERS.find((order) => order.id === selectedOrderId) || null
+  const filteredOrders = ORDERS.filter((order) => {
+    const derivedStatus = getOrderDisplayStatus(order, cancelledOrderIds)
+    return matchesOrderDateRange(order.placedOn, orderStartDate, orderEndDate) && matchesOrderStatus(derivedStatus, orderStatusFilter)
+  })
+  const transactionEntries = TRANSACTIONS
+    .map((transaction) => {
+      const order = ORDERS.find((candidate) => candidate.id === transaction.orderId)
+      return order ? { transaction, order } : null
+    })
+    .filter((entry): entry is { transaction: TransactionRecord; order: OrderRecord } => Boolean(entry))
+  const selectedTransactionEntry = transactionEntries.find((entry) => entry.transaction.id === selectedTransactionId) || null
 
   const handleProfileSave = () => {
     const fallbackPhone = splitPhoneNumber(DEFAULT_PHONE)
@@ -673,6 +970,30 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
     <HeaderActionButton label="Edit Profile" icon={PencilLine} onClick={() => setIsEditingProfile(true)} />
   )
 
+  const ordersHeaderAction = (
+    <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end lg:justify-end">
+      <DateFilterPicker
+        label="Start Date"
+        value={orderStartDate}
+        onChange={setOrderStartDate}
+        placeholder="Select start date"
+      />
+      <DateFilterPicker
+        label="End Date"
+        value={orderEndDate}
+        onChange={setOrderEndDate}
+        placeholder="Select end date"
+      />
+      <DashboardFilterSelect
+        label="Status"
+        value={orderStatusFilter}
+        onValueChange={(value) => setOrderStatusFilter(value as OrderStatusFilter)}
+        options={ORDER_STATUS_OPTIONS}
+        icon={<ListFilter className="h-4 w-4" />}
+      />
+    </div>
+  )
+
   const addressHeaderAction = <HeaderActionButton label="Add New Address" icon={Plus} onClick={handleAddAddress} tone="brand" />
   const contentTitle = activeSectionId === "address" && isAddingAddress ? "Add a New Address" : activeSection.title
   const contentDescription = activeSectionId === "address" && isAddingAddress
@@ -681,7 +1002,7 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
 
   return (
     <>
-      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#faf5ea_100%)] px-6 py-12 lg:px-12 lg:py-16">
+      <section className="bg-[linear-gradient(180deg,#ffffff_0%,#faf5ea_100%)] px-6 pt-[50px] pb-12 lg:px-12 lg:pt-[50px] lg:pb-16">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
             <aside className="border border-black/10 bg-white p-5 lg:w-[260px] lg:flex-none lg:p-6 xl:w-[280px]">
@@ -727,7 +1048,9 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
                     ? profileHeaderAction
                     : activeSectionId === "address"
                       ? (addressDraft ? undefined : addressHeaderAction)
-                      : undefined
+                      : activeSectionId === "orders"
+                        ? ordersHeaderAction
+                        : undefined
                 }
               />
 
@@ -872,56 +1195,84 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
 
               {activeSectionId === "orders" && (
                 <div className="mt-6 space-y-5">
-                  {ORDERS.map((order) => {
-                    const derivedStatus = cancelledOrderIds.includes(order.id) ? "Cancellation Requested" : order.status
-                    const cancelDisabled = order.status === "Delivered" || cancelledOrderIds.includes(order.id)
-                    return (
-                      <article key={order.id} className="border border-black/10 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f0_100%)] p-5 lg:p-6">
-                        <div className="flex flex-col gap-6">
-                          <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-                            <div className="h-[128px] w-[104px] shrink-0 overflow-hidden border border-black/10 bg-white">
-                              <Image src={order.image} alt={order.productName} width={104} height={128} className="h-full w-full object-cover" />
-                            </div>
-
-                            <div className="min-w-0 flex-1">
-                              <div className="flex flex-wrap items-center gap-3">
-                                <span className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Order ID {order.id}</span>
-                                <StatusBadge status={derivedStatus} />
+                  {filteredOrders.length ? (
+                    filteredOrders.map((order) => {
+                      const derivedStatus = getOrderDisplayStatus(order, cancelledOrderIds)
+                      const isCancellationRequested = cancelledOrderIds.includes(order.id)
+                      const cancelDisabled = order.status === "Delivered" || isCancellationRequested
+                      return (
+                        <article key={order.id} className="border border-black/10 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f0_100%)] p-5 lg:p-6">
+                          <div className="flex flex-col gap-6">
+                            <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                              <div className="h-[128px] w-[104px] shrink-0 overflow-hidden border border-black/10 bg-white">
+                                <Image src={order.image} alt={order.productName} width={104} height={128} className="h-full w-full object-cover" />
                               </div>
 
-                              <h3 className="mt-3 font-serif text-[22px] leading-tight text-black sm:text-[24px]">{order.productName}</h3>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex flex-wrap items-center gap-3">
+                                  <span className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Order ID {order.id}</span>
+                                  <StatusBadge status={derivedStatus} />
+                                </div>
 
-                              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans font-semibold text-black">
-                                <span>{order.productPrice}</span>
-                                <span>Qty: {order.quantity}</span>
-                                <span>Placed on {order.placedOn}</span>
+                                <h3 className="mt-3 font-serif text-[22px] leading-tight text-black sm:text-[24px]">{order.productName}</h3>
+
+                                <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans font-semibold text-black">
+                                  <span>{order.productPrice}</span>
+                                  <span>Qty: {order.quantity}</span>
+                                  <span>Placed on {order.placedOn}</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-                            <ActionButton label="Download Invoice" icon={Download} onClick={() => handleInvoiceDownload(order)} />
-                            <ActionButton label={cancelDisabled ? "Cancel Requested" : "Cancel Order"} icon={X} tone="danger" disabled={cancelDisabled} onClick={() => handleCancelOrder(order.id)} />
-                            <ActionLinkButton label="Need Help" icon={LifeBuoy} href="/contact" />
-                            <ActionExternalLinkButton label="Tracking Order" icon={Truck} href={getTrackingOrderUrl(order.trackingCode)} />
-                            <ActionButton label="View Details" icon={FileText} tone="primary" onClick={() => setSelectedOrderId(order.id)} />
+                            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                              <ActionButton label="Download Invoice" icon={Download} onClick={() => handleInvoiceDownload(order)} />
+                              <ActionButton label={isCancellationRequested ? "Cancel Requested" : "Cancel Order"} icon={X} tone="danger" disabled={cancelDisabled} onClick={() => handleCancelOrder(order.id)} />
+                              <ActionLinkButton label="Need Help" icon={LifeBuoy} href="/contact" />
+                              <ActionExternalLinkButton label="Tracking Order" icon={Truck} href={getTrackingOrderUrl(order.trackingCode)} />
+                              <ActionButton label="View Details" icon={FileText} tone="primary" onClick={() => { setSelectedTransactionId(null); setSelectedOrderId(order.id) }} />
+                            </div>
                           </div>
-                        </div>
-                      </article>
-                    )
-                  })}
+                        </article>
+                      )
+                    })
+                  ) : (
+                    <div className="border border-dashed border-black/10 bg-[#FBF8F2] px-6 py-10 text-center">
+                      <p className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">No Matching Orders</p>
+                      <p className="mt-3 text-sm font-sans text-muted-foreground">Adjust the date range or status filter to see available orders.</p>
+                    </div>
+                  )}
                 </div>
               )}
 
               {activeSectionId === "transactions" && (
                 <div className="mt-6 space-y-4">
-                  {TRANSACTIONS.map((transaction) => (
-                    <div key={transaction.id} className="grid gap-4 border border-black/10 bg-[#FBF8F2] p-5 md:grid-cols-[180px_140px_minmax(0,1fr)_120px] md:items-center">
-                      <div><p className="text-[10px] font-sans uppercase tracking-[0.22em] text-[#B8894A]">Transaction</p><p className="mt-2 text-sm font-sans font-semibold text-foreground">{transaction.id}</p></div>
-                      <div><p className="text-sm font-sans text-foreground">{transaction.method}</p></div>
-                      <div><p className="text-sm font-sans text-muted-foreground">{transaction.date}</p></div>
-                      <div className="md:text-right"><p className="text-base font-sans font-semibold text-foreground">{transaction.amount}</p></div>
-                    </div>
+                  {transactionEntries.map(({ transaction, order }) => (
+                    <article key={transaction.id} className="border border-black/10 bg-[linear-gradient(180deg,#ffffff_0%,#fbf7f0_100%)] p-5 lg:p-6">
+                      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-center">
+                          <div className="h-[96px] w-[76px] shrink-0 overflow-hidden border border-black/10 bg-white">
+                            <Image src={order.image} alt={order.productName} width={76} height={96} className="h-full w-full object-cover" />
+                          </div>
+
+                          <div className="min-w-0 flex-1 space-y-3">
+                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans">
+                              <span className="min-w-0 truncate font-semibold text-black">{order.productName}</span>
+                              <span className="text-foreground">Qty: {order.quantity}</span>
+                              <span className="font-semibold text-black">{order.productPrice}</span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans text-foreground">
+                              <span>{transaction.date}</span>
+                              <span>{transaction.method}</span>
+                              <span className="font-semibold text-foreground">{transaction.id}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="xl:shrink-0">
+                          <ActionButton label="View Details" icon={FileText} tone="primary" onClick={() => { setSelectedOrderId(null); setSelectedTransactionId(transaction.id) }} />
+                        </div>
+                      </div>
+                    </article>
                   ))}
                 </div>
               )}
@@ -931,91 +1282,34 @@ export function AccountDashboard({ session, onLogout }: { session: StoredSession
       </section>
 
       {selectedOrder ? (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-6 lg:px-8">
-          <button type="button" onClick={() => setSelectedOrderId(null)} className="absolute inset-0 bg-black/55 backdrop-blur-[2px]" aria-label="Close order details" />
+        <DetailModal
+          smallLabel="Order Details"
+          heading={`Order ${selectedOrder.id}`}
+          order={selectedOrder}
+          status={getOrderDisplayStatus(selectedOrder, cancelledOrderIds)}
+          onClose={() => setSelectedOrderId(null)}
+          onDownloadInvoice={handleInvoiceDownload}
+          showCancelAction
+          cancelDisabled={selectedOrder.status === "Delivered" || cancelledOrderIds.includes(selectedOrder.id)}
+          onCancelOrder={handleCancelOrder}
+        />
+      ) : null}
 
-          <div className="relative z-10 max-h-[90vh] w-full max-w-[1080px] overflow-y-auto border border-black/10 bg-white shadow-[0_30px_120px_-45px_rgba(0,0,0,0.7)]">
-            <div className="flex items-start justify-between gap-4 border-b border-black/10 px-6 py-5 lg:px-8">
-              <div>
-                <p className="text-[10px] font-sans uppercase tracking-[0.28em] text-[#B8894A]">Order Details</p>
-                <h3 className="mt-3 font-serif text-[34px] leading-tight text-black lg:text-[40px]">Order {selectedOrder.id}</h3>
-              </div>
-
-              <button type="button" onClick={() => setSelectedOrderId(null)} className="inline-flex h-10 w-10 items-center justify-center border border-black/10 text-foreground transition-colors hover:border-[#D33740] hover:text-[#D33740]" aria-label="Close order modal">
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="grid gap-6 p-6 lg:grid-cols-[1.2fr_0.8fr] lg:p-8">
-              <div className="space-y-6">
-                <div className="flex flex-col gap-4 border border-black/10 bg-[#FBF8F2] p-4 sm:flex-row sm:items-start">
-                  <div className="h-[116px] w-[92px] shrink-0 self-start overflow-hidden border border-black/10 bg-white">
-                    <Image src={selectedOrder.image} alt={selectedOrder.productName} width={92} height={116} className="h-full w-full object-cover" />
-                  </div>
-
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Order ID {selectedOrder.id}</span>
-                      <StatusBadge status={cancelledOrderIds.includes(selectedOrder.id) ? "Cancellation Requested" : selectedOrder.status} />
-                    </div>
-                    <h4 className="mt-3 font-serif text-[24px] leading-tight text-black lg:text-[28px]">{selectedOrder.productName}</h4>
-                    <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-sans font-semibold text-black">
-                      <span>{selectedOrder.productPrice}</span>
-                      <span>Qty: {selectedOrder.quantity}</span>
-                      <span>Placed on {selectedOrder.placedOn}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border border-black/10 p-5">
-                  <p className="text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]">Shipping Address</p>
-                  <div className="mt-4 max-w-[460px] text-sm font-sans leading-6 text-black/68">
-                    <p className="font-semibold text-black">{selectedOrder.recipientName}</p>
-                    <p className="mt-2">{selectedOrder.shippingAddress.slice(1).join(", ")}</p>
-                  </div>
-                </div>
-
-                <div className="border border-black/10 p-5">
-                  <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]"><Truck className="h-4 w-4" />Tracking Details</div>
-                  <p className="mt-4 text-sm font-sans leading-7 text-black/62">Pickup is scheduled with the courier partner.</p>
-                  <div className="mt-4 grid gap-4 border-t border-black/10 pt-4 sm:grid-cols-2">
-                    <div>
-                      <p className="text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">Tracking ID</p>
-                      <p className="mt-2 text-sm font-sans font-semibold text-black">{selectedOrder.trackingCode}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-sans uppercase tracking-[0.22em] text-muted-foreground">Expected Delivery</p>
-                      <p className="mt-2 text-sm font-sans font-semibold text-black">{selectedOrder.deliveryWindow}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="border border-black/10 bg-[#FBF8F2] p-5">
-                  <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-[0.24em] text-[#B8894A]"><ShieldCheck className="h-4 w-4" />Payment Summary</div>
-                  <div className="mt-5 space-y-3 border-b border-black/10 pb-4">
-                    <SummaryRow label="Subtotal" value={selectedOrder.paymentSummary.subtotal} />
-                    <SummaryRow label="Shipping" value={selectedOrder.paymentSummary.shipping} />
-                    <SummaryRow label="Tax" value={selectedOrder.paymentSummary.tax} />
-                    <SummaryRow label="Discount" value={selectedOrder.paymentSummary.discount} />
-                  </div>
-                  <SummaryRow label="Total Paid" value={selectedOrder.paymentSummary.total} total />
-                </div>
-
-                <div className="grid gap-3">
-                  <ActionButton label="Download Invoice" icon={Download} onClick={() => handleInvoiceDownload(selectedOrder)} />
-                  <ActionLinkButton label="Need Help" icon={LifeBuoy} href="/contact" />
-                  <ActionButton label={cancelledOrderIds.includes(selectedOrder.id) || selectedOrder.status === "Delivered" ? "Cancel Requested" : "Cancel Order"} icon={X} tone="danger" disabled={cancelledOrderIds.includes(selectedOrder.id) || selectedOrder.status === "Delivered"} onClick={() => handleCancelOrder(selectedOrder.id)} />
-                </div>
-              </div>
-            </div>
-              </div>
-        </div>
+      {selectedTransactionEntry ? (
+        <DetailModal
+          smallLabel="Transaction Details"
+          heading={`Transaction ${selectedTransactionEntry.transaction.id}`}
+          order={selectedTransactionEntry.order}
+          status={getOrderDisplayStatus(selectedTransactionEntry.order, cancelledOrderIds)}
+          onClose={() => setSelectedTransactionId(null)}
+          onDownloadInvoice={handleInvoiceDownload}
+          showCancelAction={false}
+        />
       ) : null}
     </>
   )
 }
+
 
 
 

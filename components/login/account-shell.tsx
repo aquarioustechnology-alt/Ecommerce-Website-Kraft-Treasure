@@ -1,14 +1,12 @@
-﻿"use client"
+"use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { ArrowRight } from "lucide-react"
 import { AccountDashboard } from "@/components/login/account-dashboard"
 import { AUTH_EVENT, clearStoredSession, getStoredSession, type StoredSession } from "@/lib/auth"
 
 export function AccountShell() {
-  const router = useRouter()
   const [session, setSession] = useState<StoredSession | null | undefined>(undefined)
 
   useEffect(() => {
@@ -76,8 +74,7 @@ export function AccountShell() {
       session={session}
       onLogout={() => {
         clearStoredSession()
-        router.push("/login")
-        router.refresh()
+        window.location.href = "/login"
       }}
     />
   )

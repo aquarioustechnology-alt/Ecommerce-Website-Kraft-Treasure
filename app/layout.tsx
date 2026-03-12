@@ -21,21 +21,8 @@ export const metadata: Metadata = {
     'Discover museum-quality handcrafted artifacts from Kraft Treasure. Luxury tribal art, textiles, and heritage pieces from the artisans of Arunachal Pradesh, curated for global collectors.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/images/logo/Logo content.png',
+    apple: '/images/logo/Logo content.png',
   },
 }
 
