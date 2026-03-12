@@ -1,9 +1,15 @@
 export type AuthSource = "login" | "register"
 
+export const DEFAULT_LAST_NAME = "Rana"
+export const DEFAULT_PHONE = "+91 98765 43210"
+export const DEFAULT_PHONE_COUNTRY = "IN"
+
 export type StoredSession = {
   firstName: string
   lastName: string
   email: string
+  phone: string
+  phoneCountry: string
   source: AuthSource
   createdAt: string
 }
@@ -27,8 +33,10 @@ export function getStoredSession(): StoredSession | null {
 
     return {
       firstName: parsed.firstName?.trim() || "Collector",
-      lastName: parsed.lastName?.trim() || "",
+      lastName: parsed.lastName?.trim() || DEFAULT_LAST_NAME,
       email: parsed.email,
+      phone: parsed.phone?.trim() || DEFAULT_PHONE,
+      phoneCountry: parsed.phoneCountry?.trim() || DEFAULT_PHONE_COUNTRY,
       source: parsed.source === "register" ? "register" : "login",
       createdAt: parsed.createdAt || new Date().toISOString(),
     }

@@ -4,9 +4,16 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { ArrowRight } from "lucide-react"
+import {
+  AUTH_EVENT,
+  DEFAULT_LAST_NAME,
+  DEFAULT_PHONE,
+  DEFAULT_PHONE_COUNTRY,
+  getStoredSession,
+  setStoredSession,
+} from "@/lib/auth"
 import { LoginForm } from "@/components/login/login-form"
 import { RegisterForm } from "@/components/login/register-form"
-import { AUTH_EVENT, getStoredSession, setStoredSession } from "@/lib/auth"
 
 function normalizeName(value: string) {
   const sanitized = value.trim()
@@ -34,11 +41,20 @@ export function AuthShell() {
     }
   }, [])
 
-  const enterAccount = (session: { firstName: string; lastName: string; email: string; source: "login" | "register" }) => {
+  const enterAccount = (session: {
+    firstName: string
+    lastName: string
+    email: string
+    phone?: string
+    phoneCountry?: string
+    source: "login" | "register"
+  }) => {
     setIsSubmitting(true)
 
     setStoredSession({
       ...session,
+      phone: session.phone || DEFAULT_PHONE,
+      phoneCountry: session.phoneCountry || DEFAULT_PHONE_COUNTRY,
       createdAt: new Date().toISOString(),
     })
 
@@ -78,15 +94,17 @@ export function AuthShell() {
           <LoginForm
             isSubmitting={isSubmitting}
             onSubmit={({ email }) => {
-              const [firstName, lastName = ""] = email
+              const [firstName, lastName = DEFAULT_LAST_NAME] = email
                 .split(/[\s._-]+/)
                 .filter(Boolean)
                 .map((part) => normalizeName(part))
 
               enterAccount({
                 firstName: firstName || "Collector",
-                lastName,
+                lastName: normalizeName(lastName || DEFAULT_LAST_NAME),
                 email,
+                phone: DEFAULT_PHONE,
+                phoneCountry: DEFAULT_PHONE_COUNTRY,
                 source: "login",
               })
             }}
@@ -97,8 +115,10 @@ export function AuthShell() {
             onSubmit={({ firstName, lastName, email }) => {
               enterAccount({
                 firstName: normalizeName(firstName),
-                lastName: normalizeName(lastName),
+                lastName: normalizeName(lastName || DEFAULT_LAST_NAME),
                 email,
+                phone: DEFAULT_PHONE,
+                phoneCountry: DEFAULT_PHONE_COUNTRY,
                 source: "register",
               })
             }}

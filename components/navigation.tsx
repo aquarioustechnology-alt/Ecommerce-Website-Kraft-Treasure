@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { useRouter } from "next/navigation"
@@ -244,14 +244,14 @@ export function Navigation() {
                       </p>
                     </div>
 
-                    <div className="py-2">
+                    <div className="py-1">
                       {ACCOUNT_MENU_ITEMS.map((item) => (
                         <Link
                           prefetch={false}
                           key={item.label}
                           href={item.href}
                           onClick={() => setAccountMenuOpen(false)}
-                          className="block px-4 py-3 text-sm font-sans text-black transition-colors hover:bg-[#FFF8F4] hover:text-[#D33740]"
+                          className="block px-4 py-2 text-sm font-sans text-black transition-colors hover:bg-[#FFF8F4] hover:text-[#D33740]"
                         >
                           {item.label}
                         </Link>
@@ -260,7 +260,7 @@ export function Navigation() {
                       <button
                         type="button"
                         onClick={handleLogout}
-                        className="flex w-full items-center gap-2 px-4 py-3 text-sm font-sans text-[#D33740] transition-colors hover:bg-[#FFF8F4]"
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm font-sans text-[#D33740] transition-colors hover:bg-[#FFF8F4]"
                       >
                         <LogOut className="h-4 w-4" />
                         Logout
@@ -505,4 +505,5 @@ export function Navigation() {
     </>
   )
 }
+
 
