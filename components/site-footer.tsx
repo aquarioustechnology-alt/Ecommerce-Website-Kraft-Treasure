@@ -1,4 +1,4 @@
-import Link from "next/link"
+﻿import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Send } from "lucide-react"
 
@@ -13,21 +13,20 @@ const QUICK_LINKS = [
 ] as const
 
 const SERVICE_LINKS = [
-  "Shipping & Delivery",
-  "Returns & Exchanges",
-  "Care Instructions",
-  "Privacy Policy",
-  "Terms of Use",
+  { label: "Shipping & Delivery", href: "/shipping-delivery" },
+  { label: "Returns & Exchanges", href: "/returns-exchanges" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Use", href: "/terms-of-use" },
 ] as const
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-white/10 bg-black px-6 pt-20 pb-[50px] text-white lg:px-20">
+    <footer className="border-t border-white/10 bg-black px-6 pb-[50px] pt-20 text-white lg:px-20">
       <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
         <div className="lg:col-span-1">
-          <div className="origin-left scale-110 mb-8">
+          <div className="origin-left mb-8 scale-110">
             <Image
               src={LOGO_SRC}
               alt="Kraft Treasure Logo"
@@ -70,13 +69,13 @@ export function SiteFooter() {
           <p className="mb-8 text-[12px] font-medium uppercase tracking-[0.4em] text-white">Client Services</p>
           <ul className="space-y-4">
             {SERVICE_LINKS.map((item) => (
-              <li key={item}>
+              <li key={item.label}>
                 <Link
                   prefetch={false}
-                  href="#"
+                  href={item.href}
                   className="inline-block text-sm text-white/50 transition-all duration-300 hover:translate-x-1 hover:text-[#FFF4B3]"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               </li>
             ))}
