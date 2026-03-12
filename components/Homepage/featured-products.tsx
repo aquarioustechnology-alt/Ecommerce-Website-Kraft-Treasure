@@ -7,72 +7,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, ShoppingBag, Heart } from "lucid
 import useEmblaCarousel from "embla-carousel-react"
 import { cartStore } from "@/lib/store"
 import { useToast } from "@/hooks/use-toast"
-
-const NEW_ARRIVALS_DATA = [
-  {
-    id: "na-4",
-    name: "Sacred Geometric Steel Tongue Drum",
-    category: "Show Pieces",
-    price: 6800,
-    slug: "sacred-geometric-steel-tongue-drum",
-    image: "/images/homepage/New Arrivals/Product 4.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 4 Hover.png"
-  },
-  {
-    id: "na-5",
-    name: "Ritual Gilded Butter Lamp Cup",
-    category: "Show Pieces",
-    price: 4200,
-    slug: "ritual-gilded-butter-lamp-cup",
-    image: "/images/homepage/New Arrivals/Product 5.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 5 Hover.png"
-  },
-  {
-    id: "na-6",
-    name: "Sacred Tawang Monastery Banner",
-    category: "Others",
-    price: 3600,
-    slug: "sacred-tawang-monastery-banner",
-    image: "/images/homepage/New Arrivals/Product 6.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 6 Hover.png"
-  },
-  {
-    id: "na-7",
-    name: "Imperial Dragon Motif Teacup",
-    category: "Cups and plates",
-    price: 1800,
-    slug: "imperial-dragon-motif-teacup",
-    image: "/images/homepage/New Arrivals/Product 7.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 7 hover.png"
-  },
-  {
-    id: "na-1",
-    name: "Serene Buddha Head Sculpture",
-    category: "Show Pieces",
-    price: 9400,
-    slug: "serene-buddha-head-sculpture",
-    image: "/images/homepage/New Arrivals/Product 1.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 1 Hover.png"
-  },
-  {
-    id: "na-2",
-    name: "Tribal Sun Guardian Shield",
-    category: "Show Pieces",
-    price: 8500,
-    slug: "tribal-sun-guardian-shield",
-    image: "/images/homepage/New Arrivals/Product 2.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 2 Hover.png"
-  },
-  {
-    id: "na-3",
-    name: "Majestic Ritual Soul Mask",
-    category: "Masks",
-    price: 12400,
-    slug: "majestic-ritual-soul-mask",
-    image: "/images/homepage/New Arrivals/Product 3.png",
-    hoverImage: "/images/homepage/New Arrivals/Product 3 Hover.png"
-  }
-]
+import { newArrivalHomepageProducts } from "@/components/product page/products"
 
 export function FeaturedProducts() {
   const [visible, setVisible] = useState(false)
@@ -82,7 +17,7 @@ export function FeaturedProducts() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     loop: true,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   })
 
   const scrollPrev = useCallback(() => {
@@ -98,19 +33,19 @@ export function FeaturedProducts() {
       ([entry]) => {
         if (entry.isIntersecting) setVisible(true)
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     )
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [])
 
-  const handleAddToCart = (e: React.MouseEvent, product: any) => {
+  const handleAddToCart = (e: React.MouseEvent, productId: string, productName: string) => {
     e.preventDefault()
     e.stopPropagation()
-    cartStore.addItem(product.id)
+    cartStore.addItem(productId)
     toast({
       title: "Added to Bag",
-      description: `${product.name} has been added to your shopping bag.`,
+      description: `${productName} has been added to your shopping bag.`,
     })
   }
 
@@ -133,98 +68,80 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section ref={ref} className="pt-10 pb-8 px-6 lg:px-12 max-w-[1440px] mx-auto w-full overflow-hidden">
-      {/* Header */}
-      <div
-        className={`max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-      >
+    <section ref={ref} className="mx-auto w-full max-w-[1440px] overflow-hidden px-6 pb-8 pt-10 lg:px-12">
+      <div className={`mx-auto mb-12 flex max-w-[1440px] flex-col justify-between gap-8 transition-all duration-1000 md:flex-row md:items-end ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
         <div className="text-left">
-          <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#C5AB7D] font-sans mb-3">
-            Freshly Curated
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-black leading-tight">
-            New Arrivals
-          </h2>
+          <p className="mb-3 text-[10px] font-sans uppercase tracking-[0.4em] text-[#C5AB7D] md:text-xs">Freshly Curated</p>
+          <h2 className="text-3xl font-serif leading-tight text-black md:text-4xl lg:text-5xl">New Arrivals</h2>
         </div>
-        <Link prefetch={false}
+        <Link
+          prefetch={false}
           href="/shop"
-          className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-[#D33740] text-white px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[200px]"
+          className="group relative inline-flex min-w-[200px] items-center justify-center gap-2 overflow-hidden whitespace-nowrap bg-[#D33740] px-8 py-4 text-[11px] font-sans uppercase tracking-[0.2em] text-white shadow-md transition-colors duration-500"
         >
           <span className="relative z-20">View All Pieces</span>
-          <ArrowRight className="relative z-20 w-3.5 h-3.5 transition-transform group-hover:translate-x-2" />
-          <div className="absolute inset-0 bg-[#C5AB7D] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
+          <ArrowRight className="relative z-20 h-3.5 w-3.5 transition-transform group-hover:translate-x-2" />
+          <div className="absolute inset-0 z-10 -translate-x-[101%] bg-[#C5AB7D] transition-transform duration-500 ease-in-out group-hover:translate-x-0" />
         </Link>
       </div>
 
-      {/* Product Carousel Container (Relative for absolute inner buttons) */}
-      <div className="relative max-w-[1440px] mx-auto group/carousel">
+      <div className="relative mx-auto max-w-[1440px] group/carousel">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex -ml-4 lg:-ml-5">
-            {NEW_ARRIVALS_DATA.map((product, index) => (
-              <div
-                className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_20%] pl-4 lg:pl-5 min-w-0"
-                key={product.id}
-              >
-                <Link prefetch={false}
-                  href={`/product/${product.slug}`}
-                  className={`group transition-all duration-1000 block ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-                    }`}
+            {newArrivalHomepageProducts.map((item, index) => (
+              <div className="min-w-0 flex-[0_0_100%] pl-4 sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_20%] lg:pl-5" key={item.product.id}>
+                <Link
+                  prefetch={false}
+                  href={`/product/${item.product.slug}`}
+                  className={`group block transition-all duration-1000 ${visible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                   style={{ transitionDelay: `${0.15 + index * 0.1}s` }}
                 >
-                  {/* Product Image Container */}
-                  <div className="relative aspect-[4/5] overflow-hidden mb-4 bg-zinc-50 border border-zinc-100/50">
+                  <div className="relative mb-4 aspect-[4/5] overflow-hidden border border-zinc-100/50 bg-zinc-50">
                     <Image
-                      src={product.image}
-                      alt={product.name}
+                      src={item.cardImage}
+                      alt={item.product.name}
                       fill
-                      className="object-cover transition-opacity duration-700 opacity-100 group-hover:opacity-0"
+                      className="object-cover opacity-100 transition-opacity duration-700 group-hover:opacity-0"
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     />
                     <Image
-                      src={product.hoverImage}
-                      alt={`${product.name} alternate view`}
+                      src={item.cardHoverImage}
+                      alt={`${item.product.name} alternate view`}
                       fill
-                      className="object-cover transition-opacity duration-700 opacity-0 group-hover:opacity-100"
+                      className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     />
 
-                    {/* Actions Overlay */}
-                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-4 right-4 flex flex-col gap-2 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="absolute inset-0 bg-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <div className="absolute right-4 top-4 flex translate-x-4 flex-col gap-2 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
                         <button
-                          onClick={(e) => toggleWishlist(e, product.id, product.name)}
-                          className={`p-3 bg-white hover:bg-black hover:text-white transition-colors shadow-sm ${cart.wishlist.includes(product.id) ? 'text-[#E31E25]' : 'text-black'}`}
+                          type="button"
+                          onClick={(e) => toggleWishlist(e, item.product.id, item.product.name)}
+                          className={`p-3 shadow-sm transition-colors ${cart.wishlist.includes(item.product.id) ? "bg-white text-[#E31E25]" : "bg-white text-black hover:bg-black hover:text-white"}`}
                         >
-                          <Heart className={`w-4 h-4 ${cart.wishlist.includes(product.id) ? 'fill-current' : ''}`} />
+                          <Heart className={`h-4 w-4 ${cart.wishlist.includes(item.product.id) ? "fill-current" : ""}`} />
                         </button>
                         <button
-                          onClick={(e) => handleAddToCart(e, product)}
-                          className="p-3 bg-white hover:bg-black hover:text-white transition-colors shadow-sm text-black"
+                          type="button"
+                          onClick={(e) => handleAddToCart(e, item.product.id, item.product.name)}
+                          className="bg-white p-3 text-black shadow-sm transition-colors hover:bg-black hover:text-white"
                         >
-                          <ShoppingBag className="w-4 h-4" />
+                          <ShoppingBag className="h-4 w-4" />
                         </button>
                       </div>
 
-                      <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                        <div className="text-center text-[10px] tracking-[0.2em] uppercase text-black font-sans border border-black/10 px-5 py-3 bg-white hover:bg-black hover:text-white transition-colors duration-300 shadow-sm">
+                      <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                        <div className="border border-black/10 bg-white px-5 py-3 text-center text-[10px] font-sans uppercase tracking-[0.2em] text-black shadow-sm transition-colors duration-300 hover:bg-black hover:text-white">
                           View Details
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Product Info */}
-                  <div className="text-center space-y-0.5">
-                    <p className="text-[9px] tracking-[0.3em] uppercase text-muted-foreground font-sans">
-                      {product.category}
-                    </p>
-                    <h3 className="text-sm lg:text-base font-serif text-foreground hover:text-[#C5AB7D] transition-colors line-clamp-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-base lg:text-lg font-sans text-primary font-semibold">
-                      {"\u20B9"}{product.price.toLocaleString()}
-                    </p>
+                  <div className="space-y-0.5 text-center">
+                    <p className="text-[9px] font-sans uppercase tracking-[0.3em] text-muted-foreground">{item.product.category}</p>
+                    <h3 className="line-clamp-1 text-sm font-serif text-foreground transition-colors hover:text-[#C5AB7D] lg:text-base">{item.product.name}</h3>
+                    <p className="text-base font-semibold text-primary lg:text-lg">{"\u20B9"}{item.product.price.toLocaleString("en-IN")}</p>
                   </div>
                 </Link>
               </div>
@@ -232,40 +149,41 @@ export function FeaturedProducts() {
           </div>
         </div>
 
-        {/* Carousel Controls - Repositioned inside the Product Area */}
-        {/* Desktop Controls (Extreme Left/Right overlapping cards) */}
         <div className="hidden lg:block">
           <button
+            type="button"
             onClick={scrollPrev}
-            className="absolute left-2 top-[40%] -translate-y-1/2 z-40 p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-xl"
+            className="absolute left-2 top-[40%] z-40 -translate-y-1/2 bg-white p-4 text-foreground shadow-xl transition-all duration-300 hover:bg-black hover:text-white border border-border"
             aria-label="Previous item"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <button
+            type="button"
             onClick={scrollNext}
-            className="absolute right-2 top-[40%] -translate-y-1/2 z-40 p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-xl"
+            className="absolute right-2 top-[40%] z-40 -translate-y-1/2 bg-white p-4 text-foreground shadow-xl transition-all duration-300 hover:bg-black hover:text-white border border-border"
             aria-label="Next item"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Mobile/Tablet Controls (Below Cards) */}
-        <div className="flex lg:hidden justify-center gap-4 mt-12">
+        <div className="mt-12 flex justify-center gap-4 lg:hidden">
           <button
+            type="button"
             onClick={scrollPrev}
-            className="p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
+            className="border border-border bg-white p-4 text-foreground shadow-sm transition-all duration-300 hover:bg-black hover:text-white"
             aria-label="Previous item"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <button
+            type="button"
             onClick={scrollNext}
-            className="p-4 bg-white border border-border text-foreground hover:bg-black hover:text-white transition-all duration-300 shadow-sm"
+            className="border border-border bg-white p-4 text-foreground shadow-sm transition-all duration-300 hover:bg-black hover:text-white"
             aria-label="Next item"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="h-5 w-5" />
           </button>
         </div>
       </div>

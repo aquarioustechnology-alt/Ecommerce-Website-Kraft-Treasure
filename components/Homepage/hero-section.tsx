@@ -9,7 +9,7 @@ const HERO_IMAGES = [
   { src: "/images/homepage/1st-image.png", name: "Traditional Brass Lamp" },
   { src: "/images/homepage/2nd-image.png", name: "Handwoven Tribal Textile" },
   { src: "/images/homepage/3rd-image.png", name: "Bamboo Craft Vessel" },
-  { src: "/images/homepage/4th-image.png", name: "Ceremonial Tribal Mask" }
+  { src: "/images/homepage/4th-image.png", name: "Ceremonial Tribal Mask" },
 ]
 
 export function HeroSection() {
@@ -33,33 +33,24 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[90vh] md:h-screen w-full overflow-hidden bg-white">
-      {/* Background split - Hidden on mobile, handled by section colors */}
-      <div className="absolute inset-0 flex flex-col md:flex-row pointer-events-none">
-        <div className="w-full md:w-1/2 h-1/2 md:h-full bg-white" />
-        <div className="w-full md:w-1/2 h-1/2 md:h-full bg-[#FFF4B3]" />
+    <section className="relative min-h-[90vh] w-full overflow-hidden bg-white md:h-screen">
+      <div className="pointer-events-none absolute inset-0 flex flex-col md:flex-row">
+        <div className="h-1/2 w-full bg-white md:h-full md:w-1/2" />
+        <div className="h-1/2 w-full bg-[#FFF4B3] md:h-full md:w-1/2" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col md:flex-row h-full">
-        {/* Left Section - Content */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center px-6 lg:px-12 pt-36 pb-32 md:py-0 items-center md:items-start text-center md:text-left">
-          <div className="max-w-xl w-full">
-            {/* Overline - Color #C5AB7D */}
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1440px] flex-col md:flex-row">
+        <div className="flex w-full flex-col items-center justify-center px-6 pb-32 pt-36 text-center md:w-1/2 md:items-start md:py-0 md:text-left lg:px-12">
+          <div className="w-full max-w-xl">
             <p
-              className={`text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans mb-3 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-              style={{
-                transitionDelay: "0.4s",
-                color: "#C5AB7D"
-              }}
+              className={`mb-3 text-[10px] font-sans uppercase tracking-[0.4em] transition-all duration-1000 md:text-xs ${loaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+              style={{ transitionDelay: "0.4s", color: "#C5AB7D" }}
             >
               Authentic Arunachal Pradesh Handicrafts
             </p>
 
-            {/* Main heading - Improved responsiveness for all screens */}
             <h2
-              className={`text-[40px] leading-[1.1] sm:text-5xl md:text-[54px] lg:text-[62px] xl:text-[70px] font-serif text-black tracking-tight mb-5 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+              className={`mb-5 text-[40px] font-serif leading-[1.1] tracking-tight text-black transition-all duration-1000 sm:text-5xl md:text-[54px] lg:text-[62px] xl:text-[70px] ${loaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
               style={{ transitionDelay: "0.6s" }}
             >
               Where Ancient
@@ -69,10 +60,8 @@ export function HeroSection() {
               Modern Luxury
             </h2>
 
-            {/* Subheading - Reduced size by 2px */}
             <p
-              className={`text-[12px] sm:text-[14px] lg:text-[16px] text-black/80 font-sans leading-relaxed max-w-xl mb-8 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-                }`}
+              className={`mb-8 max-w-xl text-[12px] font-sans leading-relaxed text-black/80 transition-all duration-1000 sm:text-[14px] lg:text-[16px] ${loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
               style={{ transitionDelay: "0.8s" }}
             >
               Discover original tribal crafts from Arunachal Pradesh, bamboo & cane,
@@ -80,83 +69,83 @@ export function HeroSection() {
               d{"\u00E9"}cor-sourced directly from artisans and delivered with care.
             </p>
 
-            {/* CTA Buttons - Single line, smaller font, adjusted padding */}
             <div
-              className={`flex flex-col sm:flex-row justify-center md:justify-start gap-4 md:gap-3 lg:gap-4 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-                }`}
+              className={`flex flex-col justify-center gap-4 transition-all duration-1000 sm:flex-row md:justify-start md:gap-3 lg:gap-4 ${loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
               style={{ transitionDelay: "1s" }}
             >
-              <Link prefetch={false}
-                href="/#collections"
-                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 bg-[#D33740] text-white px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-colors duration-500 shadow-md whitespace-nowrap min-w-[180px] md:min-w-[215px] xl:min-w-[180px]"
+              <Link
+                prefetch={false}
+                href="/shop"
+                className="group relative inline-flex min-w-[180px] items-center justify-center gap-2 overflow-hidden whitespace-nowrap bg-[#D33740] px-6 py-4 text-[11px] font-sans uppercase tracking-[0.2em] text-white shadow-md transition-colors duration-500 md:min-w-[215px] md:px-4 xl:min-w-[180px] lg:px-6"
               >
                 <span className="relative z-20">Explore Collections</span>
-                <ArrowRight className="relative z-20 w-3.5 h-3.5 transition-transform group-hover:translate-x-2" />
-                <div className="absolute inset-0 bg-[#C5AB7D] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
+                <ArrowRight className="relative z-20 h-3.5 w-3.5 transition-transform group-hover:translate-x-2" />
+                <div className="absolute inset-0 z-10 -translate-x-[101%] bg-[#C5AB7D] transition-transform duration-500 ease-in-out group-hover:translate-x-0" />
               </Link>
 
-              <Link prefetch={false}
+              <Link
+                prefetch={false}
                 href="/shop"
-                className="relative group overflow-hidden inline-flex items-center justify-center gap-2 border border-[#D33740] bg-transparent text-[#D33740] px-6 md:px-4 lg:px-6 py-4 text-[11px] tracking-[0.2em] uppercase font-sans transition-all duration-500 shadow-sm whitespace-nowrap min-w-[180px] md:min-w-[130px] xl:min-w-[180px]"
+                className="group relative inline-flex min-w-[180px] items-center justify-center gap-2 overflow-hidden whitespace-nowrap border border-[#D33740] bg-transparent px-6 py-4 text-[11px] font-sans uppercase tracking-[0.2em] text-[#D33740] shadow-sm transition-all duration-500 md:min-w-[130px] md:px-4 xl:min-w-[180px] lg:px-6"
               >
-                <span className="relative z-20 transition-colors duration-500 group-hover:text-white font-medium">Shop Now</span>
-                <div className="absolute inset-0 bg-[#D33740] -translate-x-[101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out z-10" />
+                <span className="relative z-20 font-medium transition-colors duration-500 group-hover:text-white">Shop Now</span>
+                <div className="absolute inset-0 z-10 -translate-x-[101%] bg-[#D33740] transition-transform duration-500 ease-in-out group-hover:translate-x-0" />
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Right Section - Image Side - Carousel centered in its half */}
-        <div className="w-full md:w-1/2 relative flex items-center justify-center overflow-hidden min-h-[500px] md:min-h-screen">
+        <div className="relative flex min-h-[500px] w-full items-center justify-center overflow-hidden md:min-h-screen md:w-1/2">
           <div
-            className={`relative w-full aspect-square max-w-[380px] lg:max-w-[460px] 2xl:max-w-[500px] transition-all duration-700 ease-out group ${loaded ? "opacity-100 scale-100" : "opacity-0 scale-110"
-              }`}
+            className={`group relative w-full max-w-[380px] aspect-square transition-all duration-700 ease-out lg:max-w-[460px] 2xl:max-w-[500px] ${loaded ? "scale-100 opacity-100" : "scale-110 opacity-0"}`}
             style={{ transitionDelay: "0.5s" }}
           >
             {HERO_IMAGES.map((image, index) => (
               <div
                 key={image.src}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out overflow-hidden rounded-sm shadow-xl ${index === currentImage ? "opacity-100 z-10" : "opacity-0 z-0"
-                  }`}
+                className={`absolute inset-0 overflow-hidden rounded-sm shadow-xl transition-opacity duration-1000 ease-in-out ${index === currentImage ? "z-10 opacity-100" : "z-0 opacity-0"}`}
               >
-                <NextImage
-                  src={image.src}
-                  alt={image.name}
-                  fill
-                  className="object-cover transition-transform duration-1000 ease-out scale-110 group-hover:scale-100"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority={index === 0}
-                />
+                <Link
+                  prefetch={false}
+                  href="/shop"
+                  className="block h-full w-full cursor-pointer"
+                  aria-label={`Explore ${image.name} in the shop`}
+                >
+                  <NextImage
+                    src={image.src}
+                    alt={image.name}
+                    fill
+                    className="scale-110 object-cover transition-transform duration-1000 ease-out group-hover:scale-100"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={index === 0}
+                  />
 
-                {/* Name and Gradient overlay - Always visible now */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-20 flex flex-col justify-end p-8 pointer-events-none">
-                  <p className="text-white text-xs tracking-[0.3em] uppercase font-sans mb-2">
-                    Product
-                  </p>
-                  <h3 className="text-white text-xl md:text-lg lg:text-2xl font-serif">
-                    {image.name}
-                  </h3>
-                </div>
+                  <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8">
+                    <p className="mb-2 text-xs font-sans uppercase tracking-[0.3em] text-white">Product</p>
+                    <h3 className="text-xl font-serif text-white md:text-lg lg:text-2xl">{image.name}</h3>
+                  </div>
+                </Link>
               </div>
             ))}
 
-            <div className="absolute inset-0 border border-white/10 pointer-events-none z-20 rounded-sm" />
+            <div className="pointer-events-none absolute inset-0 z-20 rounded-sm border border-white/10" />
 
-            {/* Carousel Controls - Always visible now */}
-            <div className="absolute bottom-6 right-6 flex gap-3 z-30">
+            <div className="absolute bottom-6 right-6 z-30 flex gap-3">
               <button
+                type="button"
                 onClick={prevImage}
-                className="p-4 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 border border-black/10 shadow-lg"
+                className="cursor-pointer border border-black/10 bg-white/40 p-4 text-black shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="h-5 w-5" />
               </button>
               <button
+                type="button"
                 onClick={nextImage}
-                className="p-4 bg-white/40 backdrop-blur-md text-black hover:bg-white transition-all duration-300 border border-black/10 shadow-lg"
+                className="cursor-pointer border border-black/10 bg-white/40 p-4 text-black shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white"
                 aria-label="Next image"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
           </div>
